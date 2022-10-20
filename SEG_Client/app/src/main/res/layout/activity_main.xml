@@ -22,7 +22,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
         <EditText
-            android:id="@+id/First_name"
+            android:id="@+id/firstName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -31,7 +31,7 @@
             android:text="First Name" />
 
         <EditText
-            android:id="@+id/Last_Name"
+            android:id="@+id/lastName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -40,7 +40,7 @@
             android:text="Last Name" />
 
         <EditText
-            android:id="@+id/Email_address"
+            android:id="@+id/emailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -49,7 +49,7 @@
             android:text="Email Address" />
 
         <EditText
-            android:id="@+id/Account_Password"
+            android:id="@+id/accountPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -58,7 +58,7 @@
             android:text="Account Password" />
 
         <EditText
-            android:id="@+id/Adress"
+            android:id="@+id/address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -67,7 +67,7 @@
             android:text="Address" />
 
         <EditText
-            android:id="@+id/Credit_Card_info"
+            android:id="@+id/creditCardInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
