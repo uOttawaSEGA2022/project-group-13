@@ -21,8 +21,19 @@ public class WelcomePage extends AppCompatActivity {
         String role = bundle.getString("role");
 
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+        //EditText userProfile = (EditText) findViewById(R.id.UserProfile);
+        //userProfile.setText();
+=======
+
+
+
+>>>>>>> f763cf6666e5d8b36ce2fba4d1b804b5a1ce62bb
         TextView userProfile = (TextView) findViewById(R.id.UserProfile);
         userProfile.setText(role);
+<<<<<<< HEAD
 
         Button logoff = (Button) findViewById(R.id.LogOff);
         logoff.setOnClickListener(new View.OnClickListener() {
@@ -31,6 +42,9 @@ public class WelcomePage extends AppCompatActivity {
                 LogInPage(v);
             }
         });
+=======
+>>>>>>> ec044942af4e6e5b51045f53f85343ac49388e3e
+>>>>>>> f763cf6666e5d8b36ce2fba4d1b804b5a1ce62bb
     }
 
     public void LogInPage(View view){
