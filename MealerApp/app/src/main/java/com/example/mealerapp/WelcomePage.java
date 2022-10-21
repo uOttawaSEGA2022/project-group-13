@@ -16,8 +16,8 @@ public class WelcomePage extends AppCompatActivity {
 
 
 
-        EditText userProfile = (EditText) findViewById(R.id.UserProfile);
-        userProfile.setText();
+        //EditText userProfile = (EditText) findViewById(R.id.UserProfile);
+        //userProfile.setText();
     }
 
     public void LogInPage(View view){

@@ -26,7 +26,8 @@ public class MainActivity extends AppCompatActivity {
 
         Database dtb = new Database();
         dtb.login(email,password);
-        //Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
+        Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
+        startActivity(intent);
     }
 
     public void cookpage(View view){
