@@ -63,7 +63,17 @@ public class User {
         this.password = password;
     }
 
-    //ToString that displays the type (Chef or Client)
+    //Getter for User's address
+    public String getAddress() {
+        return address;
+    }
+
+    //Setter for User's set address
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    //Method that converts type variable to a string and returns the type (Chef or Client)
     public String roleToString(){return type.toString();}
 
 
