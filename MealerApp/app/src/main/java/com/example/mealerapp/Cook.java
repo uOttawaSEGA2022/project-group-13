@@ -74,8 +74,8 @@ public class Cook extends User{
      }
 
     */
-    public void setDescription(String newname) {
-        address = newname;
+    public void setDescription(String newDescription) {
+        description = newDescription;
     }
 
      public String toString() {
