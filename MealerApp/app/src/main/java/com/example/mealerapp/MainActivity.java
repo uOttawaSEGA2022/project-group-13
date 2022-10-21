@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loginpage(View view){
-        Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
+        //Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
     }
 
     public void cookpage(View view){

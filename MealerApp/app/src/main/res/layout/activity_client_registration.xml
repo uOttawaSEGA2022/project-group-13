@@ -9,53 +9,55 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/Register_client_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Register Client"
-            android:textSize="40sp"
-            android:textColor="@color/black"
             android:gravity="center_horizontal"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+            android:text="Register Client"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="@color/black"
+            android:textSize="40sp" />
 
         <EditText
             android:id="@+id/firstName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:textSize="20sp"
             android:inputType="textPersonName"
-            android:text="First Name" />
+            android:text="First Name"
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/lastName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:textSize="20sp"
             android:inputType="textPersonName"
-            android:text="Last Name" />
+            android:text="Last Name"
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/emailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:textSize="20sp"
             android:inputType="textPersonName"
-            android:text="Email Address" />
+            android:text="Email Address"
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/accountPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:textSize="20sp"
             android:inputType="textPersonName"
-            android:text="Account Password" />
+            android:text="Account Password"
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/address"
@@ -63,8 +65,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:textSize="20sp"
-            android:text="Address" />
+            android:text="Address"
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/creditCardInfo"
@@ -72,15 +74,15 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:textSize="20sp"
-            android:text="Credit Card Information" />
+            android:text="Credit Card Information"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/Register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="30sp"
-            android:text="Register" />
+            android:text="Register"
+            android:textSize="30sp" />
 
     </LinearLayout>
 

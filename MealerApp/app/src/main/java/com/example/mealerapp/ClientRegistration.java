@@ -17,7 +17,7 @@ public class ClientRegistration extends AppCompatActivity {
 
 
     protected void createClient(View view) {
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_client_registration);
         EditText firstName= (EditText)  findViewById(R.id.firstName);
         EditText lastName= (EditText)  findViewById(R.id.lastName);
         EditText emailAddress= (EditText)  findViewById(R.id.emailAddress);
@@ -38,8 +38,9 @@ public class ClientRegistration extends AppCompatActivity {
                 String addressOne = address.getText().toString();
                 String creditCardInfoOne = creditCardInfo.getText().toString();
                 Client newClient = new Client(firstNameOne,lastNameOne,emailAddressOne, accountPasswordOne,addressOne, creditCardInfoOne);
-                Intent intent = new Intent( getApplicationContext(), Welcome.class);
-                startActivity(intent);
+                newClient.registerClient();
+                // Intent intent = new Intent( getApplicationContext(), Welcome.class);
+              //  startActivity(intent);
                 //add database
             }
         });

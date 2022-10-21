@@ -41,13 +41,13 @@ public class CookRegistration extends AppCompatActivity {
                 String addressone = address.getText().toString();
                 String descriptionone = description.getText().toString();
                 Cook newCook = new Cook(firstnameone, lastnameone, emailone, passwordone, addressone, descriptionone);
-
+                newCook.registerCook();
                 //Database dbt = new Databse();
                 //dtb.registerUser(newCook);
 
                 // dont forget to change main act to page
-                Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
-                startActivity(intent);
+               // Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
+                //startActivity(intent);
             }
         });
     }

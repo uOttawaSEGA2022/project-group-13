@@ -9,6 +9,12 @@ public class Cook extends User{
         this.description = description;
     }
 
+    public void registerCook(){
+
+        Database dtb = new Database();
+        dtb.registerUser(this);
+    }
+
     public String getDescription() {
         return description;
     }
@@ -18,7 +24,7 @@ public class Cook extends User{
     }
 
      public String toString() {
-     return "\nAccount Information \n************************* \nFirst name: " + firstName + "\n" + "Last name: " + lastName + "\n" + "Email: " + emailAddress + "\n" + "Password: " + accountPassword + "\n" + "Description: " + description;
+     return "\nAccount Information \n************************* \nFirst name: " + firstName + "\n" + "Last name: " + lastName + "\n" + "Email: " + email + "\n" + "Password: " + password + "\n" + "Description: " + description;
      }
 
 

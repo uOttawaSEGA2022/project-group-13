@@ -1,12 +1,20 @@
 package com.example.mealerapp;
 
+import android.provider.ContactsContract;
+
 public class Client extends User {
 
     private String creditCardInfo;
 
     public Client( String firstName, String lastName, String emailAddress, String accountPassword, String address, String creditCardInfo) {
-        super(firstName, lastName, emailAddress, accountPassword, address, userType.CLIENT);
+        super(firstName, lastName, emailAddress, accountPassword, userType.CLIENT, address);
         this.creditCardInfo = creditCardInfo;
+    }
+
+    public void registerClient(){
+
+        Database dtb = new Database();
+        dtb.registerUser(this);
     }
 
     public String getCreditCardInfo() {
@@ -18,6 +26,6 @@ public class Client extends User {
     }
 
     public String toString() {
-        return "\nAccount Information  \nFirst name: " + firstName + "\n" + "Last name: " + lastName + "\n" + "Email: " + emailAddress + "\n" + "Password: " + accountPassword + "\n" + "Credit Card Information " + creditCardInfo;
+        return "\nAccount Information  \nFirst name: " + firstName + "\n" + "Last name: " + lastName + "\n" + "Email: " + email + "\n" + "Password: " + password + "\n" + "Credit Card Information " + creditCardInfo;
     }
 }
