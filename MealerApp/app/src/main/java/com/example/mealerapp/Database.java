@@ -61,9 +61,9 @@ public class Database {
     }
 
     //This does not work I am trying to fix it
-   /* public String retrieveInfo(User user,String field){
-
-        FirebaseDatabase.getInstance().getReference().child(user.roleToString()).child(FirebaseAuth.getInstance().getUid()).child(field).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+   /*public String retrieveInfo(User user,String field){
+        String data;
+        FirebaseDatabase.getInstance().getReference().child(user.getRole().toString()).child(FirebaseAuth.getInstance().getUid()).child(field).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
                 data = dataSnapshot.getValue().toString();

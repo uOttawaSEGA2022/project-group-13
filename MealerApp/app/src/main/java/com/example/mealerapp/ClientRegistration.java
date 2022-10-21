@@ -46,6 +46,10 @@ public class ClientRegistration extends AppCompatActivity {
                 String creditCardInfoOne = creditCardInfo.getText().toString();
                 Client newClient = new Client(firstNameOne,lastNameOne,emailAddressOne, accountPasswordOne,addressOne, creditCardInfoOne);
                 newClient.registerClient();
+
+                Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
+                intent.putExtra("role","client");
+                startActivity(intent);
             }
         });
 
