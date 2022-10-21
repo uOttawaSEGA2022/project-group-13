@@ -2,6 +2,8 @@ package com.example.mealerapp;
 
 import android.net.Uri;
 
+import com.google.firebase.database.Exclude;
+
 public class User {
 
     protected String firstName, lastName, email, password, address;
@@ -57,7 +59,7 @@ public class User {
     }
 
 
-   // @Exclude
+    @Exclude
     public userType getRole(){return type;}
 
     public void setRole(userType role){type = role;}

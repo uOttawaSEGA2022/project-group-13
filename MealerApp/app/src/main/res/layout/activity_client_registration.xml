@@ -28,8 +28,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="First Name"
             android:inputType="textPersonName"
-            android:text="First Name"
             android:textSize="20sp" />
 
         <EditText
@@ -37,8 +37,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="Last Name"
             android:inputType="textPersonName"
-            android:text="Last Name"
             android:textSize="20sp" />
 
         <EditText
@@ -46,8 +46,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="Email Address"
             android:inputType="textPersonName"
-            android:text="Email Address"
             android:textSize="20sp" />
 
         <EditText
@@ -55,8 +55,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="Account Password"
             android:inputType="textPersonName"
-            android:text="Account Password"
             android:textSize="20sp" />
 
         <EditText
@@ -64,8 +64,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="Address"
             android:inputType="textPersonName"
-            android:text="Address"
             android:textSize="20sp" />
 
         <EditText
@@ -73,8 +73,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="Credit Card Information"
             android:inputType="textPersonName"
-            android:text="Credit Card Information"
             android:textSize="20sp" />
 
         <Button

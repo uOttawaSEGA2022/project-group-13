@@ -10,10 +10,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.content.Intent;
 
-
-
-
 public class ClientRegistration extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_client_registration);
+
+
+        //Cook newCook = new Cook(firstname.getText().toString(), lastname.getText().toString(), email.getText().toString(), password.getText().toString(), description.getText().toString());
+
+
+    }
 
 
     protected void createClient(View view) {

@@ -8,8 +8,8 @@
 
     <Button
         android:id="@+id/cook2"
-        android:layout_width="178dp"
-        android:layout_height="139dp"
+        android:layout_width="171dp"
+        android:layout_height="143dp"
         android:onClick="cookpage"
         android:text="cook"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,13 +21,13 @@
 
     <Button
         android:id="@+id/client2"
-        android:layout_width="175dp"
-        android:layout_height="134dp"
+        android:layout_width="171dp"
+        android:layout_height="143dp"
         android:onClick="clientpage"
         android:text="Client"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.932"
+        app:layout_constraintHorizontal_bias="0.872"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.628" />
@@ -42,7 +42,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.471" />
+        app:layout_constraintVertical_bias="0.463" />
 
     <Button
         android:id="@+id/login2"
@@ -52,9 +52,10 @@
         android:text="Login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.543"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.313" />
+        app:layout_constraintVertical_bias="0.308" />
 
     <EditText
         android:id="@+id/password2"
@@ -65,17 +66,17 @@
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.479"
+        app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.175" />
+        app:layout_constraintVertical_bias="0.154" />
 
     <EditText
         android:id="@+id/username2"
         android:layout_width="365dp"
         android:layout_height="48dp"
         android:ems="10"
-        android:hint="Username"
+        android:hint="Email"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
