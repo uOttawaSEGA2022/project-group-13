@@ -1,13 +1,24 @@
-package com.example.mealer;
+package com.example.myapplication;
 
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Locale;
 //import com.google.firebase.storage.FirebaseStorage;
 //import com.google.firebase.storage.StorageReference;
 
@@ -17,12 +28,12 @@ public class Database {
     private FirebaseDatabase database;
     private FirebaseAuth auth;
     public enum dataField{FIRSTNAME,LASTNAME,EMAIL,PASSWORD,ADDRESS};
-    private String uID = "null";
+
 
     public Database(){
         database = FirebaseDatabase.getInstance();
         userReference = database.getReference().child("USERS");
-        // auth = FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
     }
 
     public void registerUser(User user){
@@ -47,6 +58,7 @@ public class Database {
 
         //Delete user authentication information
         auth.getCurrentUser().delete();
+
     }
 
     //This does not work I am trying to fix it
@@ -64,7 +76,7 @@ public class Database {
     }*/
 
     //
-    public void changeInfo(User user, dataField field, String newInfo){
+    public void changeInfo(User user,  dataField field, String newInfo){
 
         //Make sure someone is logged in before trying to change their information
         if(auth.getCurrentUser()!=null)
@@ -74,18 +86,14 @@ public class Database {
     //Login user using email and password
     public void login(String email, String password){
 
-        FirebaseAuth.getInstance().signInWithEmailAndPassword(email,password);
-
-        uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-        Log.d("Login uid", uID);
+        auth.signInWithEmailAndPassword(email,password);
 
     }
 
     //Log out current user
     public void logoff(){
 
-        FirebaseAuth.getInstance().signOut();
+        auth.signOut();
 
     }
 }
