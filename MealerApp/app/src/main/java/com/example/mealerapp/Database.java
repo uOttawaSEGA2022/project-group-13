@@ -26,7 +26,7 @@ public class Database {
     private DatabaseReference userReference;
     private FirebaseDatabase database;
     private FirebaseAuth auth;
-    public enum dataField{FIRSTNAME,LASTNAME,EMAIL,PASSWORD,ADDRESS};
+    public enum dataField{FIRSTNAME,LASTNAME,EMAIL,PASSWORD,ADDRESS,CREDITCARDINFO, DESCRIPTION, ROLE};
     private String uID = "null";
 
     public Database(){
@@ -44,7 +44,7 @@ public class Database {
             //If sign up with email and password is successful, stores user information into realtime database
             public void onSuccess(AuthResult authResult) {
 
-                userReference.child(user.getRole().toString()).child(auth.getCurrentUser().getUid()).setValue(user);
+                userReference.child(auth.getCurrentUser().getUid()).setValue(user);
             }
         });
 
@@ -60,28 +60,32 @@ public class Database {
 
     }
 
-    //This does not work I am trying to fix it
-   /*public String retrieveInfo(User user,String field){
-        String data;
-        FirebaseDatabase.getInstance().getReference().child(user.getRole().toString()).child(FirebaseAuth.getInstance().getUid()).child(field).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
-            @Override
-            public void onSuccess(DataSnapshot dataSnapshot) {
-                data = dataSnapshot.getValue().toString();
-                Log.d("Inside on Success: " ,dataSnapshot.toString());
-            }
-        });
-        return data;
+    public interface retrieveListener{
 
-    }*/
-
-    //
-    public void changeInfo(User user,  dataField field, String newInfo){
-
-        //Make sure someone is logged in before trying to change their information
-        if(auth.getCurrentUser()!=null)
-            userReference.child(user.getRole().toString()).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(field.toString().toLowerCase()).setValue(newInfo);
+        void onDataReceived(String data);
+        void onError();
     }
 
+
+   public void retrieveInfo(dataField field, final retrieveListener listener){
+
+        DatabaseReference uIDReference = userReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(fieldToString(field));
+
+        uIDReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String data = snapshot.getValue().toString();
+                listener.onDataReceived(data);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                listener.onError();
+            }
+        });
+
+
+    }
     //Login user using email and password
     public void login(String email, String password){
 
@@ -93,6 +97,28 @@ public class Database {
     public void logoff(){
 
         auth.signOut();
+
+    }
+
+    private String fieldToString(dataField field){
+
+        String fieldString;
+
+        if(field==dataField.FIRSTNAME){
+            fieldString = "lastName";
+
+        }
+        else if (field==dataField.LASTNAME){
+            fieldString = "firstName";
+        }
+        else if(field== dataField.CREDITCARDINFO){
+            fieldString = "creditCardInfo";
+        }
+        else{
+            fieldString = field.toString().toLowerCase();
+        }
+
+        return fieldString;
 
     }
 }

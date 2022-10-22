@@ -58,8 +58,6 @@ public class User {
         this.address = address;
     }
 
-
-    @Exclude
     public userType getRole(){return type;}
 
     public void setRole(userType role){type = role;}

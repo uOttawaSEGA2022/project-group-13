@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class WelcomePage extends AppCompatActivity {
+public class WelcomePage extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,16 +21,9 @@ public class WelcomePage extends AppCompatActivity {
         String role = bundle.getString("role");
 
 
-        //EditText userProfile = (EditText) findViewById(R.id.UserProfile);
-        //userProfile.setText();
-//=======
-
-
-
-//>>>>>>> f763cf6666e5d8b36ce2fba4d1b804b5a1ce62bb
         TextView userProfile = (TextView) findViewById(R.id.UserProfile);
         userProfile.setText(role);
-//<<<<<<< HEAD
+
 
         Button logoff = (Button) findViewById(R.id.LogOff);
         logoff.setOnClickListener(new View.OnClickListener() {
@@ -48,7 +41,4 @@ public class WelcomePage extends AppCompatActivity {
 
 
     }
-
-
-
 }

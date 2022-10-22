@@ -4,12 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
 import org.w3c.dom.Text;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Database.retrieveListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +28,25 @@ public class MainActivity extends AppCompatActivity {
         Database dtb = new Database();
         dtb.login(email,password);
         Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
-//<<<<<<< HEAD
-        startActivity(intent);
-//=======
-//>>>>>>> ec044942af4e6e5b51045f53f85343ac49388e3e
+
+        Database.retrieveListener roleListener = new Database.retrieveListener() {
+            @Override
+            public void onDataReceived(String data) {
+                intent.putExtra("role",data);
+                startActivity(intent);
+
+            }
+
+            @Override
+            public void onError() {
+                intent.putExtra("role", "user");
+                startActivity(intent);
+
+            }
+        };
+
+        dtb.retrieveInfo(Database.dataField.ROLE,roleListener);
+
     }
 
     public void cookpage(View view){
@@ -43,4 +59,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    public void onDataReceived(String data) {
+
+    }
+
+    @Override
+    public void onError() {
+
+    }
 }
