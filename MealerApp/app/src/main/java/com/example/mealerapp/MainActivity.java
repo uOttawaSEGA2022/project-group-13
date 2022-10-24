@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements Database.retrieve
         String email = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
 
-        Database dtb = new Database();
+        ClientDatabase dtb = new ClientDatabase();
         dtb.login(email,password);
         Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
 
@@ -39,13 +40,12 @@ public class MainActivity extends AppCompatActivity implements Database.retrieve
 
             @Override
             public void onError() {
-                intent.putExtra("role", "user");
-                startActivity(intent);
+                //Toast.makeText(getApplicationContext(), "Invalid Login Credentials", Toast.LENGTH_SHORT);
 
             }
         };
 
-        dtb.retrieveInfo(Database.dataField.ROLE,roleListener);
+        dtb.retrieveInfo(ClientDatabase.dataField.ROLE,roleListener);
 
     }
 

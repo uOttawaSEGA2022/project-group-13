@@ -13,7 +13,7 @@ public class Client extends User {
 
     public void registerClient(){
 
-        Database dtb = new Database();
+       ClientDatabase dtb = new ClientDatabase();
         dtb.registerUser(this);
     }
 

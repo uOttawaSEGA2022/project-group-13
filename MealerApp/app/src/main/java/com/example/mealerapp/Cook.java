@@ -11,7 +11,7 @@ public class Cook extends User{
 
     public void registerCook(){
 
-        Database dtb = new Database();
+        ClientDatabase dtb = new ClientDatabase();
         dtb.registerUser(this);
     }
 
