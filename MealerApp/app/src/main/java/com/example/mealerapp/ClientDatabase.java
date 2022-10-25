@@ -2,9 +2,13 @@ package com.example.mealerapp;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -61,14 +65,16 @@ public class ClientDatabase extends Database{
     //Login user using email and password
     public void login(String email, String password){
 
-        auth.signInWithEmailAndPassword(email,password);
+            auth.signInWithEmailAndPassword(email,password);
 
     }
 
     //Log out current user
     public void logoff(){
 
-        auth.signOut();
+        if(auth.getCurrentUser()!=null) {
+            auth.signOut();
+        }
 
     }
 
