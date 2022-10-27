@@ -56,7 +56,8 @@ public class WelcomePage extends AppCompatActivity{
     }
 
     public void ComplaintsPage(View view){
-        Intent intent = new Intent(getApplication(), ComplaintsPage.class);
+        //change to complaints
+        Intent intent = new Intent(getApplication(), MainActivity.class);
         startActivity(intent);
     }
 
