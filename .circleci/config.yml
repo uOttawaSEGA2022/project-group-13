@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/uOttawaSEGA2022/project-group-13/MealerApp
+    #working_directory: ~/code
     docker:
       - image: circleci/android:api-25-alpha
     environment:
