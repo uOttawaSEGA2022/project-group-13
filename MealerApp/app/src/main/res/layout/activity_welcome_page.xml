@@ -51,7 +51,6 @@
         android:layout_height="wrap_content"
         android:onClick="ComplaintsPage"
         android:text="View Complaints"
-        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"

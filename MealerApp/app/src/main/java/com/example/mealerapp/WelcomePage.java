@@ -24,7 +24,7 @@ public class WelcomePage extends AppCompatActivity{
         TextView userProfile = (TextView) findViewById(R.id.UserProfile);
         userProfile.setText(role);
 
-
+        /**
         Button logoff = (Button) findViewById(R.id.LogOff);
         logoff.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +45,7 @@ public class WelcomePage extends AppCompatActivity{
         if(role == "admin"){
             viewcomplaints.setVisibility(View.VISIBLE);
         }
+         */
 
     }
 
@@ -57,8 +58,16 @@ public class WelcomePage extends AppCompatActivity{
 
     public void ComplaintsPage(View view){
         //change to complaints
-        Intent intent = new Intent(getApplication(), MainActivity.class);
-        startActivity(intent);
+        Button viewcomplaints = (Button) findViewById(R.id.viewcomplaints);
+
+        viewcomplaints.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplication(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
 
