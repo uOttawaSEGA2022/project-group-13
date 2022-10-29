@@ -46,8 +46,12 @@ public class CookRegistration extends AppCompatActivity {
                 //dtb.registerUser(newCook);
 
                 // dont forget to change main act to page
-                Intent intent = new Intent(CookRegistration.this, WelcomePage.class);
+
+                Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
+
+                //Intent intent = new Intent(CookRegistration.this, WelcomePage.class);
                 intent.putExtra("role", "cook");
+
                 startActivity(intent);
             }
         });

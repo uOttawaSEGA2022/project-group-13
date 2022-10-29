@@ -7,7 +7,7 @@ import com.google.firebase.database.Exclude;
 public class User {
 
     protected String firstName, lastName, email, password, address;
-    public enum userType {COOK, CLIENT};
+    public enum userType {COOK, CLIENT, ADMIN};
     private userType type;
 
     public User(String fName, String lName, String mail, String pswrd, userType role, String adrs){
@@ -58,8 +58,6 @@ public class User {
         this.address = address;
     }
 
-
-    @Exclude
     public userType getRole(){return type;}
 
     public void setRole(userType role){type = role;}

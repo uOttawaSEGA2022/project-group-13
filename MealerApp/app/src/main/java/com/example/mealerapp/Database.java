@@ -22,77 +22,46 @@ import java.util.Locale;
 //import com.google.firebase.storage.StorageReference;
 
 
-public class Database {
-    private DatabaseReference userReference;
+abstract public class Database {
+
     private FirebaseDatabase database;
-    private FirebaseAuth auth;
-    public enum dataField{FIRSTNAME,LASTNAME,EMAIL,PASSWORD,ADDRESS};
-    private String uID = "null";
 
     public Database(){
         database = FirebaseDatabase.getInstance();
-        userReference = database.getReference().child("USERS");
-        auth = FirebaseAuth.getInstance();
     }
 
-    public void registerUser(User user){
+    public void setInformation(DatabaseReference reference, Object information){
 
-        //Create an account using email and password
-        auth.createUserWithEmailAndPassword(user.getEmail(),user.getPassword()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+        reference.setValue(information);
+
+    }
+
+    public void deleteInformation(DatabaseReference reference){
+
+        reference.removeValue();
+    }
+
+    public void getInformation(DatabaseReference reference, final Database.retrieveListener listener){
+
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String data = snapshot.getValue().toString();
+                listener.onDataReceived(data);
+            }
 
-            //If sign up with email and password is successful, stores user information into realtime database
-            public void onSuccess(AuthResult authResult) {
-
-                userReference.child(user.getRole().toString()).child(auth.getCurrentUser().getUid()).setValue(user);
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                listener.onError();
             }
         });
-
     }
 
-    public void deleteUser(User user){
+    public interface retrieveListener{
 
-        //Delete user information
-        userReference.child(user.getRole().toString()).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).removeValue();
-
-        //Delete user authentication information
-        auth.getCurrentUser().delete();
-
+        void onDataReceived(String data);
+        void onError();
     }
 
-    //This does not work I am trying to fix it
-   /*public String retrieveInfo(User user,String field){
-        String data;
-        FirebaseDatabase.getInstance().getReference().child(user.getRole().toString()).child(FirebaseAuth.getInstance().getUid()).child(field).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
-            @Override
-            public void onSuccess(DataSnapshot dataSnapshot) {
-                data = dataSnapshot.getValue().toString();
-                Log.d("Inside on Success: " ,dataSnapshot.toString());
-            }
-        });
-        return data;
 
-    }*/
-
-    //
-    public void changeInfo(User user,  dataField field, String newInfo){
-
-        //Make sure someone is logged in before trying to change their information
-        if(auth.getCurrentUser()!=null)
-            userReference.child(user.getRole().toString()).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(field.toString().toLowerCase()).setValue(newInfo);
-    }
-
-    //Login user using email and password
-    public void login(String email, String password){
-
-        auth.signInWithEmailAndPassword(email,password);
-
-    }
-
-    //Log out current user
-    public void logoff(){
-
-        auth.signOut();
-
-    }
 }

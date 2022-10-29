@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Database.retrieveListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,9 +26,27 @@ public class MainActivity extends AppCompatActivity {
         String email = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
 
-        Database dtb = new Database();
+        ClientDatabase dtb = new ClientDatabase();
         dtb.login(email,password);
         Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
+
+        Database.retrieveListener roleListener = new Database.retrieveListener() {
+            @Override
+            public void onDataReceived(String data) {
+                intent.putExtra("role",data);
+                startActivity(intent);
+
+            }
+
+            @Override
+            public void onError() {
+                //Toast.makeText(getApplicationContext(), "Invalid Login Credentials", Toast.LENGTH_SHORT);
+
+            }
+        };
+
+        dtb.retrieveInfo(ClientDatabase.dataField.ROLE,roleListener);
+
     }
 
     public void cookpage(View view){
@@ -39,4 +59,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    public void onDataReceived(String data) {
+
+    }
+
+    @Override
+    public void onError() {
+
+    }
 }
