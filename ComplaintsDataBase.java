@@ -25,7 +25,7 @@ import java.util.Locale;
 
 
     public class ComplaintsDataBase {
-        private DatabaseReference userReference;
+        private DatabaseReference complaintsReference;
         private FirebaseDatabase database;
         private FirebaseAuth auth;
         public enum dataField{COMPLAINTS, COOKNAME, ACTION};
@@ -33,11 +33,12 @@ import java.util.Locale;
 
         public ComplaintsDataBase(){
             database = FirebaseDatabase.getInstance();
-            userReference = database.getReference().child("USERS");
+            complaintsReference = database.getReference().child("Complaints");
             auth = FirebaseAuth.getInstance();
         }
 
-        private void addComplaint(Complaints complaints) {
+        private void addComplaint(Complaints complaints, String cookName) {
+            ComplaintsReference.child(COOKNAME).setValueAsync(new Complaints(complaints, cookName, null)); // trying to add complaint to firebase, action hasnt been taken yet
 
             databaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
