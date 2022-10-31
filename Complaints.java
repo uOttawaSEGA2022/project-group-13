@@ -1,13 +1,12 @@
 package com.example.secondderivable;
 
-public class Complaints extends Client {
+public class Complaints {
     String cookName;
     String complaint;
-    String action;
+    String clientName;
 
-    public Complaints(String complaint, String action,String cookName){
-        super(firstName,lastName,emailAddress,accountPassword,address,creditCardInfo);
-        this.action = action;
+    public Complaints(String complaint, String clientName,String cookName){
+        this.clientName = clientName;
         this.complaint = complaint;
         this.cookName = cookName;
     }
@@ -20,12 +19,12 @@ public class Complaints extends Client {
         this.complaint = complaint;
     }
 
-    public String getAction() {
-        return action;
+    public String getClientName() {
+        return clientName;
     }
 
-    public void setAction(String action) {
-        this.action = action;
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
     }
 
     public String getCookName() {
