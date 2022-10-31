@@ -1,4 +1,4 @@
-package com.example.secondderivable;
+package com.example.mealerapp;
 
 public class Complaints {
     String cookName;
