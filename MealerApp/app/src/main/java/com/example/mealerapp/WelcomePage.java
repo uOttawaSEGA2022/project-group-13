@@ -29,8 +29,6 @@ public class WelcomePage extends AppCompatActivity{
         logoff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //ClientDatabase dtb = new ClientDatabase();
-                //dtb.logoff();
                 LogInPage(v);
             }
         });

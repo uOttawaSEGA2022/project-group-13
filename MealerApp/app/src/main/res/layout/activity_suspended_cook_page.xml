@@ -8,15 +8,17 @@
 
     <TextView
         android:id="@+id/suspendedTextView"
-        android:layout_width="121dp"
-        android:layout_height="44dp"
+        android:layout_width="272dp"
+        android:layout_height="114dp"
         android:text="TextView"
+        android:gravity="center"
+        android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.242" />
+        app:layout_constraintVertical_bias="0.241" />
 
     <Button
         android:id="@+id/logoffButton"

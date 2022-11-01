@@ -33,13 +33,15 @@ public class MainActivity extends AppCompatActivity implements Database.retrieve
         Database.retrieveListener roleListener = new Database.retrieveListener() {
             @Override
             public void onDataReceived(Object data) {
-                String dataString = data.toString();
+               String dataString = data.toString();
                 if(dataString.equals("COOK")){
+                    Log.d("HERE","HERE");
                     Database.retrieveListener suspendedListener = new Database.retrieveListener() {
                         @Override
                         public void onDataReceived(Object data) {
-                            Log.d("HIT",data.toString());
-                            if((boolean)data){
+                            Boolean isSuspended = Boolean.valueOf(data.toString());
+                            if(isSuspended){
+                                Log.d("HIT","HIT");
                                 Database.retrieveListener dateListener = new Database.retrieveListener() {
                                     @Override
                                     public void onDataReceived(Object data) {
@@ -64,11 +66,9 @@ public class MainActivity extends AppCompatActivity implements Database.retrieve
                     };
                     dtb.retrieveInfo(ClientDatabase.dataField.ISSUSPENDED,suspendedListener);
                 }
-                else {
-                    intent.putExtra("role", dataString);
-                    startActivity(intent);
-                }
 
+                intent.putExtra("role", dataString);
+                startActivity(intent);
             }
 
             @Override
@@ -94,7 +94,6 @@ public class MainActivity extends AppCompatActivity implements Database.retrieve
 
     @Override
     public void onDataReceived(Object data) {
-
     }
 
     @Override

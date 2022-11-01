@@ -45,7 +45,6 @@ public class ComplaintsDataBase extends Database implements Database.retrieveLis
 
     @Override
     public void onDataReceived(Object data) {
-
     }
 
     @Override

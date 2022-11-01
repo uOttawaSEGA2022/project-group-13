@@ -65,7 +65,6 @@ public class ClientDatabase extends Database{
     public void login(String email, String password){
 
             auth.signInWithEmailAndPassword(email,password);
-
     }
 
     //Log out current user
