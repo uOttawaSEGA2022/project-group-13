@@ -4,11 +4,13 @@ public class Complaints {
     String cookUID;
     String complaint;
     String clientUID;
+    Boolean read;
 
     public Complaints(String complaint, String clientUID,String coolUID){
         this.clientUID = clientUID;
         this.complaint = complaint;
         this.cookUID = cookUID;
+        read = false;
     }
 
     public String getComplaint() {
@@ -34,4 +36,8 @@ public class Complaints {
     public void setCookUID(String cookUID) {
         this.cookUID = cookUID;
     }
+
+    public void setRead(Boolean read){this.read = read;}
+
+    public Boolean getRead(){return read;}
 }

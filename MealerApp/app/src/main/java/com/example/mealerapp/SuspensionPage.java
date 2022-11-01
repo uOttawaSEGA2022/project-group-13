@@ -2,6 +2,7 @@ package com.example.mealerapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -21,9 +22,10 @@ public class SuspensionPage extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_suspension_page);
 
         Bundle bundle = getIntent().getExtras();
-        cookUID = bundle.getString("UID");
+        cookUID = bundle.getString("cookUID");
 
-        EditText suspensionDate = (EditText) findViewById(R.id.suspensionDateTextEdit);
+
+        EditText suspensionDate = (EditText) findViewById(R.id.lengthOfSuspension);
         date = suspensionDate.getText().toString();
 
         Button permanent = findViewById(R.id.permanentButton);
@@ -36,13 +38,16 @@ public class SuspensionPage extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         ClientDatabase dtb = new ClientDatabase();
+        Intent returnToComplaints = new Intent(getApplicationContext(),ComplaintsPage.class);
         switch (view.getId()){
             case R.id.permanentButton:
                 dtb.suspendCook(cookUID,date);
-
+                startActivity(returnToComplaints);
                 break;
             case R.id.temporaryButton:
                 dtb.suspendCook(cookUID,"Indefinite");
+                startActivity(returnToComplaints);
+                break;
 
         }
 

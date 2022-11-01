@@ -17,7 +17,7 @@ public class ComplaintsDataBase extends Database implements Database.retrieveLis
 
     public ComplaintsDataBase(){
         database = FirebaseDatabase.getInstance();
-        complaintsRef = database.getReference("USERS").child("rQlNmFRGIBMhC0MhJnWdUVTgKM03").child("COMPLAINTS");
+        complaintsRef = database.getReference("COMPLAINTS");
     }
 
     private void getComplaints (final retrieveListener listener){
@@ -42,6 +42,9 @@ public class ComplaintsDataBase extends Database implements Database.retrieveLis
         deleteInformation(complaintsRef.child(cookUID));
     }
 
+    public void setRead(String cookUID){
+        complaintsRef.child(cookUID).child("read").setValue(true);
+    }
 
     @Override
     public void onDataReceived(Object data) {

@@ -7,7 +7,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -17,7 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ComplaintsPage extends AppCompatActivity {
+public class ComplaintsPage extends AppCompatActivity implements MyAdapter.RecyclerViewInterface {
 
     private RecyclerView recyclerView;
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
@@ -30,19 +33,25 @@ public class ComplaintsPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complaints_page);
 
-        recyclerView = findViewById(R.id.recyclerview);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setOnClickListener(new View.OnClickListener() {
+        TextView noComplaints = (TextView) findViewById(R.id.noComplaintsTextView);
+        noComplaints.setVisibility(View.GONE);
+
+        Button welcomePage = (Button) findViewById(R.id.welcomePageButton);
+        welcomePage.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
-                startActivity(intent);
+            public void onClick(View v) {
+                Intent returnToWelcome = new Intent(getApplicationContext(), WelcomePage.class);
+                startActivity(returnToWelcome);
             }
         });
 
+        recyclerView = findViewById(R.id.recyclerview);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
         list = new ArrayList<>();
-        adapter = new MyAdapter(this, list);
+        adapter = new MyAdapter(this, list,this);
 
         recyclerView.setAdapter(adapter);
 
@@ -51,10 +60,17 @@ public class ComplaintsPage extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 for(DataSnapshot dataSnapshot: snapshot.getChildren()){
-                    Model model = dataSnapshot.getValue(Model.class);
-                    list.add(model);
+                    Boolean isRead = (Boolean) dataSnapshot.child("read").getValue();
+
+                    if(!isRead) {
+                        Model model = dataSnapshot.getValue(Model.class);
+                        list.add(model);
+                    }
                 }
                 adapter.notifyDataSetChanged();
+                if(list.isEmpty()){
+                    noComplaints.setVisibility(View.VISIBLE);
+                }
 
             }
 
@@ -66,6 +82,16 @@ public class ComplaintsPage extends AppCompatActivity {
         });
 
 
+
+    }
+
+    @Override
+    public void onItemClick(int position, String cookUID, String clientUID, String complaint) {
+        Intent handleComplaintPage = new Intent(getApplicationContext(), HandleComplaintPage.class);
+        handleComplaintPage.putExtra("cookUID", cookUID);
+        handleComplaintPage.putExtra("clientUID",clientUID);
+        handleComplaintPage.putExtra("complaint",complaint);
+        startActivity(handleComplaintPage);
 
     }
 }
