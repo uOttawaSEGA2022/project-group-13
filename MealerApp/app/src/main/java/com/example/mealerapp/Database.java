@@ -18,9 +18,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Locale;
-//import com.google.firebase.storage.FirebaseStorage;
-//import com.google.firebase.storage.StorageReference;
-
 
 abstract public class Database {
 
@@ -59,7 +56,7 @@ abstract public class Database {
 
     public interface retrieveListener{
 
-        void onDataReceived(String data);
+        void onDataReceived(Object data);
         void onError();
     }
 

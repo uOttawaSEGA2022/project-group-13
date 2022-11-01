@@ -24,13 +24,13 @@ public class WelcomePage extends AppCompatActivity{
         TextView userProfile = (TextView) findViewById(R.id.UserProfile);
         userProfile.setText(role);
 
-        /**
+
         Button logoff = (Button) findViewById(R.id.LogOff);
         logoff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ClientDatabase dtb = new ClientDatabase();
-                dtb.logoff();
+               // ClientDatabase dtb = new ClientDatabase();
+               // dtb.logoff();
                 LogInPage(v);
             }
         });
@@ -42,10 +42,10 @@ public class WelcomePage extends AppCompatActivity{
             }
         });
 
-        if(role == "admin"){
+        if(role == "ADMIN"){
             viewcomplaints.setVisibility(View.VISIBLE);
         }
-         */
+
 
     }
 

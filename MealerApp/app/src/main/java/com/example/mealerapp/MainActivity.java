@@ -32,8 +32,38 @@ public class MainActivity extends AppCompatActivity implements Database.retrieve
 
         Database.retrieveListener roleListener = new Database.retrieveListener() {
             @Override
-            public void onDataReceived(String data) {
-                intent.putExtra("role",data);
+            public void onDataReceived(Object data) {
+                String dataString = data.toString();
+                if(data == "COOK"){
+                    Database.retrieveListener suspendedListener = new Database.retrieveListener() {
+                        @Override
+                        public void onDataReceived(Object data) {
+                            if((boolean)data){
+                                Database.retrieveListener dateListener = new Database.retrieveListener() {
+                                    @Override
+                                    public void onDataReceived(Object data) {
+                                        Intent intent = new Intent(getApplicationContext(), SuspendedCookPage.class);
+                                        intent.putExtra("date",data.toString());
+                                        startActivity(intent);
+                                    }
+
+                                    @Override
+                                    public void onError() {
+
+                                    }
+                                };
+                                dtb.retrieveInfo(ClientDatabase.dataField.SUSPENSIONDATE, dateListener);
+                            }
+                        }
+
+                        @Override
+                        public void onError() {
+
+                        }
+                    };
+                    dtb.retrieveInfo(ClientDatabase.dataField.ISSUSPENDED,suspendedListener);
+                }
+                intent.putExtra("role",dataString);
                 startActivity(intent);
 
             }
@@ -60,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements Database.retrieve
     }
 
     @Override
-    public void onDataReceived(String data) {
+    public void onDataReceived(Object data) {
 
     }
 

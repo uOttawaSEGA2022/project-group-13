@@ -1,14 +1,14 @@
 package com.example.mealerapp;
 
 public class Complaints {
-    String cookName;
+    String cookUID;
     String complaint;
-    String clientName;
+    String clientUID;
 
-    public Complaints(String complaint, String clientName,String cookName){
-        this.clientName = clientName;
+    public Complaints(String complaint, String clientUID,String coolUID){
+        this.clientUID = clientUID;
         this.complaint = complaint;
-        this.cookName = cookName;
+        this.cookUID = cookUID;
     }
 
     public String getComplaint() {
@@ -19,19 +19,19 @@ public class Complaints {
         this.complaint = complaint;
     }
 
-    public String getClientName() {
-        return clientName;
+    public String getClientUID() {
+        return clientUID;
     }
 
-    public void setClientName(String clientName) {
-        this.clientName = clientName;
+    public void setClientName(String clientUID) {
+        this.clientUID = clientUID;
     }
 
-    public String getCookName() {
-        return cookName;
+    public String getCookUID() {
+        return cookUID;
     }
 
-    public void setCookName(String cookName) {
-        this.cookName = cookName;
+    public void setCookUID(String cookUID) {
+        this.cookUID = cookUID;
     }
 }

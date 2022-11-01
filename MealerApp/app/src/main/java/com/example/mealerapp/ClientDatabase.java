@@ -20,7 +20,7 @@ public class ClientDatabase extends Database{
     private DatabaseReference userReference;
     private FirebaseDatabase database;
     private FirebaseAuth auth;
-    public enum dataField{FIRSTNAME,LASTNAME,EMAIL,PASSWORD,ADDRESS,CREDITCARDINFO, DESCRIPTION, ROLE};
+    public enum dataField{FIRSTNAME,LASTNAME,EMAIL,PASSWORD,ADDRESS,CREDITCARDINFO, DESCRIPTION, ROLE, ISSUSPENDED, SUSPENSIONDATE};
 
     public ClientDatabase(){
         database = FirebaseDatabase.getInstance();
@@ -54,7 +54,6 @@ public class ClientDatabase extends Database{
 
     }
 
-
     public void retrieveInfo(ClientDatabase.dataField field, final ClientDatabase.retrieveListener listener){
 
         DatabaseReference fieldReference = userReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(fieldToString(field));
@@ -78,6 +77,13 @@ public class ClientDatabase extends Database{
 
     }
 
+    public void suspendCook(String cookUID, String suspensionDate){
+        DatabaseReference cookRef = database.getReference("USERS").child(cookUID);
+        cookRef.child("isSuspended").setValue(true);
+        cookRef.child("suspensionDate").setValue(suspensionDate);
+
+    }
+
     //Helper function converts field enum into a properly formatted string
     private String fieldToString(ClientDatabase.dataField field){
 
@@ -92,6 +98,12 @@ public class ClientDatabase extends Database{
         }
         else if(field== ClientDatabase.dataField.CREDITCARDINFO){
             fieldString = "creditCardInfo";
+        }
+        else if(field == dataField.ISSUSPENDED){
+            fieldString = "isSuspended";
+        }
+        else if(field == dataField.SUSPENSIONDATE){
+            fieldString = "suspensionDate";
         }
         else{
             fieldString = field.toString().toLowerCase();
