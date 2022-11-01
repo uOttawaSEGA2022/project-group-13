@@ -29,23 +29,23 @@ public class WelcomePage extends AppCompatActivity{
         logoff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // ClientDatabase dtb = new ClientDatabase();
-               // dtb.logoff();
+                //ClientDatabase dtb = new ClientDatabase();
+                //dtb.logoff();
                 LogInPage(v);
             }
         });
 
         Button viewcomplaints = (Button) findViewById(R.id.viewcomplaints);
-        viewcomplaints.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                ComplaintsPage(v);
-            }
-        });
-
-        if(role == "ADMIN"){
+        viewcomplaints.setVisibility(View.GONE);
+        if(role.equals("ADMIN")){
             viewcomplaints.setVisibility(View.VISIBLE);
         }
-
+        viewcomplaints.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                //Intent intent = new Intent(getApplicationContext(),ComplaintsPage.class);
+                //startActivity(intent);
+            }
+        });
 
     }
 
@@ -53,20 +53,6 @@ public class WelcomePage extends AppCompatActivity{
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
 
-
-    }
-
-    public void ComplaintsPage(View view){
-        //change to complaints
-        Button viewcomplaints = (Button) findViewById(R.id.viewcomplaints);
-
-        viewcomplaints.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplication(), MainActivity.class);
-                startActivity(intent);
-            }
-        });
 
     }
 
