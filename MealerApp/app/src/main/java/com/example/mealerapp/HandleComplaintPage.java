@@ -37,7 +37,7 @@ public class HandleComplaintPage extends AppCompatActivity {
             public void onClick(View v) {
                 ComplaintsDataBase dtb = new ComplaintsDataBase();
                 dtb.setRead(cookUID);
-                Toast.makeText(getApplicationContext(), "Complaint Dismissed", Toast.LENGTH_LONG);
+                Toast.makeText(getApplicationContext(), "Complaint Dismissed", Toast.LENGTH_LONG).show();
                 Intent returnToComplaints = new Intent(getApplicationContext(),SuspensionPage.class);
                 startActivity(returnToComplaints);
             }
