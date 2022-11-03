@@ -24,9 +24,6 @@ public class ExampleInstrumentedTest {
         assertEquals("com.example.mealerapp", appContext.getPackageName());
     }
 
-    @Test
-    public void checkSuspendedCook(){
 
-    }
 
 }

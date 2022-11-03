@@ -37,7 +37,7 @@ public class SuspensionPage extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
-        ClientDatabase dtb = new ClientDatabase();
+        UserDatabase dtb = new UserDatabase();
         Intent returnToComplaints = new Intent(getApplicationContext(),ComplaintsPage.class);
         switch (view.getId()){
             case R.id.permanentButton:

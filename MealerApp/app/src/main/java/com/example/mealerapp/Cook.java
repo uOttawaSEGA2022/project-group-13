@@ -30,7 +30,7 @@ public class Cook extends User{
 
     public void registerCook(){
 
-        ClientDatabase dtb = new ClientDatabase();
+        UserDatabase dtb = new UserDatabase();
         dtb.registerUser(this);
     }
 

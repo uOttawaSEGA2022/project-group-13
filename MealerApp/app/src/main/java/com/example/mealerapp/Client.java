@@ -1,7 +1,5 @@
 package com.example.mealerapp;
 
-import android.provider.ContactsContract;
-
 public class Client extends User {
 
     private String creditCardInfo;
@@ -13,7 +11,7 @@ public class Client extends User {
 
     public void registerClient(){
 
-       ClientDatabase dtb = new ClientDatabase();
+       UserDatabase dtb = new UserDatabase();
         dtb.registerUser(this);
     }
 

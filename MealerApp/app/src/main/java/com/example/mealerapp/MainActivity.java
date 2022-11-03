@@ -7,9 +7,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity implements Database.retrieveListener{
 
@@ -26,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements Database.retrieve
         String email = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
 
-        ClientDatabase dtb = new ClientDatabase();
+        UserDatabase dtb = new UserDatabase();
         dtb.login(email,password);
         Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
 
@@ -55,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements Database.retrieve
 
                                     }
                                 };
-                                dtb.retrieveInfo(ClientDatabase.dataField.SUSPENSIONDATE, dateListener);
+                                dtb.retrieveInfo(UserDatabase.dataField.SUSPENSIONDATE, dateListener);
                             }
                         }
 
@@ -64,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements Database.retrieve
 
                         }
                     };
-                    dtb.retrieveInfo(ClientDatabase.dataField.ISSUSPENDED,suspendedListener);
+                    dtb.retrieveInfo(UserDatabase.dataField.ISSUSPENDED,suspendedListener);
                 }
 
                 intent.putExtra("role", dataString);
@@ -78,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements Database.retrieve
             }
         };
 
-        dtb.retrieveInfo(ClientDatabase.dataField.ROLE,roleListener);
+        dtb.retrieveInfo(UserDatabase.dataField.ROLE,roleListener);
 
     }
 

@@ -1,28 +1,19 @@
 package com.example.mealerapp;
 
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-public class ClientDatabase extends Database{
+public class UserDatabase extends Database{
 
     private DatabaseReference userReference;
     private FirebaseDatabase database;
     private FirebaseAuth auth;
     public enum dataField{FIRSTNAME,LASTNAME,EMAIL,PASSWORD,ADDRESS,CREDITCARDINFO, DESCRIPTION, ROLE, ISSUSPENDED, SUSPENSIONDATE};
 
-    public ClientDatabase(){
+    public UserDatabase(){
         database = FirebaseDatabase.getInstance();
         userReference = database.getReference().child("USERS");
         auth = FirebaseAuth.getInstance();
@@ -54,7 +45,7 @@ public class ClientDatabase extends Database{
 
     }
 
-    public void retrieveInfo(ClientDatabase.dataField field, final ClientDatabase.retrieveListener listener){
+    public void retrieveInfo(UserDatabase.dataField field, final UserDatabase.retrieveListener listener){
 
         DatabaseReference fieldReference = userReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(fieldToString(field));
 
@@ -83,19 +74,25 @@ public class ClientDatabase extends Database{
 
     }
 
+    public void liftSuspension(String cookUID){
+        DatabaseReference cookRef = database.getReference("USERS").child(cookUID);
+        cookRef.child("isSuspended").setValue(false);
+        cookRef.child("suspensionDate").setValue("N/A");
+    }
+
     //Helper function converts field enum into a properly formatted string
-    private String fieldToString(ClientDatabase.dataField field){
+    private String fieldToString(UserDatabase.dataField field){
 
         String fieldString;
 
-        if(field== ClientDatabase.dataField.FIRSTNAME){
+        if(field== UserDatabase.dataField.FIRSTNAME){
             fieldString = "lastName";
 
         }
-        else if (field== ClientDatabase.dataField.LASTNAME){
+        else if (field== UserDatabase.dataField.LASTNAME){
             fieldString = "firstName";
         }
-        else if(field== ClientDatabase.dataField.CREDITCARDINFO){
+        else if(field== UserDatabase.dataField.CREDITCARDINFO){
             fieldString = "creditCardInfo";
         }
         else if(field == dataField.ISSUSPENDED){
