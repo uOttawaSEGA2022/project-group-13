@@ -22,7 +22,7 @@ public class ExampleUnitTest{
     }
 
     /**
-     * Test will check is suspended and lifting a suspension on a cook is working correctly
+     * Test will check if suspend and lifting a suspension on a cook is working correctly
      */
 
     @Test

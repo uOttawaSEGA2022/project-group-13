@@ -34,11 +34,15 @@ public class WelcomePage extends AppCompatActivity{
         });
 
         Button viewcomplaints = (Button) findViewById(R.id.viewcomplaints);
-        viewcomplaints.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                ComplaintsPage(v);
-            }
-        });
+        viewcomplaints.setVisibility(View.GONE);
+        if(role.equals("ADMIN")){
+            viewcomplaints.setVisibility(View.VISIBLE);
+            viewcomplaints.setOnClickListener(new View.OnClickListener(){
+                public void onClick(View v){
+                    ComplaintsPage(v);
+                }
+            });
+        }
 
     }
 

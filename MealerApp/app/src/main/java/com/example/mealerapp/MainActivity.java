@@ -3,22 +3,45 @@ package com.example.mealerapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import java.util.Date;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+
 public class MainActivity extends AppCompatActivity implements Database.retrieveListener{
+    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+    Date today = new Date();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Button login = (Button) findViewById(R.id.login2);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginpage(v);
+            }
+        });
+
     }
 
     public void loginpage(View view){
+
+
         EditText emailEditText = (EditText)findViewById(R.id.username2);
         EditText passwordEditText = (EditText)findViewById(R.id.password2);
+
 
         String email = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
@@ -32,19 +55,25 @@ public class MainActivity extends AppCompatActivity implements Database.retrieve
             public void onDataReceived(Object data) {
                String dataString = data.toString();
                 if(dataString.equals("COOK")){
-                    Log.d("HERE","HERE");
                     Database.retrieveListener suspendedListener = new Database.retrieveListener() {
                         @Override
                         public void onDataReceived(Object data) {
                             Boolean isSuspended = Boolean.valueOf(data.toString());
                             if(isSuspended){
-                                Log.d("HIT","HIT");
                                 Database.retrieveListener dateListener = new Database.retrieveListener() {
                                     @Override
                                     public void onDataReceived(Object data) {
-                                        Intent intent = new Intent(getApplicationContext(), SuspendedCookPage.class);
-                                        intent.putExtra("date",data.toString());
-                                        startActivity(intent);
+                                        if(isDatePassed(data.toString())){
+                                            dtb.liftSuspension(FirebaseAuth.getInstance().getUid());
+                                            Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
+                                            intent.putExtra("role",dataString);
+                                            startActivity(intent);
+                                        }
+                                        else {
+                                            Intent intent = new Intent(getApplicationContext(), SuspendedCookPage.class);
+                                            intent.putExtra("date", data.toString());
+                                            startActivity(intent);
+                                        }
                                     }
 
                                     @Override
@@ -65,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements Database.retrieve
                 }
 
                 intent.putExtra("role", dataString);
+                Log.d("HIT","HIT");
                 startActivity(intent);
             }
 
@@ -77,6 +107,27 @@ public class MainActivity extends AppCompatActivity implements Database.retrieve
 
         dtb.retrieveInfo(UserDatabase.dataField.ROLE,roleListener);
 
+    }
+
+    /**
+     * Helper function that compares dates
+     * @param date
+     * @return true is the parameter date is before or equal to today and false otherwise
+     */
+    private boolean isDatePassed(String date){
+
+       Date suspension;
+
+        try{
+            suspension = formatter.parse(date);
+            if(suspension.compareTo(today)<=0){
+                return true;
+            }
+        }
+        catch(Exception e){
+
+        }
+        return false;
     }
 
     public void cookpage(View view){
