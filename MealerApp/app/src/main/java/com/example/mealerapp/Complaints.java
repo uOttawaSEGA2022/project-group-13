@@ -6,7 +6,7 @@ public class Complaints {
     String clientUID;
     Boolean read;
 
-    public Complaints(String complaint, String clientUID,String coolUID){
+    public Complaints(String complaint, String clientUID,String cookUID){
         this.clientUID = clientUID;
         this.complaint = complaint;
         this.cookUID = cookUID;
