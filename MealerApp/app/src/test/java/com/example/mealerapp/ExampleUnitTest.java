@@ -1,13 +1,19 @@
 package com.example.mealerapp;
 
 import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import android.content.Context;
 import android.service.autofill.UserData;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.FirebaseDatabase;
 
 /**
@@ -15,7 +21,8 @@ import com.google.firebase.database.FirebaseDatabase;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-public class ExampleUnitTest{
+public class ExampleUnitTest {
+
     @Test
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
@@ -26,11 +33,9 @@ public class ExampleUnitTest{
      */
 
     @Test
-    public void suspendCook_isCorrect(){
+    public void suspendCook_isCorrect() throws Exception{
         UserDatabase dtb = new UserDatabase();
-
-
-        dtb.suspendCook("diWhRfZIqRdWSgqki9aKDpn1vDk2", "June 10 2022");
+        dtb.suspendCook("diWhRfZIqRdWSgqki9aKDpn1vDk2", "03/04/2023");
         Database.retrieveListener isSuspendedListener = new Database.retrieveListener() {
             @Override
             public void onDataReceived(Object data) {
@@ -49,7 +54,7 @@ public class ExampleUnitTest{
         Database.retrieveListener dateListener = new Database.retrieveListener() {
             @Override
             public void onDataReceived(Object data) {
-                assertEquals("June 10 2022", data.toString());
+                assertEquals("03/04/2023", data.toString());
             }
 
             @Override

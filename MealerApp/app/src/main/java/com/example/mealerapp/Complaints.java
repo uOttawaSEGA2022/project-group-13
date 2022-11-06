@@ -10,7 +10,14 @@ public class Complaints {
         this.clientUID = clientUID;
         this.complaint = complaint;
         this.cookUID = cookUID;
-        read = false;
+        this.read = false;
+    }
+
+    public Complaints(String complaint, String clientUID,String cookUID,Boolean read){
+        this.clientUID = clientUID;
+        this.complaint = complaint;
+        this.cookUID = cookUID;
+        this.read = read;
     }
 
     public String getComplaint() {
@@ -40,4 +47,5 @@ public class Complaints {
     public void setRead(Boolean read){this.read = read;}
 
     public Boolean getRead(){return read;}
+
 }

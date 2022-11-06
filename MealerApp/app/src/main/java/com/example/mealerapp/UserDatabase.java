@@ -2,11 +2,18 @@ package com.example.mealerapp;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class UserDatabase extends Database{
 
@@ -67,6 +74,47 @@ public class UserDatabase extends Database{
             auth.signOut();
         }
 
+    }
+
+    public void getUserObject(DatabaseReference ref, final Database.retrieveListener listener, String role){
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<String> userData = new ArrayList<>();
+                for(DataSnapshot dataSnapshot: snapshot.getChildren()){
+                    userData.add(dataSnapshot.getValue().toString());
+                }
+                if(role.equals("CLIENT")){
+                    String address = userData.get(0);
+                    String creditCardInfo = userData.get(1);
+                    String email = userData.get(2);
+                    String firstName = userData.get(3);
+                    String lastName = userData.get(4);
+                    String password = userData.get(5);
+
+                    Client client = new Client(firstName,lastName,email,password,address,creditCardInfo);
+                    listener.onDataReceived(client);
+                }
+                else{
+                    String address = userData.get(0);
+                    String description = userData.get(1);
+                    String email = userData.get(2);
+                    String firstName = userData.get(3);
+                    String lastName = userData.get(4);
+                    String password = userData.get(5);
+                    Boolean isSuspended = Boolean.getBoolean(userData.get(7));
+                    String suspensionDate = userData.get(8);
+
+                    Cook cook = new Cook(firstName,lastName,email,password,address,description,isSuspended,suspensionDate);
+                    listener.onDataReceived(cook);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     public void suspendCook(String cookUID, String suspensionDate){
