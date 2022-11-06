@@ -136,8 +136,8 @@ public class ExampleUnitTest{
         Database.retrieveListener registrationListener = new Database.retrieveListener() {
             @Override
             public void onDataReceived(Object data) {
-                User dtbClient = (User) data;
-                assertEquals(client,dtbClient);
+                User dtbClient = data;
+                assertEquals(client,dtbClient); //Checks if the expected "value" (client) is the same as the actual "value"  (dtbClient) within the DataBase
             }
 
             @Override
@@ -145,7 +145,9 @@ public class ExampleUnitTest{
 
             }
         };
-        dtb.getInformation(FirebaseDatabase.getInstance().getReference("USERS").child("").child(""), registrationListener);
+
+        String userID=FirebaseAuth.getInstance().getUID();
+        dtb.getInformation(FirebaseDatabase.getInstance().getReference("USERS").child(userID), registrationListener);
     
     }
 
@@ -158,6 +160,32 @@ public class ExampleUnitTest{
     }
 
 
+    /**
+     * Test will check if the login works correctly
+     */
+    @Test
+    public void userLogin_isCorrect(){ 
+        UserDatabase dtb = new UserDatabase();
+        User client= new Client("John", "Doe", "Jdoe@gmail.com", "Ilikefood/123", "213 Celtic road","1638299384651290");
+        dtb.registerUser(client);
+
+        Database.retrieveListener registrationListener = new Database.retrieveListener() {
+            @Override
+            public void onDataReceived(Object data) {
+                User dtbClient = data;
+                assertEquals(client,dtbClient); //Checks if the expected "value" (client) is the same as the actual "value"  (dtbClient) within the DataBase
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        };
+
+        String userID=FirebaseAuth.getInstance().getUID();
+        dtb.getInformation(FirebaseDatabase.getInstance().getReference("USERS").child(userID), registrationListener);
+
+
+
 
 }
-
