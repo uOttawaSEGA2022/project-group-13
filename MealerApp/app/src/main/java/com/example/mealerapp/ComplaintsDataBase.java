@@ -1,4 +1,6 @@
 package com.example.mealerapp;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.google.firebase.database.DataSnapshot;
@@ -20,7 +22,7 @@ public class ComplaintsDataBase extends Database implements Database.retrieveLis
         complaintsRef = database.getReference("COMPLAINTS");
     }
 
-    private void getComplaints (final retrieveListener listener){
+   /* private void getComplaints (final retrieveListener listener){
         complaintsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -34,6 +36,32 @@ public class ComplaintsDataBase extends Database implements Database.retrieveLis
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+    }*/
+    public void getComplaintObject(DatabaseReference ref, final Database.retrieveListener listener){
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String[] complaintData = new String[4];
+                int counter = 0;
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    complaintData[counter] = dataSnapshot.getValue().toString();
+                    counter++;
+                }
+                String clientUID = complaintData[0];
+                String complaintString = complaintData[1];
+                String cookUID = complaintData[2];
+                Boolean read = Boolean.getBoolean(complaintData[3]);
+                Complaints complaint = new Complaints(complaintString,clientUID,cookUID);
+                listener.onDataReceived(complaint);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
     }
     public void addComplaint(String cookUID, Complaints complaint){
         setInformation(complaintsRef.child(cookUID), complaint);

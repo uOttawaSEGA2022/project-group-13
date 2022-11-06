@@ -94,7 +94,6 @@ public class MainActivity extends AppCompatActivity implements Database.retrieve
                 }
 
                 intent.putExtra("role", dataString);
-                Log.d("HIT","HIT");
                 startActivity(intent);
             }
 

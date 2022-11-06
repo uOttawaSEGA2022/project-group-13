@@ -12,6 +12,13 @@ public class Cook extends User{
         isSuspended = false;
     }
 
+    public Cook(String firstName, String lastName, String emailAddress, String accountPassword, String address, String description, Boolean isSuspended, String suspensionDate) {
+        super(firstName, lastName, emailAddress, accountPassword, userType.COOK, address);
+        this.description = description;
+        this.suspensionDate = suspensionDate;
+        this.isSuspended = isSuspended;
+    }
+
     public String getSuspensionDate() {
         return suspensionDate;
     }
