@@ -127,5 +127,42 @@ public class ExampleUnitTest {
         ComplaintsDataBase dtb = new ComplaintsDataBase();
         dtb.deleteComplaint("diWhRfZIqRdWSgqki9aKDpn1vDk2");
     }
+
+
+    /**
+     * Test will check if registering and deleting a client is working correctly
+     */
+    @Test
+    public void registerAndDeleteUser_isCorrect(){
+        UserDatabase dtb = new UserDatabase();
+        User client= new Client("John", "Doe", "Jdoe@gmail.com", "Ilikefood/123", "213 Celtic road","1638299384651290");
+        dtb.registerUser(client);
+
+        Database.retrieveListener registrationListener = new Database.retrieveListener() {
+            @Override
+            public void onDataReceived(Object data) {
+                User dtbClient = (User) data;
+                assertEquals(client,dtbClient);
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        };
+        dtb.getInformation(FirebaseDatabase.getInstance().getReference("USERS").child("").child(""), registrationListener);
+    
+    }
+
+    /**
+     * Deletes the test Client created
+     */
+    @After public void deleteTestClient(){
+        UsersDataBase dtb = new UsersDataBase();
+        dtb.deleteUser(client);
+    }
+
+
+
 }
 
