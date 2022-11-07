@@ -130,7 +130,7 @@ public class ExampleUnitTest {
 
 
     /**
-     * Test will check if registering and deleting a client is working correctly
+     * Test will check if registering and deleting a user is working correctly
      */
     @Test
     public void registerAndDeleteUser_isCorrect(){
@@ -166,19 +166,21 @@ public class ExampleUnitTest {
 
 
     /**
-     * Test will check if the login works correctly
+     * Test will check if registering, suspending, and deleting a cook user is working correctly
      */
     @Test
-    public void userLogin_isCorrect(){ 
+    public void userRegisterAndSuspension_isCorrect(){ 
         UserDatabase dtb = new UserDatabase();
-        User client= new Client("John", "Doe", "Jdoe@gmail.com", "Ilikefood/123", "213 Celtic road","1638299384651290");
-        dtb.registerUser(client);
+        User cook= new Cook("Jane", "Doe", "Janedoe@gmail.com", "Imakefood/123", "213 teron road","I make food");
+        dtb.registerUser(cook);
+        String userID=FirebaseAuth.getInstance().getUID();
+        dtb.suspendCook(userID, "09/07/2023"); 
 
-        Database.retrieveListener registrationListener = new Database.retrieveListener() {
+        Database.retrieveListener cookListener = new Database.retrieveListener() {
             @Override
             public void onDataReceived(Object data) {
-                User dtbClient = data;
-                assertEquals(client,dtbClient); //Checks if the expected "value" (client) is the same as the actual "value"  (dtbClient) within the DataBase
+                Boolean isSuspended = Boolean.valueOf(data.toString());
+                assertTrue(isSuspended);
             }
 
             @Override
@@ -187,10 +189,16 @@ public class ExampleUnitTest {
             }
         };
 
-        String userID=FirebaseAuth.getInstance().getUID();
-        dtb.getInformation(FirebaseDatabase.getInstance().getReference("USERS").child(userID), registrationListener);
+        dtb.getInformation(FirebaseDatabase.getInstance().getReference("USERS").child(userID).child("isSuspended"), cookListener);
 
-
-
+}
+    
+    /**
+     * Deletes the test Client created
+     */
+    @After public void deleteTestCook(){
+        UsersDataBase dtb = new UsersDataBase();
+        dtb.deleteUser(cook);
+    }
 
 }
