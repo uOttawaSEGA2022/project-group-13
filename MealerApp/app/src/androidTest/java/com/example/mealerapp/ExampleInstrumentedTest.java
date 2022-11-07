@@ -12,6 +12,8 @@ import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 /**
@@ -111,31 +113,13 @@ public class ExampleInstrumentedTest {
         dtb.deleteComplaint("diWhRfZIqRdWSgqki9aKDpn1vDk2");
     }
 
-<<<<<<< HEAD
     @Test
     public void setAndGetInfo_isCorrect(){
-
-
-    }
-}
-
-
-
-=======
-    /**
-     * Test will check if registering and deleting a client is working correctly
-     */
-    @Test
-    public void registerAndDeleteUser_isCorrect(){
         UserDatabase dtb = new UserDatabase();
-        User client= new Client("John", "Doe", "Jdoe@gmail.com", "Ilikefood/123", "213 Celtic road","1638299384651290");
-        dtb.registerUser(client);
-
-        Database.retrieveListener registrationListener = new Database.retrieveListener() {
+        Database.retrieveListener listener = new Database.retrieveListener() {
             @Override
             public void onDataReceived(Object data) {
-                User dtbClient = data;
-                assertEquals(client,dtbClient); //Checks if the expected "value" (client) is the same as the actual "value"  (dtbClient) within the DataBase
+                assertEquals(data.toString(),"123 Main st");
             }
 
             @Override
@@ -143,26 +127,52 @@ public class ExampleInstrumentedTest {
 
             }
         };
+        DatabaseReference addressRef = FirebaseDatabase.getInstance()
+                .getReference("USERS").child("25vrVWZNuVVyuWI3H4IX01rpzgs1")
+                .child("address");
+        dtb.getInformation(addressRef,listener);
 
-        String userID=FirebaseAuth.getInstance().getUID();
-        dtb.getInformation(FirebaseDatabase.getInstance().getReference("USERS").child(userID), registrationListener);
-    
+        dtb.setInformation(addressRef,"44 Apple Avenue");
+
+        Database.retrieveListener retrieveListener = new Database.retrieveListener() {
+            @Override
+            public void onDataReceived(Object data) {
+                assertEquals(data.toString(),"44 Apple Avenue");
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        };
+        dtb.getInformation(addressRef,retrieveListener);
     }
+
+    @After
+    public void resetAddress(){
+        UserDatabase dtb = new UserDatabase();
+        DatabaseReference addressRef = FirebaseDatabase.getInstance()
+                .getReference("USERS").child("25vrVWZNuVVyuWI3H4IX01rpzgs1")
+                .child("address");
+
+        dtb.setInformation(addressRef,"123 Main st");
+    }
+
+
+
+
 
     /**
-     * Deletes the test Client created
+     * Test will check if registering and deleting a client is working correctly
      */
-    @After public void deleteTestClient(){
-        UsersDataBase dtb = new UsersDataBase();
-        dtb.deleteUser(client);
-    }
+
 
 
 
     /**
      * Test will check if registering, suspending, and deleting a cook user is working correctly
      */
-    @Test
+    /*@Test
     public void userRegisterAndSuspension_isCorrect(){ 
         UserDatabase dtb = new UserDatabase();
         User cook= new Cook("Jane", "Doe", "Janedoe@gmail.com", "Imakefood/123", "213 teron road","I make food");
@@ -190,9 +200,10 @@ public class ExampleInstrumentedTest {
     /**
      * Deletes the test Client created
      */
-    @After public void deleteTestCook(){
+    /*@After public void deleteTestCook(){
         UsersDataBase dtb = new UsersDataBase();
         dtb.deleteUser(cook);
-    }
->>>>>>> a8ef46abd3ab5541537795e4ee689d39625c0f79
+    }*/
+}
+
 
