@@ -157,7 +157,7 @@ public class ExampleInstrumentedTest {
 
         dtb.setInformation(addressRef,"123 Main st");
     }
-
+    @Test
     public void loginAndLogoff_isCorrect(){
         UserDatabase dtb = new UserDatabase();
         dtb.login("testcook@gmail.com", "12345Password");
@@ -168,7 +168,6 @@ public class ExampleInstrumentedTest {
         UID = FirebaseAuth.getInstance().getUid();
         assertNull(UID);
     }
-
 
 
     /**
