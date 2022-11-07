@@ -80,7 +80,7 @@ public class ExampleInstrumentedTest {
      * Tests if adding and dismissing complaints is working as expected
      */
     @Test
-    public void addAndDismissComplain_isCorrect() {
+    public void addAndDismissComplaint_isCorrect() {
         ComplaintsDataBase dtb = new ComplaintsDataBase();
         Complaints complaint = new Complaints("I did not like the food",
                 "CLIENTUID", "diWhRfZIqRdWSgqki9aKDpn1vDk2");
@@ -158,7 +158,16 @@ public class ExampleInstrumentedTest {
         dtb.setInformation(addressRef,"123 Main st");
     }
 
+    public void loginAndLogoff_isCorrect(){
+        UserDatabase dtb = new UserDatabase();
+        dtb.login("testcook@gmail.com", "12345Password");
+        String UID = FirebaseAuth.getInstance().getUid();
 
+        assertNotNull(UID);
+        dtb.logoff();
+        UID = FirebaseAuth.getInstance().getUid();
+        assertNull(UID);
+    }
 
 
 
