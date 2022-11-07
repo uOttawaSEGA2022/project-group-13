@@ -8,6 +8,10 @@
 
 Mealer is an Ottawa-based meal sharing application where local cooks can sell meals to clients from their home.
 
+ADMIN LOGIN
+Username: admin@gmail.com
+Password: 12345Password
+
 ## Roadmap 
 - **Deliverable 1 – GitHub and User Accounts**
 

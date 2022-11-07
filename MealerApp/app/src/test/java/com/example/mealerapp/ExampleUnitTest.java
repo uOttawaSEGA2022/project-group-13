@@ -130,7 +130,7 @@ public class ExampleUnitTest {
 
 
     /**
-     * Test will check if registering and deleting a client is working correctly
+     * Test will check if registering and deleting a user is working correctly
      */
     @Test
     public void registerAndDeleteUser_isCorrect(){
@@ -141,8 +141,8 @@ public class ExampleUnitTest {
         Database.retrieveListener registrationListener = new Database.retrieveListener() {
             @Override
             public void onDataReceived(Object data) {
-                User dtbClient = (User) data;
-                assertEquals(client,dtbClient);
+                User dtbClient = data;
+                assertEquals(client,dtbClient); //Checks if the expected "value" (client) is the same as the actual "value"  (dtbClient) within the DataBase
             }
 
             @Override
@@ -150,7 +150,9 @@ public class ExampleUnitTest {
 
             }
         };
-        dtb.getInformation(FirebaseDatabase.getInstance().getReference("USERS").child("").child(""), registrationListener);
+
+        String userID=FirebaseAuth.getInstance().getUID();
+        dtb.getInformation(FirebaseDatabase.getInstance().getReference("USERS").child(userID), registrationListener);
     
     }
 
@@ -163,6 +165,40 @@ public class ExampleUnitTest {
     }
 
 
+    /**
+     * Test will check if registering, suspending, and deleting a cook user is working correctly
+     */
+    @Test
+    public void userRegisterAndSuspension_isCorrect(){ 
+        UserDatabase dtb = new UserDatabase();
+        User cook= new Cook("Jane", "Doe", "Janedoe@gmail.com", "Imakefood/123", "213 teron road","I make food");
+        dtb.registerUser(cook);
+        String userID=FirebaseAuth.getInstance().getUID();
+        dtb.suspendCook(userID, "09/07/2023"); 
+
+        Database.retrieveListener cookListener = new Database.retrieveListener() {
+            @Override
+            public void onDataReceived(Object data) {
+                Boolean isSuspended = Boolean.valueOf(data.toString());
+                assertTrue(isSuspended);
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        };
+
+        dtb.getInformation(FirebaseDatabase.getInstance().getReference("USERS").child(userID).child("isSuspended"), cookListener);
 
 }
+    
+    /**
+     * Deletes the test Client created
+     */
+    @After public void deleteTestCook(){
+        UsersDataBase dtb = new UsersDataBase();
+        dtb.deleteUser(cook);
+    }
 
+}
