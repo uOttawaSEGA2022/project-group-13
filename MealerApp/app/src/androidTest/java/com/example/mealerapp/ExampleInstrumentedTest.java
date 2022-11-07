@@ -119,7 +119,7 @@ public class ExampleInstrumentedTest {
         Database.retrieveListener listener = new Database.retrieveListener() {
             @Override
             public void onDataReceived(Object data) {
-                assertEquals(data.toString(),"123 Main st");
+                assertEquals(data.toString(),"12345 Main Street");
             }
 
             @Override
@@ -128,7 +128,7 @@ public class ExampleInstrumentedTest {
             }
         };
         DatabaseReference addressRef = FirebaseDatabase.getInstance()
-                .getReference("USERS").child("25vrVWZNuVVyuWI3H4IX01rpzgs1")
+                .getReference("USERS").child("diWhRfZIqRdWSgqki9aKDpn1vDk2")
                 .child("address");
         dtb.getInformation(addressRef,listener);
 
@@ -152,10 +152,10 @@ public class ExampleInstrumentedTest {
     public void resetAddress(){
         UserDatabase dtb = new UserDatabase();
         DatabaseReference addressRef = FirebaseDatabase.getInstance()
-                .getReference("USERS").child("25vrVWZNuVVyuWI3H4IX01rpzgs1")
+                .getReference("USERS").child("diWhRfZIqRdWSgqki9aKDpn1vDk2")
                 .child("address");
 
-        dtb.setInformation(addressRef,"123 Main st");
+        dtb.setInformation(addressRef,"12345 Main Street");
     }
     @Test
     public void loginAndLogoff_isCorrect(){
