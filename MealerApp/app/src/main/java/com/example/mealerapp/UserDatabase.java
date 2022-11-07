@@ -61,10 +61,21 @@ public class UserDatabase extends Database{
         getInformation(fieldReference, listener);
 
     }
+    
     //Login user using email and password
     public void login(String email, String password){
 
-            auth.signInWithEmailAndPassword(email,password);
+            auth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if(task.isSuccessful()){
+                        Log.d("Login Status: ", "Success");
+                    }
+                    else{
+                        Log.d("Login Status: ", "Fail");
+                    }
+                }
+            });
     }
 
     //Log out current user
