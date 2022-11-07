@@ -76,7 +76,7 @@ public class UserDatabase extends Database{
 
     }
 
-    public void getUserObject(DatabaseReference ref, final Database.retrieveListener listener, String role){
+    /* public void getUserObject(DatabaseReference ref, final Database.retrieveListener listener, String role){
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -115,7 +115,7 @@ public class UserDatabase extends Database{
 
             }
         });
-    }
+    }*/
 
     public void suspendCook(String cookUID, String suspensionDate){
         DatabaseReference cookRef = database.getReference("USERS").child(cookUID);
@@ -128,6 +128,10 @@ public class UserDatabase extends Database{
         DatabaseReference cookRef = database.getReference("USERS").child(cookUID);
         cookRef.child("isSuspended").setValue(false);
         cookRef.child("suspensionDate").setValue("N/A");
+    }
+
+    public String getUID(){
+        return FirebaseAuth.getInstance().getUid().toString();
     }
 
     //Helper function converts field enum into a properly formatted string

@@ -37,6 +37,7 @@ public class ComplaintsDataBase extends Database implements Database.retrieveLis
             }
         });
     }*/
+    /*
     public void getComplaintObject(DatabaseReference ref, final Database.retrieveListener listener){
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -62,7 +63,7 @@ public class ComplaintsDataBase extends Database implements Database.retrieveLis
         });
 
 
-    }
+    }*/
     public void addComplaint(String cookUID, Complaints complaint){
         setInformation(complaintsRef.child(cookUID), complaint);
     }

@@ -29,14 +29,14 @@ public class ExampleInstrumentedTest {
     }
 
     @Test
-    public void suspendCook_isCorrect() throws Exception{
+    public void suspendCook_isCorrect() throws Exception {
         UserDatabase dtb = new UserDatabase();
         dtb.suspendCook("diWhRfZIqRdWSgqki9aKDpn1vDk2", "03/04/2023");
         Database.retrieveListener isSuspendedListener = new Database.retrieveListener() {
             @Override
             public void onDataReceived(Object data) {
-               Boolean isSuspended = Boolean.valueOf(data.toString());
-               assertTrue(isSuspended);
+                Boolean isSuspended = Boolean.valueOf(data.toString());
+                assertTrue(isSuspended);
 
             }
 
@@ -69,7 +69,7 @@ public class ExampleInstrumentedTest {
      * Resets the values of the test cook in the database so that the test may be preformed again
      */
     @After
-    public void resetCook(){
+    public void resetCook() {
         UserDatabase dtb = new UserDatabase();
         dtb.liftSuspension("diWhRfZIqRdWSgqki9aKDpn1vDk2");
     }
@@ -78,11 +78,11 @@ public class ExampleInstrumentedTest {
      * Tests if adding and dismissing complaints is working as expected
      */
     @Test
-    public void addAndDismissComplain_isCorrect(){
+    public void addAndDismissComplain_isCorrect() {
         ComplaintsDataBase dtb = new ComplaintsDataBase();
         Complaints complaint = new Complaints("I did not like the food",
                 "CLIENTUID", "diWhRfZIqRdWSgqki9aKDpn1vDk2");
-        dtb.addComplaint("diWhRfZIqRdWSgqki9aKDpn1vDk2",complaint);
+        dtb.addComplaint("diWhRfZIqRdWSgqki9aKDpn1vDk2", complaint);
         assertNotNull(FirebaseDatabase.getInstance().getReference("COMPLAINTS").child("diWhRfZIqRdWSgqki9aKDpn1vDk2"));
         dtb.setRead("diWhRfZIqRdWSgqki9aKDpn1vDk2");
 
@@ -90,7 +90,7 @@ public class ExampleInstrumentedTest {
             @Override
             public void onDataReceived(Object data) {
 
-                assertEquals(data.toString(),"true");
+                assertEquals(data.toString(), "true");
             }
 
             @Override
@@ -105,10 +105,19 @@ public class ExampleInstrumentedTest {
     /**
      * Deletes the test complaint created
      */
-    @After public void deleteTestComplaint(){
+    @After
+    public void deleteTestComplaint() {
         ComplaintsDataBase dtb = new ComplaintsDataBase();
         dtb.deleteComplaint("diWhRfZIqRdWSgqki9aKDpn1vDk2");
     }
 
+    @Test
+    public void setAndGetInfo_isCorrect(){
 
+
+    }
 }
+
+
+
+
