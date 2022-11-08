@@ -4,7 +4,9 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -64,7 +66,17 @@ public class UserDatabase extends Database{
     //Login user using email and password
     public void login(String email, String password){
 
-            auth.signInWithEmailAndPassword(email,password);
+            auth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if(task.isSuccessful()){
+                        Log.d("Login Status: ", "Success");
+                    }
+                    else{
+                        Log.d("Login Status: ", "Fail");
+                    }
+                }
+            });
     }
 
     //Log out current user
