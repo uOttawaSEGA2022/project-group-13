@@ -73,7 +73,7 @@ public class ExampleInstrumentedTest {
     @After
     public void resetCook() {
         UserDatabase dtb = new UserDatabase();
-        dtb.liftSuspension("diWhRfZIqRdWSgqki9aKDpn1vDk2");
+        dtb.liftSuspension();
     }
 
     /**
