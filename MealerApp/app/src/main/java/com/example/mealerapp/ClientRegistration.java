@@ -44,12 +44,15 @@ public class ClientRegistration extends AppCompatActivity {
                 String accountPasswordOne= accountPassword.getText().toString();
                 String addressOne = address.getText().toString();
                 String creditCardInfoOne = creditCardInfo.getText().toString();
-                Client newClient = new Client(firstNameOne,lastNameOne,emailAddressOne, accountPasswordOne,addressOne, creditCardInfoOne);
-                newClient.registerClient();
 
-                Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
-                intent.putExtra("role","client");
-                startActivity(intent);
+                if(checkFields()) {
+                    Client newClient = new Client(firstNameOne, lastNameOne, emailAddressOne, accountPasswordOne, addressOne, creditCardInfoOne);
+                    newClient.registerClient();
+
+                    Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
+                    intent.putExtra("role", "client");
+                    startActivity(intent);
+                }
             }
         });
 
@@ -57,5 +60,44 @@ public class ClientRegistration extends AppCompatActivity {
 
 
 
+    }
+
+    private boolean checkFields(){
+        boolean status = true;
+
+        EditText firstname = (EditText) findViewById(R.id.firstName);
+        EditText lastname = (EditText) findViewById(R.id.lastName);
+        EditText email = (EditText) findViewById(R.id.emailAddress);
+        EditText password = (EditText) findViewById(R.id.accountPassword);
+        EditText address = (EditText) findViewById(R.id.address);
+        EditText description = (EditText) findViewById(R.id.creditCardInfo);
+
+        if(firstname.length() == 0){
+            firstname.setError("This field is required");
+            status = false;
+        }
+        if(lastname.length() == 0){
+            lastname.setError("This field is required");
+            status = false;
+        }
+        if(email.length() == 0 || !email.getText().toString().contains("@")){
+            email.setError("This field is required and required a valid email with an @ symbol");
+            status = false;
+        }
+        if(password.length() == 0){
+            password.setError("This field is required");
+            status = false;
+        }
+        if(address.length() == 0){
+            address.setError("This field is required");
+            status = false;
+        }
+        if(description.length() == 0){
+            description.setError("This field is required");
+            status = false;
+        }
+
+
+        return status;
     }
 }
