@@ -1,21 +1,20 @@
 package com.example.mealerapp;
 
+import com.google.firebase.database.DatabaseReference;
+
 import java.util.LinkedList;
 import java.util.List;
 
 public class Menu {
-    private List<Meal> menuList;
+    private MenuDatabase database;
 
-    public Menu (){
-        menuList = new LinkedList<Meal>();
+
+    public Menu(){
+        database = new MenuDatabase();
     }
 
-    public void addMeal(Meal meal){
-        menuList.add(meal);
-    }
-
-    public void removeMealFromOffered(Meal meal){
-        menuList.remove(meal);
+    public void addMeal(String cookUID, Meal meal){
+        database.addMeal(cookUID,meal);
     }
 
 }

@@ -69,6 +69,9 @@ public class WelcomePage extends AppCompatActivity{
 
     public void menuPage(View view){
         Intent menuPage = new Intent(getApplicationContext(), MenuPage.class);
+        UserDatabase dtb = new UserDatabase();
+        String uid = dtb.getUID();
+        menuPage.putExtra("UID", uid);
             startActivity(menuPage);
 
     }

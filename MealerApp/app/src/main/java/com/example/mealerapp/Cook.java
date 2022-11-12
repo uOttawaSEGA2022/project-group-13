@@ -57,13 +57,6 @@ public class Cook extends User{
      return "\nAccount Information \n************************* \nFirst name: " + firstName + "\n" + "Last name: " + lastName + "\n" + "Email: " + email + "\n" + "Password: " + password + "\n" + "Description: " + description;
      }
 
-     public void addMealtoMenu(Meal meal){
-        menu.addMeal(meal);
-     }
-
-     public void addMealToCurrentlyOffered(Meal meal){
-        meal.getCurrentlyOffered();
-     }
 
 
 }

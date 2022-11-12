@@ -7,7 +7,7 @@ public class Meal {
     private Boolean currentlyOffered;
 
     public Meal(String name, String mealType, String cuisine,
-                     String ingredients, String allergens, String description, double price){
+                     String ingredients, String allergens, String description, double price, boolean currentlyOffered){
 
         this.name = name;
         this.mealType = mealType;
@@ -16,7 +16,7 @@ public class Meal {
         this.allergens = allergens;
         this.description = description;
         this.price = price;
-        this.currentlyOffered = true;
+        this.currentlyOffered = currentlyOffered;
 
     }
 

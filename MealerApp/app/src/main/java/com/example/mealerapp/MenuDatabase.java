@@ -1,5 +1,7 @@
 package com.example.mealerapp;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.google.firebase.database.DataSnapshot;
@@ -21,17 +23,21 @@ public class MenuDatabase extends Database implements Database.retrieveListener{
     }
 
     public void addMeal(String cookUID, Meal meal){
-        reference.child(cookUID).child("MENU").setValue(meal);
+        reference.child(cookUID).child("MENU").child(meal.getName()).setValue(meal);
     }
 
-    public void getMenu(String cookUID, retrieveListener listener){
+    /*public void getMenu(String cookUID, retrieveListener listener){
+        Log.d("HERE", "HERE");
+
         DatabaseReference ref = reference.child(cookUID).child("MENU");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<Meal> meals = new ArrayList<>();
+                ArrayList<MealModel> meals = new ArrayList<>();
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    meals.add((Meal) dataSnapshot.getValue());
+                    MealModel model = dataSnapshot.getValue(MealModel.class);
+                    meals.add(model);
+                    Log.d("MEAL",model.toString());
                 }
                 listener.onDataReceived(meals);
 
@@ -42,7 +48,7 @@ public class MenuDatabase extends Database implements Database.retrieveListener{
 
             }
         });
-    }
+    }*/
 
     public void setMealOffered(String cookUID, Meal meal, Boolean currentlyOffered){
         reference.child(cookUID).child("MENU").addValueEventListener(new ValueEventListener() {

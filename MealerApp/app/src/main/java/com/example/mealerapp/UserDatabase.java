@@ -81,6 +81,10 @@ public class UserDatabase extends Database{
                 }
             });
 
+        if(auth.getCurrentUser() == null){
+            Log.d("Login Status", "Failed");
+        }
+
     }
 
     //Log out current user
