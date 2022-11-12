@@ -82,12 +82,12 @@ public class MenuPage extends AppCompatActivity implements MenuAdapter.RecyclerV
                     }
                     String allergens = mealFields[0];
                     String cuisine = mealFields[1];
-                    Boolean currentlyOffered = Boolean.parseBoolean(mealFields[2]);
+                    boolean currentlyOffered = Boolean.parseBoolean(mealFields[2]);
                     String description = mealFields[3];
                     String ingredients = mealFields[4];
                     String mealType = mealFields[5];
                     String name = mealFields[6];
-                    Double price = Double.parseDouble(mealFields[7]);
+                    double price = Double.parseDouble(mealFields[7]);
 
                     Meal meal = new Meal(name,mealType,cuisine,ingredients,allergens,description,price, currentlyOffered);
                     list.add(meal);
@@ -110,6 +110,19 @@ public class MenuPage extends AppCompatActivity implements MenuAdapter.RecyclerV
     @Override
     public void onItemClick(int position, String meal, String description, String allergens,
                             String ingredients, String cuisine, String mealType, boolean currentlyOffered, Double price) {
+        Intent editMealPage = new Intent(getApplicationContext(),EditMealPage.class);
+        editMealPage.putExtra("name",meal);
+        editMealPage.putExtra("description",description);
+        editMealPage.putExtra("allergens",allergens);
+        editMealPage.putExtra("ingredients",ingredients);
+        editMealPage.putExtra("cuisine",cuisine);
+        editMealPage.putExtra("mealType",mealType);
+        editMealPage.putExtra("currentlyOffered",String.valueOf(currentlyOffered));
+        Log.d("Currently",String.valueOf(currentlyOffered));
+        editMealPage.putExtra("price",String.valueOf(price));
+        editMealPage.putExtra("UID",UID);
+        startActivity(editMealPage);
+
 
     }
 

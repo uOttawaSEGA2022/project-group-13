@@ -80,7 +80,10 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
                         String ingredientsString = ingredients.getText().toString();
                         String mealTypeString = mealType.getText().toString();
                         String cuisineString = cuisine.getText().toString();
-                        Boolean currentlyOfferedBool = Boolean.parseBoolean(currentlyOffered.getText().toString());
+                        Boolean currentlyOfferedBool = false;
+                        if(currentlyOffered.getText().toString().equals("Yes")){
+                            currentlyOfferedBool = true;
+                        }
                         Double priceDouble = Double.parseDouble(price.getText().toString().substring(1));
                         if(position!=RecyclerView.NO_POSITION){
                             recyclerViewInterface.onItemClick(position,mealString, descriptionString,allergensString,ingredientsString,cuisineString
