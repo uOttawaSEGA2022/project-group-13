@@ -52,7 +52,7 @@ public class CookRegistration extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
 
                     //Intent intent = new Intent(CookRegistration.this, WelcomePage.class);
-                    intent.putExtra("role", "cook");
+                    intent.putExtra("role", "COOK");
 
                     startActivity(intent);
                 }
