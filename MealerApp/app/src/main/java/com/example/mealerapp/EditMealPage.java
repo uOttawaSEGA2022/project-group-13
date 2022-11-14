@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.Toast;
 
 public class EditMealPage extends AppCompatActivity {
 
@@ -20,6 +21,7 @@ public class EditMealPage extends AppCompatActivity {
     private EditText nameEditText,mealTypeEditText,EditText,cuisineEditText,allergensEditText,ingredientsEditText,priceEditText, descriptionEditText;
     private Switch currentlyOfferedSwitch;
     private Button saveEditButton;
+    private Button deleteMealButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +64,24 @@ public class EditMealPage extends AppCompatActivity {
                 returnToMenuPage(v);
             }
         });
+        /*
+        deleteMealButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(currentlyOffered==false){
+                    deleteMeal(v);
+                    returnToMenuPage(v);
+
+
+
+                }else{
+                    Toast.makeText(getApplicationContext(), "cannot delete meal since it's currently offered", Toast.LENGTH_SHORT).show();
+
+                }
+
+            }
+        });
+        */
 
     }
 

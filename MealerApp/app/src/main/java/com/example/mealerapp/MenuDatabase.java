@@ -48,7 +48,13 @@ public class MenuDatabase extends Database implements Database.retrieveListener{
 
             }
         });
+        potential delete meal function;
+
+        public void deleteMeal(String cookUID){
+        reference.child(cookUID).child("MENU").child("MEAL").removeValue();
+    }
     }*/
+
 
     public void setMealOffered(String cookUID, Meal meal, Boolean currentlyOffered){
         reference.child(cookUID).child("MENU").addValueEventListener(new ValueEventListener() {
