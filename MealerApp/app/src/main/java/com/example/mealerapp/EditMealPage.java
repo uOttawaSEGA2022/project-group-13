@@ -64,12 +64,12 @@ public class EditMealPage extends AppCompatActivity {
                 returnToMenuPage(v);
             }
         });
-        /*
+
         deleteMealButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(currentlyOffered==false){
-                    deleteMeal(v);
+                    deleteMeal(UID);
                     returnToMenuPage(v);
 
 
@@ -81,7 +81,7 @@ public class EditMealPage extends AppCompatActivity {
 
             }
         });
-        */
+
 
     }
 

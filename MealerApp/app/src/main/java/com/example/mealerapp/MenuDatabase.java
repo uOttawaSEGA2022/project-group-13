@@ -25,6 +25,9 @@ public class MenuDatabase extends Database implements Database.retrieveListener{
     public void addMeal(String cookUID, Meal meal){
         reference.child(cookUID).child("MENU").child(meal.getName()).setValue(meal);
     }
+    public void deleteMeal(String cookUID){
+        reference.child(cookUID).child("MENU").child("MEAL").removeValue();
+    }
 
     /*public void getMenu(String cookUID, retrieveListener listener){
         Log.d("HERE", "HERE");
