@@ -17,4 +17,5 @@ public class Menu {
         database.addMeal(cookUID,meal);
     }
 
+    public void deleteMeal(String cookUID, String meal){database.deleteMeal(cookUID, meal);}
 }

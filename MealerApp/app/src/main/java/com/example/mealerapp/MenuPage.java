@@ -118,7 +118,6 @@ public class MenuPage extends AppCompatActivity implements MenuAdapter.RecyclerV
         editMealPage.putExtra("cuisine",cuisine);
         editMealPage.putExtra("mealType",mealType);
         editMealPage.putExtra("currentlyOffered",String.valueOf(currentlyOffered));
-        Log.d("Currently",String.valueOf(currentlyOffered));
         editMealPage.putExtra("price",String.valueOf(price));
         editMealPage.putExtra("UID",UID);
         startActivity(editMealPage);

@@ -17,6 +17,7 @@ public class EditMealPage extends AppCompatActivity {
     private String name, mealType, description,cuisine,allergens,ingredients, UID;
     private boolean currentlyOffered;
     private Double price;
+    private Menu menu;
 
     private EditText nameEditText,mealTypeEditText,EditText,cuisineEditText,allergensEditText,ingredientsEditText,priceEditText, descriptionEditText;
     private Switch currentlyOfferedSwitch;
@@ -28,6 +29,8 @@ public class EditMealPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_meal_page);
 
+        menu = new Menu();
+
         Bundle bundle = getIntent().getExtras();
         name = bundle.getString("name");
         mealType = bundle.getString("mealType");
@@ -37,6 +40,7 @@ public class EditMealPage extends AppCompatActivity {
         ingredients = bundle.getString("ingredients");
         currentlyOffered = Boolean.valueOf(bundle.getString("currentlyOffered"));
         price = Double.parseDouble(bundle.getString("price"));
+        Log.d("price",String.valueOf(price));
         UID = bundle.getString("UID");
 
         nameEditText = (EditText)findViewById(R.id.nameEditText2);
@@ -56,6 +60,12 @@ public class EditMealPage extends AppCompatActivity {
         ingredientsEditText.setText(ingredients);
         priceEditText.setText(String.valueOf(price));
         currentlyOfferedSwitch.setChecked(currentlyOffered);
+        currentlyOfferedSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                currentlyOffered = isChecked;
+            }
+        });
         saveEditButton = (Button)findViewById(R.id.saveEditsButton);
         saveEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,12 +74,12 @@ public class EditMealPage extends AppCompatActivity {
                 returnToMenuPage(v);
             }
         });
-
+        deleteMealButton = (Button)findViewById(R.id.deleteMealButton);
         deleteMealButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(currentlyOffered==false){
-                    deleteMeal(UID);
+                    menu.deleteMeal(UID,name);
                     returnToMenuPage(v);
 
 
@@ -93,15 +103,10 @@ public class EditMealPage extends AppCompatActivity {
         String cuisineString = cuisineEditText.getText().toString();
         String mealTypeString = mealTypeEditText.getText().toString();
         Double priceDouble = Double.parseDouble(priceEditText.getText().toString());
-        currentlyOfferedSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Meal editedMeal = new Meal(mealName,mealTypeString,cuisineString,ingredientsString,allergensString
-                ,descriptionString,priceDouble,isChecked);
-                Menu menu = new Menu();
-                menu.addMeal(UID,editedMeal);
-            }
-        });
+
+        Meal editedMeal = new Meal(mealName,mealTypeString,cuisineString,ingredientsString,allergensString
+                ,descriptionString,priceDouble,currentlyOffered);
+        menu.addMeal(UID, editedMeal);
 
     }
     private void returnToMenuPage(View view){
