@@ -96,6 +96,7 @@ public class EditMealPage extends AppCompatActivity {
     }
 
     private void editMeal(View view){
+        menu.deleteMeal(UID, name);
         String mealName = nameEditText.getText().toString();
         String descriptionString = descriptionEditText.getText().toString();
         String allergensString = allergensEditText.getText().toString();
