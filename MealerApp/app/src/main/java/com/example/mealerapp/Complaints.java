@@ -32,7 +32,7 @@ public class Complaints {
         return clientUID;
     }
 
-    public void setClientName(String clientUID) {
+    public void setClientUID(String clientUID) {
         this.clientUID = clientUID;
     }
 

@@ -4,7 +4,9 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -12,6 +14,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 
@@ -61,10 +65,26 @@ public class UserDatabase extends Database{
         getInformation(fieldReference, listener);
 
     }
+    
     //Login user using email and password
     public void login(String email, String password){
+        auth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
 
-            auth.signInWithEmailAndPassword(email,password);
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if(task.isSuccessful()){
+                        Log.d("Login Status: ", "Success");
+                    }
+                    else{
+                        Log.d("Login Status: ", "Fail");
+                    }
+                }
+            });
+
+        if(auth.getCurrentUser() == null){
+            Log.d("Login Status", "Failed");
+        }
+
     }
 
     //Log out current user
@@ -76,7 +96,7 @@ public class UserDatabase extends Database{
 
     }
 
-    public void getUserObject(DatabaseReference ref, final Database.retrieveListener listener, String role){
+    /* public void getUserObject(DatabaseReference ref, final Database.retrieveListener listener, String role){
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -115,7 +135,7 @@ public class UserDatabase extends Database{
 
             }
         });
-    }
+    }*/
 
     public void suspendCook(String cookUID, String suspensionDate){
         DatabaseReference cookRef = database.getReference("USERS").child(cookUID);
@@ -124,10 +144,14 @@ public class UserDatabase extends Database{
 
     }
 
-    public void liftSuspension(String cookUID){
-        DatabaseReference cookRef = database.getReference("USERS").child(cookUID);
+    public void liftSuspension(){
+        DatabaseReference cookRef = database.getReference("USERS").child(getUID());
         cookRef.child("isSuspended").setValue(false);
         cookRef.child("suspensionDate").setValue("N/A");
+    }
+
+    public String getUID(){
+        return FirebaseAuth.getInstance().getUid().toString();
     }
 
     //Helper function converts field enum into a properly formatted string

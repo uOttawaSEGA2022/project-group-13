@@ -40,20 +40,67 @@ public class CookRegistration extends AppCompatActivity {
                 String passwordone = password.getText().toString();
                 String addressone = address.getText().toString();
                 String descriptionone = description.getText().toString();
-                Cook newCook = new Cook(firstnameone, lastnameone, emailone, passwordone, addressone, descriptionone);
-                newCook.registerCook();
-                //Database dbt = new Databse();
-                //dtb.registerUser(newCook);
 
-                // dont forget to change main act to page
+                if(checkFields()) {
+                    Cook newCook = new Cook(firstnameone, lastnameone, emailone, passwordone, addressone, descriptionone);
+                    newCook.registerCook();
+                    //Database dbt = new Databse();
+                    //dtb.registerUser(newCook);
 
-                Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
+                    // dont forget to change main act to page
 
-                //Intent intent = new Intent(CookRegistration.this, WelcomePage.class);
-                intent.putExtra("role", "cook");
+                    Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
 
-                startActivity(intent);
+                    //Intent intent = new Intent(CookRegistration.this, WelcomePage.class);
+                    intent.putExtra("role", "COOK");
+
+                    startActivity(intent);
+                }
             }
         });
+
+
+
     }
+
+    private boolean checkFields(){
+        boolean status = true;
+
+        EditText firstname = (EditText) findViewById(R.id.firstname);
+        EditText lastname = (EditText) findViewById(R.id.lastname);
+        EditText email = (EditText) findViewById(R.id.email);
+        EditText password = (EditText) findViewById(R.id.password);
+        EditText address = (EditText) findViewById(R.id.address);
+        EditText description = (EditText) findViewById(R.id.description);
+
+        if(firstname.length() == 0){
+            firstname.setError("This field is required");
+            status = false;
+        }
+        if(lastname.length() == 0){
+            lastname.setError("This field is required");
+            status = false;
+        }
+        if(email.length() == 0 || !email.getText().toString().contains("@")){
+            email.setError("This field is required and required a valid email with an @ symbol");
+            status = false;
+        }
+        if(password.length() == 0){
+            password.setError("This field is required");
+            status = false;
+        }
+        if(address.length() == 0){
+            address.setError("This field is required");
+            status = false;
+        }
+        if(description.length() == 0){
+            description.setError("This field is required");
+            status = false;
+        }
+
+
+        return status;
+    }
+
+
 }

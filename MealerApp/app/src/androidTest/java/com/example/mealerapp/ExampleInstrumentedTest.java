@@ -12,6 +12,8 @@ import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 /**
@@ -29,14 +31,14 @@ public class ExampleInstrumentedTest {
     }
 
     @Test
-    public void suspendCook_isCorrect() throws Exception{
+    public void suspendCook_isCorrect() throws Exception {
         UserDatabase dtb = new UserDatabase();
         dtb.suspendCook("diWhRfZIqRdWSgqki9aKDpn1vDk2", "03/04/2023");
         Database.retrieveListener isSuspendedListener = new Database.retrieveListener() {
             @Override
             public void onDataReceived(Object data) {
-               Boolean isSuspended = Boolean.valueOf(data.toString());
-               assertTrue(isSuspended);
+                Boolean isSuspended = Boolean.valueOf(data.toString());
+                assertTrue(isSuspended);
 
             }
 
@@ -69,20 +71,20 @@ public class ExampleInstrumentedTest {
      * Resets the values of the test cook in the database so that the test may be preformed again
      */
     @After
-    public void resetCook(){
+    public void resetCook() {
         UserDatabase dtb = new UserDatabase();
-        dtb.liftSuspension("diWhRfZIqRdWSgqki9aKDpn1vDk2");
+        dtb.liftSuspension();
     }
 
     /**
      * Tests if adding and dismissing complaints is working as expected
      */
     @Test
-    public void addAndDismissComplain_isCorrect(){
+    public void addAndDismissComplaint_isCorrect() {
         ComplaintsDataBase dtb = new ComplaintsDataBase();
         Complaints complaint = new Complaints("I did not like the food",
                 "CLIENTUID", "diWhRfZIqRdWSgqki9aKDpn1vDk2");
-        dtb.addComplaint("diWhRfZIqRdWSgqki9aKDpn1vDk2",complaint);
+        dtb.addComplaint("diWhRfZIqRdWSgqki9aKDpn1vDk2", complaint);
         assertNotNull(FirebaseDatabase.getInstance().getReference("COMPLAINTS").child("diWhRfZIqRdWSgqki9aKDpn1vDk2"));
         dtb.setRead("diWhRfZIqRdWSgqki9aKDpn1vDk2");
 
@@ -90,7 +92,7 @@ public class ExampleInstrumentedTest {
             @Override
             public void onDataReceived(Object data) {
 
-                assertEquals(data.toString(),"true");
+                assertEquals(data.toString(), "true");
             }
 
             @Override
@@ -105,25 +107,19 @@ public class ExampleInstrumentedTest {
     /**
      * Deletes the test complaint created
      */
-    @After public void deleteTestComplaint(){
+    @After
+    public void deleteTestComplaint() {
         ComplaintsDataBase dtb = new ComplaintsDataBase();
         dtb.deleteComplaint("diWhRfZIqRdWSgqki9aKDpn1vDk2");
     }
 
-    /**
-     * Test will check if registering and deleting a client is working correctly
-     */
     @Test
-    public void registerAndDeleteUser_isCorrect(){
+    public void setAndGetInfo_isCorrect(){
         UserDatabase dtb = new UserDatabase();
-        User client= new Client("John", "Doe", "Jdoe@gmail.com", "Ilikefood/123", "213 Celtic road","1638299384651290");
-        dtb.registerUser(client);
-
-        Database.retrieveListener registrationListener = new Database.retrieveListener() {
+        Database.retrieveListener listener = new Database.retrieveListener() {
             @Override
             public void onDataReceived(Object data) {
-                User dtbClient = data;
-                assertEquals(client,dtbClient); //Checks if the expected "value" (client) is the same as the actual "value"  (dtbClient) within the DataBase
+                assertEquals(data.toString(),"12345 Main Street");
             }
 
             @Override
@@ -131,26 +127,60 @@ public class ExampleInstrumentedTest {
 
             }
         };
+        DatabaseReference addressRef = FirebaseDatabase.getInstance()
+                .getReference("USERS").child("diWhRfZIqRdWSgqki9aKDpn1vDk2")
+                .child("address");
+        dtb.getInformation(addressRef,listener);
 
-        String userID=FirebaseAuth.getInstance().getUID();
-        dtb.getInformation(FirebaseDatabase.getInstance().getReference("USERS").child(userID), registrationListener);
-    
+        dtb.setInformation(addressRef,"44 Apple Avenue");
+
+        Database.retrieveListener retrieveListener = new Database.retrieveListener() {
+            @Override
+            public void onDataReceived(Object data) {
+                assertEquals(data.toString(),"44 Apple Avenue");
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        };
+        dtb.getInformation(addressRef,retrieveListener);
     }
+
+    @After
+    public void resetAddress(){
+        UserDatabase dtb = new UserDatabase();
+        DatabaseReference addressRef = FirebaseDatabase.getInstance()
+                .getReference("USERS").child("diWhRfZIqRdWSgqki9aKDpn1vDk2")
+                .child("address");
+
+        dtb.setInformation(addressRef,"12345 Main Street");
+    }
+    @Test
+    public void loginAndLogoff_isCorrect(){
+        UserDatabase dtb = new UserDatabase();
+        dtb.login("testcook@gmail.com", "12345Password");
+        String UID = FirebaseAuth.getInstance().getUid();
+
+        assertNotNull(UID);
+        dtb.logoff();
+        UID = FirebaseAuth.getInstance().getUid();
+        assertNull(UID);
+    }
+
 
     /**
-     * Deletes the test Client created
+     * Test will check if registering and deleting a client is working correctly
      */
-    @After public void deleteTestClient(){
-        UsersDataBase dtb = new UsersDataBase();
-        dtb.deleteUser(client);
-    }
+
 
 
 
     /**
      * Test will check if registering, suspending, and deleting a cook user is working correctly
      */
-    @Test
+    /*@Test
     public void userRegisterAndSuspension_isCorrect(){ 
         UserDatabase dtb = new UserDatabase();
         User cook= new Cook("Jane", "Doe", "Janedoe@gmail.com", "Imakefood/123", "213 teron road","I make food");
@@ -178,9 +208,10 @@ public class ExampleInstrumentedTest {
     /**
      * Deletes the test Cook created
      */
-    @After public void deleteTestCook(){
+    /*@After public void deleteTestCook(){
         UsersDataBase dtb = new UsersDataBase();
         dtb.deleteUser(cook);
-    }
-
+    }*/
 }
+
+

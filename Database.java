@@ -89,6 +89,7 @@ public class Database {
         auth.signInWithEmailAndPassword(email,password);
 
     }
+    
 
     //Log out current user
     public void logoff(){
