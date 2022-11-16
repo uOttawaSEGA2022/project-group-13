@@ -176,7 +176,7 @@ public class ExampleInstrumentedTest {
 }
     
     /**
-     * Deletes the test Client created
+     * Deletes the test Cook created
      */
     @After public void deleteTestCook(){
         UsersDataBase dtb = new UsersDataBase();
