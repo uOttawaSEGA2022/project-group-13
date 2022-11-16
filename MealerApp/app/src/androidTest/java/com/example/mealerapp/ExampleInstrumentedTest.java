@@ -179,25 +179,13 @@ public class ExampleInstrumentedTest {
     @Test
     public void addingAndRemovingMealFromOfferedMealList_isCorrect(){
         MenuDatabase mD= new MenuDatabase();
-        Meal meal= new Meal("Tacos", "Lunch", "Mexican", "Tortilla, cheese, ground beef, lettuce, sour cream", "Soy, Corn, Beans", "Three soft shell Tacos", 12.99, true);
-        String mealID=FirebaseAuth.getInstance().getUID();
-        DatabaseReference offeredMealRef = FirebaseDatabase.getInstance().getReference("MEALS").child(mealID).child("CurrentlyOffered");
-        mD.addMeal(mealID, meal);
-        assertTrue(meal.getCurrentlyOffered());
+        Meal meal1= new Meal("Tacos", "Tacos", "Mexican", "Tortilla, cheese, ground beef, lettuce, sour cream", "Soy, Corn, Beans", "Three soft shell Tacos", 12.99, true);
+//      String mealID=FirebaseAuth.getInstance().getUID();
+        mD.addMeal("7Ge4oqXDzBWrvL8CnWqudoR2c7m1", meal1);
+        DatabaseReference offeredMealRef = FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").getReference("MENU").getReference("Tacos").child("currentlyOffered");
+        assertTrue(offeredMealRef);
         mD.setCurrentlyOffered(false);
-        assertFalse(meal.getCurrentlyOffered());
-
-    }
-
-
-    /**
-     * Deletes the test meal created
-     */
-    @After
-    public void deleteTestMeal() {
-        MenuDatabase mD= new MenuDatabase();
-        String mealID=FirebaseAuth.getInstance().getUID();
-        mD.deleteMeal(mealID);
+        assertFalse(meal1.getCurrentlyOffered());
     }
 
 
@@ -205,15 +193,27 @@ public class ExampleInstrumentedTest {
      * Test will check if adding and removing a meal from the offered meals list is working correctly
      */
     @Test
-    public void addingAndRemovingMealFromOfferedMealList_isCorrect(){
+    public void addingAndDeletingMeal_isCorrect(){
         MenuDatabase mD= new MenuDatabase();
-        Meal meal= new Meal("Tacos", "Lunch", "Mexican", "Tortilla, cheese, ground beef, lettuce, sour cream", "Soy", "Three soft shell Tacos", 12.99, true);
+        Meal meal2= new Meal("Butter chicken", "Butter chicken", "Indian", "Chicken, cream, butter, spices", "milk", "Butter chicken with a side of Naan bread", 19.99, true);
         String mealID=FirebaseAuth.getInstance().getUID();
-        mD.addMeal(mealID,meal);
-        assertTrue(mealID);
+        mD.addMeal(mealID,meal2);
         mD.setCurrentlyOffered(false);
-        assertFalse(mealID);
 
+        Database.retrieveListener readListener = new Database.retrieveListener() {
+            @Override
+            public void onDataReceived(Object data) {
+
+                assertEquals(data.toString(), "false");
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        };
+
+        mD.getInformation(FirebaseDatabase.getInstance().getReference("USERS").child(mealID).getReference("MENU").getReference("Tacos").child("currentlyOffered"), readListener);      
     }
 
 
@@ -223,6 +223,7 @@ public class ExampleInstrumentedTest {
     @After
     public void deleteTestMeal() {
         MenuDatabase mD= new MenuDatabase();
+        String mealID=FirebaseAuth.getInstance().getUID();
         mD.deleteMeal(mealID);
     }
 
