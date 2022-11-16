@@ -157,6 +157,8 @@ public class ExampleInstrumentedTest {
 
         dtb.setInformation(addressRef,"12345 Main Street");
     }
+
+
     @Test
     public void loginAndLogoff_isCorrect(){
         UserDatabase dtb = new UserDatabase();
@@ -168,6 +170,34 @@ public class ExampleInstrumentedTest {
         UID = FirebaseAuth.getInstance().getUid();
         assertNull(UID);
     }
+
+
+
+     /**
+     * Test will check if adding and removing a meal from the offered meals list is working correctly
+     */
+    @Test
+    public void addingAndRemovingMealFromOfferedMealList_isCorrect(){
+        MenuDatabase mD= new MenuDatabase();
+        Meal meal= new Meal("Tacos", "Lunch", "Mexican", "Tortilla, cheese, ground beef, lettuce, sour cream", "Soy", "Three soft shell Tacos", 12.99, true);
+        String mealID=FirebaseAuth.getInstance().getUID();
+        mD.addMeal(mealID,meal);
+        assertTrue(mealID);
+        mD.setCurrentlyOffered(false);
+        assertFalse(mealID);
+
+    }
+
+
+    /**
+     * Deletes the test meal created
+     */
+    @After
+    public void deleteTestMeal() {
+        MenuDatabase mD= new MenuDatabase();
+        mD.deleteMeal(mealID);
+    }
+
 
 
     /**
