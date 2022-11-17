@@ -189,7 +189,7 @@ public class ExampleInstrumentedTest {
         Database.retrieveListener listener = new Database.retrieveListener() {
             @Override
             public void onDataReceived(Object data) {
-                assertFalse((boolean)data);
+                assertFalse(Boolean.valueOf(data.toString()));
             }
 
             @Override
@@ -208,13 +208,13 @@ public class ExampleInstrumentedTest {
         MenuDatabase mD= new MenuDatabase();
         Meal meal2= new Meal("Butter chicken", "Butter chicken", "Indian", "Chicken, cream, butter, spices", "milk", "Butter chicken with a side of Naan bread", 19.99, true);
         mD.addMeal("7Ge4oqXDzBWrvL8CnWqudoR2c7m1",meal2);
-        mD.setCurrentlyOffered("7Ge4oqXDzBWrvL8CnWqudoR2c7m1",meal2,false);
 
         Database.retrieveListener readListener = new Database.retrieveListener() {
             @Override
             public void onDataReceived(Object data) {
 
-                assertEquals(data.toString(), "false");
+                assertNotNull(data);
+
             }
 
             @Override
@@ -223,7 +223,23 @@ public class ExampleInstrumentedTest {
             }
         };
 
-       mD.getInformation(FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("MENU").child("Tacos").child("currentlyOffered"), readListener);
+        mD.getInformation(FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("MENU").child("Butter chicken"), readListener);
+
+        mD.deleteMeal("7Ge4oqXDzBWrvL8CnWqudoR2c7m1", "Butter chicken");
+
+        Database.retrieveListener listener = new Database.retrieveListener() {
+            @Override
+            public void onDataReceived(Object data) {
+                assertTrue((boolean)data);
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        };
+
+       mD.checkDeleted("7Ge4oqXDzBWrvL8CnWqudoR2c7m1", "Butter chicken", listener);
 
     }
 

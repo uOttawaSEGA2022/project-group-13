@@ -33,6 +33,28 @@ public class MenuDatabase extends Database implements Database.retrieveListener{
         reference.child(cookUID).child("MENU").child(meal.getName()).child("currentlyOffered").setValue(isOffered);
     }
 
+    public void checkDeleted(String cookUID, String meal, retrieveListener listener){
+        reference.child(cookUID).child("MENU").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    if(dataSnapshot.getValue().toString().equals(meal)){
+                        listener.onDataReceived(false);
+                    }
+                    else{
+                        listener.onDataReceived(true);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+
     @Override
     public void onDataReceived(Object data) {
 
