@@ -58,20 +58,6 @@
         app:layout_constraintVertical_bias="0.308" />
 
     <EditText
-        android:id="@+id/password2"
-        android:layout_width="363dp"
-        android:layout_height="48dp"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.52"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.154" />
-
-    <EditText
         android:id="@+id/username2"
         android:layout_width="365dp"
         android:layout_height="48dp"
@@ -83,4 +69,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.071" />
+
+    <EditText
+        android:id="@+id/password2"
+        android:layout_width="365dp"
+        android:layout_height="60dp"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.173" />
 </androidx.constraintlayout.widget.ConstraintLayout>

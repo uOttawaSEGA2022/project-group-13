@@ -29,6 +29,10 @@ public class MenuDatabase extends Database implements Database.retrieveListener{
         reference.child(cookUID).child("MENU").child(meal).removeValue();
     }
 
+    public void setCurrentlyOffered(String cookUID, Meal meal, boolean isOffered){
+        reference.child(cookUID).child("MENU").child(meal.getName()).child("currentlyOffered").setValue(isOffered);
+    }
+
     @Override
     public void onDataReceived(Object data) {
 
