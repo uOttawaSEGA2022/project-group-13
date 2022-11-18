@@ -33,5 +33,31 @@ public class ExampleUnitTest {
      * Test will check if suspend and lifting a suspension on a cook is working correctly
      */
 
+    // Testing for email format
+    @Test
+    public void checkCorrectEmail(){
+        assertTrue(CookRegistration.checkEmailFormat("Testing@gmail.com"));
+    }
+
+    @Test
+    public void checkNoAt(){
+        assertFalse(CookRegistration.checkEmailFormat("Testinggmail.com"));
+    }
+
+    @Test
+    public void checkNoDotCOM(){
+        assertFalse(CookRegistration.checkEmailFormat("Testing@gmail"));
+    }
+
+    @Test
+    public void checkNoEmail(){
+        assertFalse(CookRegistration.checkEmailFormat(""));
+    }
+
+    @Test
+    public void checkNoAtandDotCOM(){
+        assertFalse(CookRegistration.checkEmailFormat("testing"));
+    }
+
 
 }

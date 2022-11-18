@@ -41,7 +41,7 @@ public class CookRegistration extends AppCompatActivity {
                 String addressone = address.getText().toString();
                 String descriptionone = description.getText().toString();
 
-                if(checkFields()) {
+                if(checkFields() && checkEmailFormat(emailone)) {
                     Cook newCook = new Cook(firstnameone, lastnameone, emailone, passwordone, addressone, descriptionone);
                     newCook.registerCook();
                     //Database dbt = new Databse();
@@ -81,8 +81,8 @@ public class CookRegistration extends AppCompatActivity {
             lastname.setError("This field is required");
             status = false;
         }
-        if(email.length() == 0 || !email.getText().toString().contains("@")){
-            email.setError("This field is required and required a valid email with an @ symbol");
+        if(email.length() == 0 || !email.getText().toString().contains("@") || !email.getText().toString().contains(".com")){
+            email.setError("This field is required and required a valid email with an @ symbol and a .com");
             status = false;
         }
         if(password.length() == 0){
@@ -100,6 +100,13 @@ public class CookRegistration extends AppCompatActivity {
 
 
         return status;
+    }
+
+    public static boolean checkEmailFormat(String email){
+        if(email.length() == 0 || !email.contains("@") || !email.contains(".com")){
+            return false;
+        }
+        return true;
     }
 
 

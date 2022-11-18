@@ -45,7 +45,7 @@ public class ClientRegistration extends AppCompatActivity {
                 String addressOne = address.getText().toString();
                 String creditCardInfoOne = creditCardInfo.getText().toString();
 
-                if(checkFields()) {
+                if(checkFields() && checkEmailFormat(emailAddressOne)) {
                     Client newClient = new Client(firstNameOne, lastNameOne, emailAddressOne, accountPasswordOne, addressOne, creditCardInfoOne);
                     newClient.registerClient();
 
@@ -80,8 +80,8 @@ public class ClientRegistration extends AppCompatActivity {
             lastname.setError("This field is required");
             status = false;
         }
-        if(email.length() == 0 || !email.getText().toString().contains("@")){
-            email.setError("This field is required and required a valid email with an @ symbol");
+        if(email.length() == 0 || !email.getText().toString().contains("@") || !email.getText().toString().contains(".com")){
+            email.setError("This field is required and required a valid email with an @ symbol and .com");
             status = false;
         }
         if(password.length() == 0){
@@ -99,5 +99,12 @@ public class ClientRegistration extends AppCompatActivity {
 
 
         return status;
+    }
+
+    public static boolean checkEmailFormat(String email){
+        if(email.length() == 0 || !email.contains("@") || !email.contains(".com")){
+            return false;
+        }
+        return true;
     }
 }
