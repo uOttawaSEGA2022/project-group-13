@@ -16,6 +16,7 @@ public class SuspensionPage extends AppCompatActivity implements View.OnClickLis
 
     private String cookUID;
     private String date;
+    private EditText suspensionDate;
 
    @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,17 +26,7 @@ public class SuspensionPage extends AppCompatActivity implements View.OnClickLis
         Bundle bundle = getIntent().getExtras();
         cookUID = bundle.getString("cookUID");
 
-        Boolean isValid = false;
-        EditText suspensionDate = (EditText) findViewById(R.id.suspensionDateEditText);
-
-        while(!isValid) {
-            date = suspensionDate.getText().toString();
-
-            isValid = verifyDate(date);
-            if (!isValid) {
-                Toast.makeText(getApplicationContext(), "Invalid date", Toast.LENGTH_SHORT).show();
-            }
-        }
+        suspensionDate = (EditText) findViewById(R.id.suspensionDateEditText);
 
         Button permanent = findViewById(R.id.permanentButton);
         permanent.setOnClickListener(this);
@@ -47,27 +38,34 @@ public class SuspensionPage extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         UserDatabase dtb = new UserDatabase();
-        Intent returnToComplaints = new Intent(getApplicationContext(),ComplaintsPage.class);
-        switch (view.getId()){
-            case R.id.permanentButton:
-                dtb.suspendCook(cookUID,date);
-                startActivity(returnToComplaints);
-                break;
+        Intent returnToComplaints = new Intent(getApplicationContext(), ComplaintsPage.class);
+        switch (view.getId()) {
             case R.id.temporaryButton:
-                dtb.suspendCook(cookUID,"Indefinite");
-                startActivity(returnToComplaints);
-                break;
+                date = suspensionDate.getText().toString();
+                boolean valid = verifyDate(date);
+                if (!valid) {
+                    Toast.makeText(getApplicationContext(), "Invalid date", Toast.LENGTH_SHORT).show();
+                }
+                    dtb.suspendCook(cookUID, date);
+                    startActivity(returnToComplaints);
+                    break;
+
+                    case R.id.permanentButton:
+                        dtb.suspendCook(cookUID, "Indefinite");
+                        startActivity(returnToComplaints);
+                        break;
+
+                }
 
         }
 
-    }
 
     //This method verfies that the date input is valid but it is incomplete
     //Needs to check the the date makes sense (ex: cannot put febuary 31)
     //Need to check that the date is not in the past
     //Add functionality that checks the current date to make sure the date input is in the future
     private boolean verifyDate(String date){
-       Boolean isValid = false;
+       boolean isValid = false;
        int month, day, year;
 
        if(date.length()<10){

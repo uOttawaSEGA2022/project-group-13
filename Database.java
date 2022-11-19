@@ -89,6 +89,10 @@ public class Database {
         auth.signInWithEmailAndPassword(email,password);
 
     }
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 4db2657f53a4fea216a5964e2d666ad1cb7b5527
 
     //Log out current user
     public void logoff(){

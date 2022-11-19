@@ -4,10 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 public class WelcomePage extends AppCompatActivity{
@@ -33,13 +31,24 @@ public class WelcomePage extends AppCompatActivity{
             }
         });
 
-        Button viewcomplaints = (Button) findViewById(R.id.viewcomplaints);
-        viewcomplaints.setVisibility(View.GONE);
-        if(role.equals("ADMIN")){
-            viewcomplaints.setVisibility(View.VISIBLE);
-            viewcomplaints.setOnClickListener(new View.OnClickListener(){
+        Button nextActivity = (Button) findViewById(R.id.nextActivityButton);
+        if(role.equals("CLIENT")){
+            nextActivity.setVisibility(View.GONE);
+        }
+        else if(role.equals("ADMIN")){
+            nextActivity.setText("View Complaints");
+            nextActivity.setOnClickListener(new View.OnClickListener(){
                 public void onClick(View v){
                     ComplaintsPage(v);
+                }
+            });
+        }
+        else if(role.equals("COOK")){
+            nextActivity.setText("View Menu");
+            nextActivity.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    menuPage(v);
                 }
             });
         }
@@ -56,6 +65,15 @@ public class WelcomePage extends AppCompatActivity{
     public void ComplaintsPage(View view){
         Intent intent = new Intent(getApplication(), ComplaintsPage.class);
         startActivity(intent);
+    }
+
+    public void menuPage(View view){
+        Intent menuPage = new Intent(getApplicationContext(), MenuPage.class);
+        UserDatabase dtb = new UserDatabase();
+        String uid = dtb.getUID();
+        menuPage.putExtra("UID", uid);
+            startActivity(menuPage);
+
     }
 
 

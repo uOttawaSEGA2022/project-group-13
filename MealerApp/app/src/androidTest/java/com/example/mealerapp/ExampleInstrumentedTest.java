@@ -7,6 +7,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -73,7 +74,7 @@ public class ExampleInstrumentedTest {
     @After
     public void resetCook() {
         UserDatabase dtb = new UserDatabase();
-        dtb.liftSuspension("diWhRfZIqRdWSgqki9aKDpn1vDk2");
+        dtb.liftSuspension();
     }
 
     /**
@@ -157,6 +158,8 @@ public class ExampleInstrumentedTest {
 
         dtb.setInformation(addressRef,"12345 Main Street");
     }
+
+
     @Test
     public void loginAndLogoff_isCorrect(){
         UserDatabase dtb = new UserDatabase();
@@ -169,6 +172,87 @@ public class ExampleInstrumentedTest {
         assertNull(UID);
     }
 
+
+
+     /**
+     * Test will check if adding and removing a meal from the offered meals list is working correctly
+     */
+    @Test
+    public void addingAndRemovingMealFromOfferedMealList_isCorrect(){
+        MenuDatabase mD= new MenuDatabase();
+        Meal meal1= new Meal("Tacos", "Tacos", "Mexican", "Tortilla, cheese, ground beef, lettuce, sour cream", "Soy, Corn, Beans", "Three soft shell Tacos", 12.99, true);
+        mD.addMeal("7Ge4oqXDzBWrvL8CnWqudoR2c7m1", meal1);
+        DatabaseReference offeredMealRef = FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("MENU").child("Tacos").child("currentlyOffered");
+        assertNotNull(offeredMealRef);
+        mD.setCurrentlyOffered("7Ge4oqXDzBWrvL8CnWqudoR2c7m1", meal1,false);
+
+        Database.retrieveListener listener = new Database.retrieveListener() {
+            @Override
+            public void onDataReceived(Object data) {
+                assertFalse(Boolean.valueOf(data.toString()));
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        };
+
+        mD.getInformation(FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("MENU").child("Tacos").child("currentlyOffered"), listener);
+    }
+
+
+    @Test
+    public void addingAndDeletingMeal_isCorrect(){
+
+        MenuDatabase mD= new MenuDatabase();
+        Meal meal2= new Meal("Butter chicken", "Butter chicken", "Indian", "Chicken, cream, butter, spices", "milk", "Butter chicken with a side of Naan bread", 19.99, true);
+        mD.addMeal("7Ge4oqXDzBWrvL8CnWqudoR2c7m1",meal2);
+
+        Database.retrieveListener readListener = new Database.retrieveListener() {
+            @Override
+            public void onDataReceived(Object data) {
+
+                assertNotNull(data);
+
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        };
+
+        mD.getInformation(FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("MENU").child("Butter chicken"), readListener);
+
+        mD.deleteMeal("7Ge4oqXDzBWrvL8CnWqudoR2c7m1", "Butter chicken");
+
+        Database.retrieveListener listener = new Database.retrieveListener() {
+            @Override
+            public void onDataReceived(Object data) {
+                assertTrue((boolean)data);
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        };
+
+       mD.checkDeleted("7Ge4oqXDzBWrvL8CnWqudoR2c7m1", "Butter chicken", listener);
+
+    }
+
+
+/* Deletes the test meal created
+    @After
+    public void deleteTestMeal() {
+        MenuDatabase mD= new MenuDatabase();
+        String mealID=FirebaseAuth.getInstance().getUID();
+        mD.deleteMeal(mealID);
+    }
+
+*/
 
     /**
      * Test will check if registering and deleting a client is working correctly
@@ -206,7 +290,7 @@ public class ExampleInstrumentedTest {
 }
     
     /**
-     * Deletes the test Client created
+     * Deletes the test Cook created
      */
     /*@After public void deleteTestCook(){
         UsersDataBase dtb = new UsersDataBase();

@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements Database.retrieve
                                     @Override
                                     public void onDataReceived(Object data) {
                                         if(isDatePassed(data.toString())){
-                                            dtb.liftSuspension(FirebaseAuth.getInstance().getUid());
+                                            dtb.liftSuspension();
                                             Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
                                             intent.putExtra("role",dataString);
                                             startActivity(intent);

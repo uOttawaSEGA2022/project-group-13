@@ -36,8 +36,10 @@ android {
     }
 }
 
+
 dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
+    implementation 'androidx.gridlayout:gridlayout:1.0.0'
     testImplementation "androidx.arch.core:core-testing:2.1.0"
 
     implementation 'androidx.appcompat:appcompat:1.5.1'

@@ -15,4 +15,5 @@ public class Model {
     public String getCook() {
         return cook;
     }
+
 }

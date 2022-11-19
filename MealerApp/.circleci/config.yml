@@ -1,9 +1,9 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/MealerApp
+    working_directory: ./MealerApp
     docker:
-      - image: cimg/android:2022.09
+      - image: circleci/android:api-25-alpha
     environment:
       JVM_OPTS: -Xmx3200m
     steps:
@@ -11,20 +11,20 @@ jobs:
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
-          name: Chmod permissions  
-          command: sudo chmod +x ./gradlew
+         name: chmod permissions #if permission for Gradlew Dependencies fail, use this. 
+         command: sudo chmod +x ./gradlew
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
       - save_cache:
           paths:
-            - ~/ .gradle
+            - ./MealerApp/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
-          name: Run InstrumentedTest
-          command: ./gradlew test
+          name: Run Tests
+          command: ./gradlew lint test
       - store_artifacts:
-          path: app/build/outputs/apk/debug/
-          destination: apks/
+          path: app/build/reports
+          destination: reports
       - store_test_results:
           path: app/build/test-results

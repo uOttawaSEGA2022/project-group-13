@@ -14,6 +14,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 /**
@@ -32,173 +33,31 @@ public class ExampleUnitTest {
      * Test will check if suspend and lifting a suspension on a cook is working correctly
      */
 
+    // Testing for email format
     @Test
-    public void suspendCook_isCorrect() throws Exception{
-        UserDatabase dtb = new UserDatabase();
-        dtb.suspendCook("diWhRfZIqRdWSgqki9aKDpn1vDk2", "03/04/2023");
-        Database.retrieveListener isSuspendedListener = new Database.retrieveListener() {
-            @Override
-            public void onDataReceived(Object data) {
-                assertTrue((Boolean)data);
-
-            }
-
-            @Override
-            public void onError() {
-
-            }
-        };
-        dtb.getInformation(FirebaseDatabase.getInstance().getReference("USERS")
-                .child("diWhRfZIqRdWSgqki9aKDpn1vDk2").child("isSuspended"), isSuspendedListener);
-
-        Database.retrieveListener dateListener = new Database.retrieveListener() {
-            @Override
-            public void onDataReceived(Object data) {
-                assertEquals("03/04/2023", data.toString());
-            }
-
-            @Override
-            public void onError() {
-
-            }
-        };
-        dtb.getInformation(FirebaseDatabase.getInstance().getReference("USERS")
-                .child("diWhRfZIqRdWSgqki9aKDpn1vDk2").child("suspensionDate"), dateListener);
-
-
+    public void checkCorrectEmail(){
+        assertTrue(CookRegistration.checkEmailFormat("Testing@gmail.com"));
     }
 
-    /**
-     * Resets the values of the test cook in the database so that the test may be preformed again
-     */
-    @After
-    public void resetCook(){
-        UserDatabase dtb = new UserDatabase();
-        dtb.liftSuspension("diWhRfZIqRdWSgqki9aKDpn1vDk2");
-    }
-
-    /**
-     * Tests if adding and dismissing complaints is working as expected
-     */
     @Test
-    public void addAndDismissComplain_isCorrect(){
-        ComplaintsDataBase dtb = new ComplaintsDataBase();
-        Complaints complaint = new Complaints("I did not like the food",
-                "CLIENTUID", "diWhRfZIqRdWSgqki9aKDpn1vDk2");
-        dtb.addComplaint("diWhRfZIqRdWSgqki9aKDpn1vDk2",complaint);
-
-        Database.retrieveListener complaintListener = new Database.retrieveListener() {
-            @Override
-            public void onDataReceived(Object data) {
-                Complaints dtbComplaint = (Complaints) data;
-                assertEquals(complaint,dtbComplaint);
-            }
-
-            @Override
-            public void onError() {
-
-            }
-        };
-        dtb.getInformation(FirebaseDatabase.getInstance().getReference("COMPLAINTS")
-                .child("diWhRfZIqRdWSgqki9aKDpn1vDk2"),complaintListener);
-
-        dtb.setRead("diWhRfZIqRdWSgqki9aKDpn1vDk2");
-
-        Database.retrieveListener readListener = new Database.retrieveListener() {
-            @Override
-            public void onDataReceived(Object data) {
-                Boolean isRead = (boolean)data;
-                assertTrue(isRead);
-            }
-
-            @Override
-            public void onError() {
-
-            }
-        };
-        dtb.getInformation(FirebaseDatabase.getInstance().getReference("COMPLAINTS")
-                .child("diWhRfZIqRdWSgqki9aKDpn1vDk2").child("isRead"), readListener);
+    public void checkNoAt(){
+        assertFalse(CookRegistration.checkEmailFormat("Testinggmail.com"));
     }
 
-    /**
-     * Deletes the test complaint created
-     */
-    @After public void deleteTestComplaint(){
-        ComplaintsDataBase dtb = new ComplaintsDataBase();
-        dtb.deleteComplaint("diWhRfZIqRdWSgqki9aKDpn1vDk2");
-    }
-
-
-    /**
-     * Test will check if registering and deleting a user is working correctly
-     */
     @Test
-    public void registerAndDeleteUser_isCorrect(){
-        UserDatabase dtb = new UserDatabase();
-        User client= new Client("John", "Doe", "Jdoe@gmail.com", "Ilikefood/123", "213 Celtic road","1638299384651290");
-        dtb.registerUser(client);
-
-        Database.retrieveListener registrationListener = new Database.retrieveListener() {
-            @Override
-            public void onDataReceived(Object data) {
-                User dtbClient = data;
-                assertEquals(client,dtbClient); //Checks if the expected "value" (client) is the same as the actual "value"  (dtbClient) within the DataBase
-            }
-
-            @Override
-            public void onError() {
-
-            }
-        };
-
-        String userID=FirebaseAuth.getInstance().getUID();
-        dtb.getInformation(FirebaseDatabase.getInstance().getReference("USERS").child(userID), registrationListener);
-    
+    public void checkNoDotCOM(){
+        assertFalse(CookRegistration.checkEmailFormat("Testing@gmail"));
     }
 
-    /**
-     * Deletes the test Client created
-     */
-    @After public void deleteTestClient(){
-        UsersDataBase dtb = new UsersDataBase();
-        dtb.deleteUser(client);
-    }
-
-
-    /**
-     * Test will check if registering, suspending, and deleting a cook user is working correctly
-     */
     @Test
-    public void userRegisterAndSuspension_isCorrect(){ 
-        UserDatabase dtb = new UserDatabase();
-        User cook= new Cook("Jane", "Doe", "Janedoe@gmail.com", "Imakefood/123", "213 teron road","I make food");
-        dtb.registerUser(cook);
-        String userID=FirebaseAuth.getInstance().getUID();
-        dtb.suspendCook(userID, "09/07/2023"); 
-
-        Database.retrieveListener cookListener = new Database.retrieveListener() {
-            @Override
-            public void onDataReceived(Object data) {
-                Boolean isSuspended = Boolean.valueOf(data.toString());
-                assertTrue(isSuspended);
-            }
-
-            @Override
-            public void onError() {
-
-            }
-        };
-
-        dtb.getInformation(FirebaseDatabase.getInstance().getReference("USERS").child(userID).child("isSuspended"), cookListener);
-
-}
-    
-    /**
-     * Deletes the test Client created
-     */
-    @After public void deleteTestCook(){
-        UsersDataBase dtb = new UsersDataBase();
-        dtb.deleteUser(cook);
+    public void checkNoEmail(){
+        assertFalse(CookRegistration.checkEmailFormat(""));
     }
+
+    @Test
+    public void checkNoAtandDotCOM(){
+        assertFalse(CookRegistration.checkEmailFormat("testing"));
+    }
+
 
 }

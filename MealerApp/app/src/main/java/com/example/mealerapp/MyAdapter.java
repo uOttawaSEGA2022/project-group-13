@@ -66,7 +66,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                         String cookUID = cook.getText().toString();
                         String clientUID = client.getText().toString();
                         String complaintTxt = complaint.getText().toString();
-                        Log.d("COOKUID", cookUID);
                         if (position != RecyclerView.NO_POSITION) {
                             recyclerViewInterface.onItemClick(position, cookUID, clientUID, complaintTxt);
                         }
