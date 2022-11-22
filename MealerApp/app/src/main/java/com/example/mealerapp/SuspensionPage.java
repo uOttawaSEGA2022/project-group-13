@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 
@@ -43,15 +44,15 @@ public class SuspensionPage extends AppCompatActivity implements View.OnClickLis
         switch (view.getId()) {
             case R.id.temporaryButton:
                 date = suspensionDate.getText().toString();
-                //boolean valid = verifyDate(date);
-               /* if (!valid) {
+                boolean valid = verifyDate(date);
+                if (!valid) {
                     Toast.makeText(getApplicationContext(), "Invalid date", Toast.LENGTH_SHORT).show();
-                } else {*/
+                } else {
                     dtb.suspendCook(cookUID, date);
                     database.setRead(cookUID);
                     startActivity(returnToComplaints);
 
-               // }
+               }
                 break;
 
         case R.id.permanentButton:
@@ -80,10 +81,12 @@ public class SuspensionPage extends AppCompatActivity implements View.OnClickLis
 
        try {
            month = Integer.parseInt(date.substring(0, 2));
-           day = Integer.parseInt(date.substring(4, 6));
+           day = Integer.parseInt(date.substring(3, 5));
            year = Integer.parseInt(date.substring(6));
+
        }
        catch(Exception e){
+           Log.d("HIT",date);
            return isValid;
        }
 
