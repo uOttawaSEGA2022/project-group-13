@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements Database.retrieve
 
     public void loginpage(View view){
 
-
         EditText emailEditText = (EditText)findViewById(R.id.username2);
         EditText passwordEditText = (EditText)findViewById(R.id.password2);
 
@@ -53,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements Database.retrieve
         Database.retrieveListener roleListener = new Database.retrieveListener() {
             @Override
             public void onDataReceived(Object data) {
-               String dataString = data.toString();
+                String dataString = data.toString();
                 if(dataString.equals("COOK")){
                     Database.retrieveListener suspendedListener = new Database.retrieveListener() {
                         @Override
@@ -92,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements Database.retrieve
                     };
                     dtb.retrieveInfo(UserDatabase.dataField.ISSUSPENDED,suspendedListener);
                 }
+                Log.d("Here","Here");
 
                 intent.putExtra("role", dataString);
                 startActivity(intent);
@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements Database.retrieve
 
             }
         };
+
 
         dtb.retrieveInfo(UserDatabase.dataField.ROLE,roleListener);
 

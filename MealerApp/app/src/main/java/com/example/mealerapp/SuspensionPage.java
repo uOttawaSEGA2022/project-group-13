@@ -38,6 +38,7 @@ public class SuspensionPage extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         UserDatabase dtb = new UserDatabase();
+        ComplaintsDataBase database = new ComplaintsDataBase();
         Intent returnToComplaints = new Intent(getApplicationContext(), ComplaintsPage.class);
         switch (view.getId()) {
             case R.id.temporaryButton:
@@ -46,12 +47,15 @@ public class SuspensionPage extends AppCompatActivity implements View.OnClickLis
                 if (!valid) {
                     Toast.makeText(getApplicationContext(), "Invalid date", Toast.LENGTH_SHORT).show();
                 }
+                else {
                     dtb.suspendCook(cookUID, date);
+                    database.setRead(cookUID);
                     startActivity(returnToComplaints);
                     break;
-
+                }
                     case R.id.permanentButton:
                         dtb.suspendCook(cookUID, "Indefinite");
+                        database.setRead(cookUID);
                         startActivity(returnToComplaints);
                         break;
 

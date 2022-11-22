@@ -40,7 +40,6 @@ abstract public class Database {
     }
 
     public void getInformation(DatabaseReference reference, final Database.retrieveListener listener){
-
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
