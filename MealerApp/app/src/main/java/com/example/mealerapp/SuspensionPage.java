@@ -18,7 +18,7 @@ public class SuspensionPage extends AppCompatActivity implements View.OnClickLis
     private String date;
     private EditText suspensionDate;
 
-   @Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_suspension_page);
@@ -31,7 +31,7 @@ public class SuspensionPage extends AppCompatActivity implements View.OnClickLis
         Button permanent = findViewById(R.id.permanentButton);
         permanent.setOnClickListener(this);
         Button temporary = findViewById(R.id.temporaryButton);
-        temporary .setOnClickListener(this);
+        temporary.setOnClickListener(this);
 
     }
 
@@ -43,25 +43,27 @@ public class SuspensionPage extends AppCompatActivity implements View.OnClickLis
         switch (view.getId()) {
             case R.id.temporaryButton:
                 date = suspensionDate.getText().toString();
-                boolean valid = verifyDate(date);
-                if (!valid) {
+                //boolean valid = verifyDate(date);
+               /* if (!valid) {
                     Toast.makeText(getApplicationContext(), "Invalid date", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {*/
                     dtb.suspendCook(cookUID, date);
                     database.setRead(cookUID);
                     startActivity(returnToComplaints);
-                    break;
-                }
-                    case R.id.permanentButton:
-                        dtb.suspendCook(cookUID, "Indefinite");
-                        database.setRead(cookUID);
-                        startActivity(returnToComplaints);
-                        break;
 
-                }
+               // }
+                break;
 
-        }
+        case R.id.permanentButton:
+        dtb.suspendCook(cookUID, "Indefinite");
+        database.setRead(cookUID);
+        startActivity(returnToComplaints);
+        break;
+
+    }
+    }
+
+
 
 
     //This method verfies that the date input is valid but it is incomplete
