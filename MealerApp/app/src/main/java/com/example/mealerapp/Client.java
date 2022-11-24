@@ -26,4 +26,8 @@ public class Client extends User {
     public String toString() {
         return "\nAccount Information  \nFirst name: " + firstName + "\n" + "Last name: " + lastName + "\n" + "Email: " + email + "\n" + "Password: " + password + "\n" + "Credit Card Information " + creditCardInfo;
     }
+
+    public PurchaseRequest createRequest(String clientUID, String cookUID, Meal meal){
+        return new PurchaseRequest(cookUID,clientUID,meal);
+    }
 }
