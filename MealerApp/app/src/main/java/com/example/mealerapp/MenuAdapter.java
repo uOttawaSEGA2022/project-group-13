@@ -48,6 +48,12 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
         }
 
         holder.currentlyOffered.setText(currentlyOfferedString);
+
+        String ratingString = String.valueOf(meal.getRating());
+        if(ratingString.equals("-1.0")){
+            ratingString = "No ratings";
+        }
+        holder.rating.setText(ratingString);
     }
 
     @Override
@@ -57,7 +63,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
 
     public static class MenuViewHolder extends RecyclerView.ViewHolder{
 
-        TextView meal, ingredients, allergens, description, cuisine, currentlyOffered, mealType, price;
+        TextView meal, ingredients, allergens, description, cuisine, currentlyOffered, mealType, price, rating;
 
         public MenuViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
             super(itemView);
@@ -69,6 +75,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
             currentlyOffered = itemView.findViewById(R.id.currentlyOfferedEditTextView);
             mealType = itemView.findViewById(R.id.mealTypeEditTextView);
             price = itemView.findViewById(R.id.priceEditTextView);
+            rating = itemView.findViewById(R.id.ratingEditTextView);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -85,9 +92,16 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
                             currentlyOfferedBool = true;
                         }
                         Double priceDouble = Double.parseDouble(price.getText().toString().substring(1));
+                        double ratingDouble;
+                        if(rating.getText().toString().equals("No ratings")){
+                            ratingDouble = -1;
+                        }
+                        else{
+                            ratingDouble = Double.parseDouble(rating.getText().toString());
+                        }
                         if(position!=RecyclerView.NO_POSITION){
                             recyclerViewInterface.onItemClick(position,mealString, descriptionString,allergensString,ingredientsString,cuisineString
-                            ,mealTypeString,currentlyOfferedBool, priceDouble);
+                            ,mealTypeString,currentlyOfferedBool,priceDouble,ratingDouble);
                         }
                     }
                 }
@@ -98,6 +112,6 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
 
     public interface RecyclerViewInterface{
         public void onItemClick(int position, String meal, String description, String allergens,
-                                String ingredients, String cuisine, String mealType, boolean currentlyOffered, Double price);
+                                String ingredients, String cuisine, String mealType, boolean currentlyOffered, Double price, double rating);
     }
 }

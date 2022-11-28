@@ -1,10 +1,13 @@
 package com.example.mealerapp;
 
-public class Cook extends User{
+import java.io.Serializable;
+
+public class Cook extends User implements Serializable {
 
     private String description, suspensionDate;
     private boolean isSuspended;
     private Menu menu;
+    private int requestsFulfilled;
 
     public Cook(String firstName, String lastName, String emailAddress, String accountPassword, String address, String description) {
         super(firstName, lastName, emailAddress, accountPassword, userType.COOK, address);
@@ -12,6 +15,7 @@ public class Cook extends User{
         suspensionDate = "N/A";
         isSuspended = false;
         menu = new Menu();
+        this.requestsFulfilled = 0;
     }
 
     public Cook(String firstName, String lastName, String emailAddress, String accountPassword, String address, String description, Boolean isSuspended, String suspensionDate) {
@@ -57,6 +61,11 @@ public class Cook extends User{
      return "\nAccount Information \n************************* \nFirst name: " + firstName + "\n" + "Last name: " + lastName + "\n" + "Email: " + email + "\n" + "Password: " + password + "\n" + "Description: " + description;
      }
 
+    public int getRequestsFulfilled() {
+        return requestsFulfilled;
+    }
 
-
+    public void setRequestsFulfilled(int requestsFulfilled) {
+        this.requestsFulfilled = requestsFulfilled;
+    }
 }

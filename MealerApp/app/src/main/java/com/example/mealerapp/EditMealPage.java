@@ -16,7 +16,7 @@ public class EditMealPage extends AppCompatActivity {
 
     private String name, mealType, description,cuisine,allergens,ingredients, UID;
     private boolean currentlyOffered;
-    private Double price;
+    private Double price, rating;
     private Menu menu;
 
     private EditText nameEditText,mealTypeEditText,EditText,cuisineEditText,allergensEditText,ingredientsEditText,priceEditText, descriptionEditText;
@@ -40,8 +40,9 @@ public class EditMealPage extends AppCompatActivity {
         ingredients = bundle.getString("ingredients");
         currentlyOffered = Boolean.valueOf(bundle.getString("currentlyOffered"));
         price = Double.parseDouble(bundle.getString("price"));
-        Log.d("price",String.valueOf(price));
         UID = bundle.getString("UID");
+        rating = Double.parseDouble(bundle.getString("rating"));
+
 
         nameEditText = (EditText)findViewById(R.id.nameEditText2);
         mealTypeEditText = (EditText)findViewById(R.id.mealTypeEditText2);
@@ -82,8 +83,6 @@ public class EditMealPage extends AppCompatActivity {
                     menu.deleteMeal(UID,name);
                     returnToMenuPage(v);
 
-
-
                 }
                 else{
                     Toast.makeText(getApplicationContext(), "cannot delete meal since it's currently offered", Toast.LENGTH_LONG).show();
@@ -107,7 +106,7 @@ public class EditMealPage extends AppCompatActivity {
         Double priceDouble = Double.parseDouble(priceEditText.getText().toString());
 
         Meal editedMeal = new Meal(mealName,mealTypeString,cuisineString,ingredientsString,allergensString
-                ,descriptionString,priceDouble,currentlyOffered);
+                ,descriptionString,priceDouble,currentlyOffered,rating);
         menu.addMeal(UID, editedMeal);
 
     }

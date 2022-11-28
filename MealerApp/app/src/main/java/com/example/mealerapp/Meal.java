@@ -1,10 +1,13 @@
 package com.example.mealerapp;
 
-public class Meal {
+import java.io.Serializable;
+
+public class Meal implements Serializable {
 
     private String name, mealType, cuisine, ingredients, allergens, description;
     private double price;
     private Boolean currentlyOffered;
+    private double rating;
 
     public Meal(String name, String mealType, String cuisine,
                      String ingredients, String allergens, String description, double price, boolean currentlyOffered){
@@ -17,7 +20,21 @@ public class Meal {
         this.description = description;
         this.price = price;
         this.currentlyOffered = currentlyOffered;
+        this.rating = -1;
 
+    }
+    public Meal(String name, String mealType, String cuisine,
+                String ingredients, String allergens, String description, double price, boolean currentlyOffered, double rating){
+
+        this.name = name;
+        this.mealType = mealType;
+        this.cuisine = cuisine;
+        this.ingredients = ingredients;
+        this.allergens = allergens;
+        this.description = description;
+        this.price = price;
+        this.currentlyOffered = currentlyOffered;
+        this.rating = rating;
     }
 
     public String getName() {
@@ -82,5 +99,13 @@ public class Meal {
 
     public void setCurrentlyOffered(Boolean currentlyOffered) {
         this.currentlyOffered = currentlyOffered;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
     }
 }

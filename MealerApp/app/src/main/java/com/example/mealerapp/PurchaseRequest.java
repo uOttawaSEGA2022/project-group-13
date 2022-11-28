@@ -46,4 +46,7 @@ public class PurchaseRequest {
     public void setStatus(STATUS status) {
         this.status = status;
     }
+
+
+
 }

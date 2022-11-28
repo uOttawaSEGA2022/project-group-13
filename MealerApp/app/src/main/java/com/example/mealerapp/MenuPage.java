@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,7 +28,7 @@ public class MenuPage extends AppCompatActivity implements MenuAdapter.RecyclerV
 
     private MenuAdapter adapter;
     private ArrayList<Meal> list;
-    private DatabaseReference ref;
+    private DatabaseReference ref, ratingRef;
 
     private Button welcomeButton, addMealButton;
     private TextView emptyMenu;
@@ -41,6 +42,7 @@ public class MenuPage extends AppCompatActivity implements MenuAdapter.RecyclerV
         Log.d("UID MENU",UID);
 
         ref = FirebaseDatabase.getInstance().getReference("USERS").child(UID).child("MENU");
+        ratingRef = FirebaseDatabase.getInstance().getReference("USERS").child(UID).child("RATING");
 
         addMealButton = (Button)findViewById(R.id.addMealButton);
         addMealButton.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +79,7 @@ public class MenuPage extends AppCompatActivity implements MenuAdapter.RecyclerV
                     String[] mealFields = new String[8];
                     int counter = 0;
                     for(DataSnapshot fields :dataSnapshot.getChildren()){
+                        if (counter==8){break;}
                         mealFields[counter] = fields.getValue().toString();
                         counter++;
                     }
@@ -89,13 +92,40 @@ public class MenuPage extends AppCompatActivity implements MenuAdapter.RecyclerV
                     String name = mealFields[6];
                     double price = Double.parseDouble(mealFields[7]);
 
-                    Meal meal = new Meal(name,mealType,cuisine,ingredients,allergens,description,price, currentlyOffered);
-                    list.add(meal);
-                    adapter.notifyDataSetChanged();
-                }
+                    ratingRef.child(name).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            double total = 0;
+                            int numRatings = 0;
+                            for(DataSnapshot rating : snapshot.getChildren()){
+                                Log.d("rating", rating.getValue().toString());
+                                total += Double.valueOf(rating.getValue().toString());
+                                numRatings++;
+                            }
 
-                if(list.isEmpty()){
-                    emptyMenu.setVisibility(View.VISIBLE);
+                            double rating;
+                            if(numRatings == 0){
+                                rating = -1;
+                            }
+                            else{
+                                rating = Math.round(total/numRatings);
+                            }
+
+                            Meal meal = new Meal(name,mealType,cuisine,ingredients,allergens,description,price, currentlyOffered, rating);
+                            list.add(meal);
+                            adapter.notifyDataSetChanged();
+
+                            if(list.isEmpty()){
+                                emptyMenu.setVisibility(View.VISIBLE);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
                 }
             }
 
@@ -109,7 +139,7 @@ public class MenuPage extends AppCompatActivity implements MenuAdapter.RecyclerV
 
     @Override
     public void onItemClick(int position, String meal, String description, String allergens,
-                            String ingredients, String cuisine, String mealType, boolean currentlyOffered, Double price) {
+                            String ingredients, String cuisine, String mealType, boolean currentlyOffered, Double price, double rating) {
         Intent editMealPage = new Intent(getApplicationContext(),EditMealPage.class);
         editMealPage.putExtra("name",meal);
         editMealPage.putExtra("description",description);
@@ -120,8 +150,8 @@ public class MenuPage extends AppCompatActivity implements MenuAdapter.RecyclerV
         editMealPage.putExtra("currentlyOffered",String.valueOf(currentlyOffered));
         editMealPage.putExtra("price",String.valueOf(price));
         editMealPage.putExtra("UID",UID);
+        editMealPage.putExtra("rating",String.valueOf(rating));
         startActivity(editMealPage);
-
 
     }
 
