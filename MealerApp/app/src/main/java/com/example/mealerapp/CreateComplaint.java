@@ -1,10 +1,13 @@
 package com.example.mealerapp;
 
+import static com.example.mealerapp.UserDatabase.getUID;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -22,6 +25,7 @@ import java.util.List;
 
 import android.widget.AdapterView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class CreateComplaint extends AppCompatActivity {
 
@@ -136,12 +140,28 @@ public class CreateComplaint extends AppCompatActivity {
 
                     ComplaintsDataBase dtb = new ComplaintsDataBase();
 
-                    Complaints newComplaint = new Complaints(complaintText, getEmailUID(clientEmailOne) , getEmailUID(text));
-                    dtb.addComplaint(getEmailUID(clientEmailOne), newComplaint);
+                    String clientUID = getUID();
 
-                    Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
-                    //intent.putExtra("role", "client");
-                    startActivity(intent);
+                    Database.retrieveListener cookListener = new Database.retrieveListener() {
+                        @Override
+                        public void onDataReceived(Object data) {
+                            String cookUID = (String)data;
+                            Complaints newComplaint = new Complaints(complaintText, clientUID , cookUID);
+                            dtb.addComplaint(cookUID, newComplaint);
+
+                            Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
+                            intent.putExtra("role", "CLIENT");
+                            Toast.makeText(getApplicationContext(),"Complaint Submitted",Toast.LENGTH_LONG).show();
+                            startActivity(intent);
+                        }
+
+                        @Override
+                        public void onError() {
+
+                        }
+                    };
+
+                    getEmailUID(text, cookListener);
                 }
 
 
@@ -153,7 +173,7 @@ public class CreateComplaint extends AppCompatActivity {
 
 
     //String emailUID = "";
-    private String getEmailUID(String emailText){
+    private void getEmailUID(String emailText, Database.retrieveListener listener){
 
         String emailUID;
         /**
@@ -189,26 +209,24 @@ public class CreateComplaint extends AppCompatActivity {
             //}
         //}));
 
-        final String[] holder = new String[1];
-
         FirebaseDatabase.getInstance().getReference().child("USERS")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        String emailUID = "";
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            String user = snapshot.child("email").getValue(String.class);
+                            String user = snapshot.child("email").getValue().toString();
+                            Log.d("user", user);
                             //System.out.println(user.email);
 
                             if(user.equals(emailText)){
-                               emailUID = snapshot.getValue(String.class);
-                               //return emailUID;
+                                Log.d("UID", snapshot.getKey());
+                               listener.onDataReceived(snapshot.getKey());
+                               break;
                             }
 
 
                         }
 
-                        holder[0] = emailUID;
 
                     }
                     @Override
@@ -216,10 +234,6 @@ public class CreateComplaint extends AppCompatActivity {
                     }
                 });
 
-
-
-
-        return holder[0];
 
     }
 

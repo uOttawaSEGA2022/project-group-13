@@ -161,7 +161,7 @@ public class UserDatabase extends Database{
         cookRef.child("suspensionDate").setValue("N/A");
     }
 
-    public String getUID(){
+    public static String getUID(){
         return FirebaseAuth.getInstance().getUid().toString();
     }
 
