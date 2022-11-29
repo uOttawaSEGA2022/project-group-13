@@ -33,6 +33,8 @@ public class CreateComplaint extends AppCompatActivity {
     List<String> cookUIDs;
     //List<String> clientNames;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +60,6 @@ public class CreateComplaint extends AppCompatActivity {
                     String spinnerName = childSnapshot.child("email").getValue(String.class);
                     //String cookUID = childSnapshot.getValue(String.class);
 
-                    //String userType = snapshot.child("role").getValue(String.class);
                     /**
                     if (userType == "COOK") {
                         cookNames.add(spinnerName);
@@ -66,21 +67,12 @@ public class CreateComplaint extends AppCompatActivity {
                      */
 
                     cookNames.add(spinnerName);
-                    //cookUIDs.add(cookUID);
-                    //clientNames.add(spinnerName);
-                    //cookNames.add(userType);
-                }
 
-                //cookNames.add("Kyle");
-                //cookNames.add("rob");
+                }
 
                 ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(CreateComplaint.this, android.R.layout.simple_spinner_item, cookNames);
                 arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
                 spinner.setAdapter(arrayAdapter);
-
-                //ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<>(CreateComplaint.this, android.R.layout.simple_spinner_item, clientNames);
-                //arrayAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_item);
-                //spinner2.setAdapter(arrayAdapter2);
 
             }
 
@@ -123,6 +115,8 @@ public class CreateComplaint extends AppCompatActivity {
 
                 if(checkComplaint()){
 
+                    /**
+
                     int count = 0;
                     int count2 = 0;
 
@@ -135,11 +129,15 @@ public class CreateComplaint extends AppCompatActivity {
                         }
 
                     }
+                    */
 
-                    String cookID = cookUIDs.get(count - 1);
-                    String clientID = cookUIDs.get(count2 -1);
-                    Complaints newComplaint = new Complaints(complaintText, clientID , cookID);
+                    //String cookID = text.getUID().getText().toString();
+                    //String clientID = cookUIDs.get(count2 -1);
 
+                    ComplaintsDataBase dtb = new ComplaintsDataBase();
+
+                    Complaints newComplaint = new Complaints(complaintText, getEmailUID(clientEmailOne) , getEmailUID(text));
+                    dtb.addComplaint(getEmailUID(clientEmailOne), newComplaint);
 
                     Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
                     //intent.putExtra("role", "client");
@@ -152,6 +150,79 @@ public class CreateComplaint extends AppCompatActivity {
 
         });
     }
+
+
+    //String emailUID = "";
+    private String getEmailUID(String emailText){
+
+        String emailUID;
+        /**
+        database = FirebaseDatabase.getInstance().getReference();
+        database.child("USERS").addValueEventListener((new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for(DataSnapshot childSnapshot:snapshot.getChildren()) {
+                    String spinnerName = childSnapshot.child("email").getValue(String.class);
+                    //String cookUID = childSnapshot.getValue(String.class);
+
+                    if(spinnerName.equals(emailText)){
+                        emailUID = childSnapshot.getValue(String.class);
+                    }
+
+                    //String userType = snapshot.child("role").getValue(String.class);
+                    /**
+                     if (userType == "COOK") {
+                     cookNames.add(spinnerName);
+                     }
+                     */
+
+
+
+               // }
+           // }
+
+
+            //@Override
+            //public void onCancelled(@NonNull DatabaseError error) {
+
+            //}
+        //}));
+
+        final String[] holder = new String[1];
+
+        FirebaseDatabase.getInstance().getReference().child("USERS")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String emailUID = "";
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            String user = snapshot.child("email").getValue(String.class);
+                            //System.out.println(user.email);
+
+                            if(user.equals(emailText)){
+                               emailUID = snapshot.getValue(String.class);
+                               //return emailUID;
+                            }
+
+
+                        }
+
+                        holder[0] = emailUID;
+
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+
+
+
+
+        return holder[0];
+
+    }
+
 
     private boolean checkComplaint(){
         return true;
