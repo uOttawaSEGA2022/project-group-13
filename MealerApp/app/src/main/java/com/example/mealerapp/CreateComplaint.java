@@ -3,9 +3,12 @@ package com.example.mealerapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.google.firebase.database.DataSnapshot;
@@ -26,7 +29,8 @@ public class CreateComplaint extends AppCompatActivity {
     //Spinner spinner2;
     DatabaseReference databaseReference;
     List<String> cookNames;
-    Object item;
+    //bject item;
+    List<String> cookUIDs;
     //List<String> clientNames;
 
     @Override
@@ -36,6 +40,7 @@ public class CreateComplaint extends AppCompatActivity {
 
         spinner = findViewById(R.id.spinner);
         cookNames = new ArrayList<>();
+        cookUIDs = new ArrayList<>();
 
         //spinner2 = findViewById(R.id.spinner2);
         //clientNames = new ArrayList<>();
@@ -51,6 +56,7 @@ public class CreateComplaint extends AppCompatActivity {
 
                 for(DataSnapshot childSnapshot:snapshot.getChildren()) {
                     String spinnerName = childSnapshot.child("email").getValue(String.class);
+                    //String cookUID = childSnapshot.getValue(String.class);
 
                     //String userType = snapshot.child("role").getValue(String.class);
                     /**
@@ -60,6 +66,7 @@ public class CreateComplaint extends AppCompatActivity {
                      */
 
                     cookNames.add(spinnerName);
+                    //cookUIDs.add(cookUID);
                     //clientNames.add(spinnerName);
                     //cookNames.add(userType);
                 }
@@ -74,9 +81,6 @@ public class CreateComplaint extends AppCompatActivity {
                 //ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<>(CreateComplaint.this, android.R.layout.simple_spinner_item, clientNames);
                 //arrayAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_item);
                 //spinner2.setAdapter(arrayAdapter2);
-
-
-
 
             }
 
@@ -100,4 +104,58 @@ public class CreateComplaint extends AppCompatActivity {
         //TextView myTextView = (TextView) findViewById(R.id.Testing);
         //myTextView.setText(item.toString());
     }
+
+    public void createComplaint(View view){
+
+        Spinner mySpinner = (Spinner) findViewById(R.id.spinner);
+        String text = mySpinner.getSelectedItem().toString();
+
+        EditText complaint = (EditText) findViewById(R.id.Complaint);
+        EditText clientEmail = (EditText) findViewById(R.id.clientEmail);
+
+        Button create = (Button) findViewById(R.id.CreateComplaint);
+
+        create.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                String complaintText = complaint.getText().toString();
+                String clientEmailOne = clientEmail.getText().toString();
+
+                if(checkComplaint()){
+
+                    int count = 0;
+                    int count2 = 0;
+
+                    for(int i = 0; i < cookNames.size(); i++){
+                        if(cookNames.equals(text)){
+                            count = i;
+                        }
+                        if(cookNames.equals(clientEmailOne)){
+                            count2 = i;
+                        }
+
+                    }
+
+                    String cookID = cookUIDs.get(count - 1);
+                    String clientID = cookUIDs.get(count2 -1);
+                    Complaints newComplaint = new Complaints(complaintText, clientID , cookID);
+
+
+                    Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
+                    //intent.putExtra("role", "client");
+                    startActivity(intent);
+                }
+
+
+
+            }
+
+        });
+    }
+
+    private boolean checkComplaint(){
+        return true;
+    }
+
+
 }
