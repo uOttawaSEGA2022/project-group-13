@@ -31,6 +31,12 @@ public class WelcomePage extends AppCompatActivity{
             }
         });
 
+        Button makeComplaint = (Button) findViewById(R.id.MakeComplaint);
+        makeComplaint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {CreateComplaints(v); }
+        });
+
         Button nextActivity = (Button) findViewById(R.id.nextActivityButton);
         if(role.equals("CLIENT")){
             nextActivity.setVisibility(View.GONE);
@@ -53,6 +59,7 @@ public class WelcomePage extends AppCompatActivity{
             });
         }
 
+
     }
 
     public void LogInPage(View view){
@@ -60,6 +67,11 @@ public class WelcomePage extends AppCompatActivity{
         startActivity(intent);
 
 
+    }
+
+    public void CreateComplaints(View view){
+        Intent intent = new Intent(getApplicationContext(), CreateComplaint.class);
+        startActivity(intent);
     }
 
     public void ComplaintsPage(View view){

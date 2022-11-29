@@ -6,17 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".CreateComplaint">
 
-    <TableRow android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:id="@+id/tableRow"/>
-
-    <Spinner android:layout_height="wrap_content"
-        android:layout_width="252dp"
-        android:id="@+id/spinner"
-        android:spinnerMode="dropdown"/>
-
-
-
     <TextView
         android:id="@+id/Title"
         android:layout_width="275dp"
@@ -30,6 +19,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.099" />
+
+    <TableRow android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/tableRow"/>
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="252dp"
+        android:layout_height="wrap_content"
+        android:contentDescription="Cook Names"
+        android:minHeight="48dp"
+        android:spinnerMode="dropdown" />
+
+
 
     <EditText
         android:id="@+id/Complaint"
@@ -54,5 +57,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/Testing"
+        android:layout_width="275dp"
+        android:layout_height="47dp"
+        android:textColor="#000000"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.58"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.099" />
 
 </TableLayout>
