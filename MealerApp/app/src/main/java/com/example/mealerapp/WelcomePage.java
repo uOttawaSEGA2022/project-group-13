@@ -38,9 +38,20 @@ public class WelcomePage extends AppCompatActivity{
         });
 
         Button nextActivity = (Button) findViewById(R.id.nextActivityButton);
+        Button requests = (Button)findViewById(R.id.requestsButton);
+        requests.setVisibility(View.GONE);
+        requests.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewRequests(v);
+            }
+        });
+
         if(role.equals("CLIENT")){
             nextActivity.setVisibility(View.GONE);
+            requests.setVisibility(View.VISIBLE);
         }
+
         else if(role.equals("ADMIN")){
             nextActivity.setText("View Complaints");
             nextActivity.setOnClickListener(new View.OnClickListener(){
@@ -67,6 +78,12 @@ public class WelcomePage extends AppCompatActivity{
         startActivity(intent);
 
 
+    }
+
+    public void viewRequests(View view){
+        Intent viewRequestsPage = new Intent(getApplicationContext(), ViewPurchaseRequests.class);
+        viewRequestsPage.putExtra("UID",UserDatabase.getUID());
+        startActivity(viewRequestsPage);
     }
 
     public void CreateComplaints(View view){
