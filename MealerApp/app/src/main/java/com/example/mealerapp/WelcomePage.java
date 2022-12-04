@@ -39,21 +39,20 @@ public class WelcomePage extends AppCompatActivity{
 
         Button nextActivity = (Button) findViewById(R.id.nextActivityButton);
         Button requests = (Button)findViewById(R.id.requestsButton);
-        requests.setVisibility(View.GONE);
         requests.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewRequests(v);
+                viewRequests(v,role);
             }
         });
 
         if(role.equals("CLIENT")){
             nextActivity.setVisibility(View.GONE);
-            requests.setVisibility(View.VISIBLE);
         }
 
         else if(role.equals("ADMIN")){
             nextActivity.setText("View Complaints");
+            requests.setVisibility(View.GONE);
             nextActivity.setOnClickListener(new View.OnClickListener(){
                 public void onClick(View v){
                     ComplaintsPage(v);
@@ -80,9 +79,10 @@ public class WelcomePage extends AppCompatActivity{
 
     }
 
-    public void viewRequests(View view){
+    public void viewRequests(View view,String role){
         Intent viewRequestsPage = new Intent(getApplicationContext(), ViewPurchaseRequests.class);
         viewRequestsPage.putExtra("UID",UserDatabase.getUID());
+        viewRequestsPage.putExtra("role",role);
         startActivity(viewRequestsPage);
     }
 

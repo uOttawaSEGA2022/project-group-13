@@ -57,13 +57,13 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/cookTextView"
+                    android:id="@+id/roleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cook:" />
+                    android:text="Role:" />
 
                 <TextView
-                    android:id="@+id/cookEditTextView"
+                    android:id="@+id/roleEditTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="TextView" />

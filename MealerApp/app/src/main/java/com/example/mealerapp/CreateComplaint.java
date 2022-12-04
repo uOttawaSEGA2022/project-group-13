@@ -224,11 +224,9 @@ public class CreateComplaint extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             String user = snapshot.child("email").getValue().toString();
-                            Log.d("user", user);
                             //System.out.println(user.email);
 
                             if(user.equals(emailText)){
-                                Log.d("UID", snapshot.getKey());
                                listener.onDataReceived(snapshot.getKey());
                                break;
                             }

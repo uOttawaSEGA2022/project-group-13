@@ -24,11 +24,11 @@ import java.util.ArrayList;
 public class ViewPurchaseRequests extends AppCompatActivity implements PurchaseRequestAdapter.RecyclerViewInterface{
 
     private RecyclerView recyclerView;
-    private TextView noRequests;
+    private TextView noRequests, roleTextView;
     private Button welcomeButton;
     private ArrayList<PurchaseRequest> list;
     private DatabaseReference ref;
-    private String UID;
+    private String UID,role;
     private PurchaseRequestAdapter adapter;
 
     @Override
@@ -36,12 +36,15 @@ public class ViewPurchaseRequests extends AppCompatActivity implements PurchaseR
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_purchase_requests);
 
+        Bundle bundle = getIntent().getExtras();
+        role = bundle.getString("role");
+
         UID = UserDatabase.getUID();
 
         ref = FirebaseDatabase.getInstance().getReference("USERS").child(UID).child("REQUESTS");
 
         list = new ArrayList<>();
-        adapter = new PurchaseRequestAdapter(list,this,this);
+        adapter = new PurchaseRequestAdapter(list,this,this, role);
 
         recyclerView = (RecyclerView) findViewById(R.id.purchaseRequestsRecycleView);
         recyclerView.setHasFixedSize(true);
@@ -50,6 +53,7 @@ public class ViewPurchaseRequests extends AppCompatActivity implements PurchaseR
 
         noRequests = (TextView) findViewById(R.id.noRequestsTextView);
         noRequests.setVisibility(View.GONE);
+
 
         welcomeButton = (Button)findViewById(R.id.welcomeButton);
         welcomeButton.setOnClickListener(new View.OnClickListener() {
@@ -103,12 +107,17 @@ public class ViewPurchaseRequests extends AppCompatActivity implements PurchaseR
 
     public void returnToWelcome(View view){
         Intent returnToWelcome = new Intent(getApplicationContext(),WelcomePage.class);
-        returnToWelcome.putExtra("role","COOK");
+        returnToWelcome.putExtra("role",role);
         startActivity(returnToWelcome);
     }
 
     @Override
-    public void onItemClick(int position) {
-
+    public void onItemClick(int position, String meal,String price, String clientString, String dateString) {
+       Intent viewPendingRequest = new Intent(getApplicationContext(),ViewPendingRequest.class);
+        viewPendingRequest.putExtra("meal",meal);
+        viewPendingRequest.putExtra("price", price);
+        viewPendingRequest.putExtra("date", dateString);
+        viewPendingRequest.putExtra("client",clientString);
+        startActivity(viewPendingRequest);
     }
 }
