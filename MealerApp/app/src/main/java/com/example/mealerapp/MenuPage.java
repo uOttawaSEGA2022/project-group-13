@@ -98,7 +98,6 @@ public class MenuPage extends AppCompatActivity implements MenuAdapter.RecyclerV
                             double total = 0;
                             int numRatings = 0;
                             for(DataSnapshot rating : snapshot.getChildren()){
-                                Log.d("rating", rating.getValue().toString());
                                 total += Double.valueOf(rating.getValue().toString());
                                 numRatings++;
                             }

@@ -1,6 +1,7 @@
 package com.example.mealerapp;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
@@ -35,14 +42,42 @@ public class PurchaseRequestAdapter extends RecyclerView.Adapter<PurchaseRequest
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PurchaseRequestAdapter.PurchaseRequestViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PurchaseRequestViewHolder holder, int position) {
         PurchaseRequest request = list.get(position);
-        Meal mealObj = (request.getMeal());
-        holder.meal.setText(mealObj.getName());
+        holder.meal.setText(request.getMeal());
         //SHOULD GET COOK NAME??? OR EMAIL???
-        holder.cook.setText(request.getCookUID());
-        holder.price.setText(String.valueOf(mealObj.getPrice()));
         holder.status.setText(request.getStatus().toString().toLowerCase());
+        holder.date.setText(request.getDate());
+        DatabaseReference priceRef = FirebaseDatabase.getInstance().getReference("USERS").child(request.getCookUID()).child("MENU")
+                        .child(request.getMeal()).child("price");
+
+        priceRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String priceString = snapshot.getValue().toString();
+                holder.price.setText(priceString);
+
+                DatabaseReference cookEmailRef = FirebaseDatabase.getInstance().getReference("USERS").child(request.getCookUID()).child("email");
+                cookEmailRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        holder.cook.setText(snapshot.getValue().toString());
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
 
     }
 
@@ -53,15 +88,16 @@ public class PurchaseRequestAdapter extends RecyclerView.Adapter<PurchaseRequest
 
     public static class PurchaseRequestViewHolder extends RecyclerView.ViewHolder{
 
-        TextView meal,price,cook,status;
+        TextView meal,price,cook,status,date;
 
         public PurchaseRequestViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
             super(itemView);
 
-            meal = itemView.findViewById(R.id.mealTextView);
-            price = itemView.findViewById(R.id.priceTextView);
-            cook = itemView.findViewById(R.id.cookTextView);
-            status = itemView.findViewById(R.id.statusTextView);
+            meal = itemView.findViewById(R.id.mealEditTextView);
+            price = itemView.findViewById(R.id.priceEditTextview);
+            cook = itemView.findViewById(R.id.cookEditTextView);
+            status = itemView.findViewById(R.id.statusEditTextView);
+            date = itemView.findViewById(R.id.dateEditTextView);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

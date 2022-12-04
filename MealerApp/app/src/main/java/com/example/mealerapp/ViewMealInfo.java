@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class ViewMealInfo extends AppCompatActivity implements Serializable {
 
@@ -69,7 +70,7 @@ public class ViewMealInfo extends AppCompatActivity implements Serializable {
     }
 
     public void requestMeal(View view){
-        PurchaseRequest request = new PurchaseRequest(cookUID,clientUID,meal);
+        PurchaseRequest request = new PurchaseRequest(cookUID,clientUID,meal.getName());
         RequestDatabase dtb = new RequestDatabase();
         dtb.addRequest(request);
 

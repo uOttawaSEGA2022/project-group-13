@@ -37,6 +37,8 @@ public class CreateComplaint extends AppCompatActivity {
     List<String> cookUIDs;
     //List<String> clientNames;
 
+    private Button welcomeButton;
+
 
 
     @Override
@@ -51,6 +53,13 @@ public class CreateComplaint extends AppCompatActivity {
         //spinner2 = findViewById(R.id.spinner2);
         //clientNames = new ArrayList<>();
 
+        welcomeButton = (Button)findViewById(R.id.welcomePageButton);
+        welcomeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                welcome(v);
+            }
+        });
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("USERS").addValueEventListener((new ValueEventListener() {
@@ -235,6 +244,12 @@ public class CreateComplaint extends AppCompatActivity {
                 });
 
 
+    }
+
+    public void welcome(View view){
+        Intent returnToWelcome = new Intent(getApplicationContext(),WelcomePage.class);
+        returnToWelcome.putExtra("role","CLIENT");
+        startActivity(returnToWelcome);
     }
 
 

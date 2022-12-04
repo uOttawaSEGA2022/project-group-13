@@ -1,18 +1,30 @@
 package com.example.mealerapp;
 
+import java.util.Date;
+
 public class PurchaseRequest {
 
     public enum STATUS{APPROVED, DENIED, PENDING};
 
-    private String cookUID, clientUID;
-    private Meal meal;
+    private String cookUID, clientUID, meal;
     private STATUS status;
+    private String date;
 
-    public PurchaseRequest(String cookUID, String clientUID, Meal meal) {
+    public PurchaseRequest(String cookUID, String clientUID, String meal) {
         this.cookUID = cookUID;
         this.clientUID = clientUID;
         this.meal = meal;
         this.status = STATUS.PENDING;
+        Date date = new Date();
+        this.date = date.toString();
+    }
+
+    public PurchaseRequest(String cookUID, String clientUID, String meal, STATUS status, String date) {
+        this.cookUID = cookUID;
+        this.clientUID = clientUID;
+        this.meal = meal;
+        this.status = status;
+        this.date = date;
     }
 
     public String getCookUID() {
@@ -31,11 +43,11 @@ public class PurchaseRequest {
         this.clientUID = clientUID;
     }
 
-    public Meal getMeal() {
+    public String getMeal() {
         return meal;
     }
 
-    public void setMeal(Meal meal) {
+    public void setMeal(String meal) {
         this.meal = meal;
     }
 
@@ -47,6 +59,21 @@ public class PurchaseRequest {
         this.status = status;
     }
 
+    public static STATUS stringToStatus(String statusString){
+        switch (statusString){
+            case "approved": return STATUS.APPROVED;
+            case "pending": return STATUS.PENDING;
+            case "denied": return STATUS.DENIED;
+        }
 
+        return STATUS.PENDING;
+    }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 }

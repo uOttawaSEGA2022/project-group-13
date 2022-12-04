@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -35,8 +36,7 @@ public class ViewPurchaseRequests extends AppCompatActivity implements PurchaseR
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_purchase_requests);
 
-        Bundle bundle = getIntent().getExtras();
-        UID = bundle.getString("UID");
+        UID = UserDatabase.getUID();
 
         ref = FirebaseDatabase.getInstance().getReference("USERS").child(UID).child("REQUESTS");
 
@@ -46,15 +46,23 @@ public class ViewPurchaseRequests extends AppCompatActivity implements PurchaseR
         recyclerView = (RecyclerView) findViewById(R.id.purchaseRequestsRecycleView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
 
         noRequests = (TextView) findViewById(R.id.noRequestsTextView);
         noRequests.setVisibility(View.GONE);
 
         welcomeButton = (Button)findViewById(R.id.welcomeButton);
+        welcomeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                returnToWelcome(v);
+            }
+        });
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String clientUID, cookUID, mealString, status, date;
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     String[] requestFields = new String[5];
                     int counter = 0;
@@ -62,7 +70,23 @@ public class ViewPurchaseRequests extends AppCompatActivity implements PurchaseR
                         requestFields[counter] = field.getValue().toString();
                         counter++;
                     }
+
+                    clientUID = requestFields[0];
+                    cookUID = requestFields[1];
+                    date = requestFields[2];
+                    mealString = requestFields[3];
+                    status = requestFields[4];
+
+
+                    PurchaseRequest purchaseRequest = new PurchaseRequest(cookUID,clientUID,mealString,PurchaseRequest.stringToStatus(status),date);
+                    list.add(purchaseRequest);
+                    adapter.notifyDataSetChanged();
+
+                    if(list.isEmpty()){
+                        noRequests.setVisibility(View.VISIBLE);
+                    }
                 }
+
             }
 
             @Override
@@ -71,6 +95,10 @@ public class ViewPurchaseRequests extends AppCompatActivity implements PurchaseR
             }
         });
 
+    }
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+        super.onPointerCaptureChanged(hasCapture);
     }
 
     public void returnToWelcome(View view){
