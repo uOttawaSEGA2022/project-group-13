@@ -48,6 +48,7 @@ public class WelcomePage extends AppCompatActivity{
 
         if(role.equals("CLIENT")){
             nextActivity.setVisibility(View.GONE);
+            makeComplaint.setVisibility(View.VISIBLE);
         }
 
         else if(role.equals("ADMIN")){
@@ -58,6 +59,7 @@ public class WelcomePage extends AppCompatActivity{
                     ComplaintsPage(v);
                 }
             });
+            //makeComplaint.setVisibility(View.GONE);
         }
         else if(role.equals("COOK")){
             nextActivity.setText("View Menu");
@@ -67,6 +69,7 @@ public class WelcomePage extends AppCompatActivity{
                     menuPage(v);
                 }
             });
+            //makeComplaint.setVisibility(View.GONE);
         }
 
 
