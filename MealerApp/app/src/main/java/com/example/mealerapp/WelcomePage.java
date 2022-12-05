@@ -37,6 +37,12 @@ public class WelcomePage extends AppCompatActivity{
             public void onClick(View v) {CreateComplaints(v); }
         });
 
+        Button viewPro = (Button) findViewById(R.id.viewProfile);
+        viewPro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {ViewProfile(v); }
+        });
+
         Button nextActivity = (Button) findViewById(R.id.nextActivityButton);
         Button requests = (Button)findViewById(R.id.requestsButton);
         requests.setOnClickListener(new View.OnClickListener() {
@@ -96,6 +102,11 @@ public class WelcomePage extends AppCompatActivity{
 
     public void ComplaintsPage(View view){
         Intent intent = new Intent(getApplication(), ComplaintsPage.class);
+        startActivity(intent);
+    }
+
+    public void ViewProfile(View view){
+        Intent intent = new Intent(getApplication(), ViewProfile.class);
         startActivity(intent);
     }
 
