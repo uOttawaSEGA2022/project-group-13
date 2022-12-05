@@ -73,13 +73,13 @@ public class CreateComplaint extends AppCompatActivity {
                     String spinnerName = childSnapshot.child("email").getValue(String.class);
                     //String cookUID = childSnapshot.getValue(String.class);
 
-                    /**
-                    if (userType == "COOK") {
+
+                    if (childSnapshot.child("role").getValue(String.class).equals("COOK")) {
                         cookNames.add(spinnerName);
                     }
-                     */
 
-                    cookNames.add(spinnerName);
+
+                    //cookNames.add(spinnerName);
 
                 }
 
@@ -114,6 +114,8 @@ public class CreateComplaint extends AppCompatActivity {
 
         Spinner mySpinner = (Spinner) findViewById(R.id.spinner);
         String text = mySpinner.getSelectedItem().toString();
+
+
 
         EditText complaint = (EditText) findViewById(R.id.Complaint);
         EditText clientEmail = (EditText) findViewById(R.id.clientEmail);
@@ -250,9 +252,33 @@ public class CreateComplaint extends AppCompatActivity {
         startActivity(returnToWelcome);
     }
 
-
+    //data validation
     private boolean checkComplaint(){
-        return true;
+        boolean status = true;
+
+        Spinner spin = (Spinner) findViewById(R.id.spinner);
+        String text = spin.getSelectedItem().toString();
+
+        EditText complaint = (EditText) findViewById(R.id.Complaint);
+        EditText email = (EditText) findViewById(R.id.clientEmail);
+
+
+        if(complaint.length() == 0){
+            complaint.setError("This field is required");
+            status = false;
+        }
+
+        if(email.length() == 0 || !email.getText().toString().contains("@") || !email.getText().toString().contains(".com")){
+            email.setError("This field is required and required a valid email with an @ symbol and .com");
+            status = false;
+        }
+
+        if(text.equals("Choose a cook")){
+            //spin.setError("Required");
+            ((TextView)spin.getSelectedView()).setError("Error message");
+        }
+
+        return status;
     }
 
 

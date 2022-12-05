@@ -39,6 +39,12 @@ public class WelcomePage extends AppCompatActivity{
             public void onClick(View v) {CreateComplaints(v); }
         });
 
+        Button viewPro = (Button) findViewById(R.id.viewProfile);
+        viewPro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {ViewProfile(v); }
+        });
+
         Button nextActivity = (Button) findViewById(R.id.nextActivityButton);
         Button requests = (Button)findViewById(R.id.requestsButton);
         requests.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +57,7 @@ public class WelcomePage extends AppCompatActivity{
         if(role.equals("CLIENT")){
             makeComplaint.setVisibility(View.VISIBLE);
             nextActivity.setVisibility(View.GONE);
+            makeComplaint.setVisibility(View.VISIBLE);
         }
 
         else if(role.equals("ADMIN")){
@@ -61,6 +68,7 @@ public class WelcomePage extends AppCompatActivity{
                     ComplaintsPage(v);
                 }
             });
+            //makeComplaint.setVisibility(View.GONE);
         }
         else if(role.equals("COOK")){
             nextActivity.setText("View Menu");
@@ -70,6 +78,7 @@ public class WelcomePage extends AppCompatActivity{
                     menuPage(v);
                 }
             });
+            //makeComplaint.setVisibility(View.GONE);
         }
 
 
@@ -96,6 +105,11 @@ public class WelcomePage extends AppCompatActivity{
 
     public void ComplaintsPage(View view){
         Intent intent = new Intent(getApplication(), ComplaintsPage.class);
+        startActivity(intent);
+    }
+
+    public void ViewProfile(View view){
+        Intent intent = new Intent(getApplication(), ViewProfile.class);
         startActivity(intent);
     }
 
