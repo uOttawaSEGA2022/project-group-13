@@ -55,8 +55,14 @@ public class WelcomePage extends AppCompatActivity{
         });
 
         if(role.equals("CLIENT")){
+            nextActivity.setText("Search Meals");
+            nextActivity.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    searchMeals(v);
+                }
+            });
             makeComplaint.setVisibility(View.VISIBLE);
-            nextActivity.setVisibility(View.GONE);
             makeComplaint.setVisibility(View.VISIBLE);
         }
 
@@ -120,6 +126,11 @@ public class WelcomePage extends AppCompatActivity{
         menuPage.putExtra("UID", uid);
             startActivity(menuPage);
 
+    }
+
+    public void searchMeals(View view){
+        Intent searchMealsPage = new Intent(getApplicationContext(),SearchMeals.class);
+        startActivity(searchMealsPage);
     }
 
 

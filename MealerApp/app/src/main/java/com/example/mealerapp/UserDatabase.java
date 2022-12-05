@@ -181,7 +181,7 @@ public class UserDatabase extends Database{
             fieldString = "creditCardInfo";
         }
         else if(field == dataField.ISSUSPENDED){
-            fieldString = "isSuspended";
+            fieldString = "suspended";
         }
         else if(field == dataField.SUSPENSIONDATE){
             fieldString = "suspensionDate";
