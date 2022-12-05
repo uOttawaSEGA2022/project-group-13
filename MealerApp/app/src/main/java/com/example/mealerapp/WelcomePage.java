@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -32,6 +33,7 @@ public class WelcomePage extends AppCompatActivity{
         });
 
         Button makeComplaint = (Button) findViewById(R.id.MakeComplaint);
+        makeComplaint.setVisibility(View.GONE);
         makeComplaint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {CreateComplaints(v); }
@@ -47,6 +49,7 @@ public class WelcomePage extends AppCompatActivity{
         });
 
         if(role.equals("CLIENT")){
+            makeComplaint.setVisibility(View.VISIBLE);
             nextActivity.setVisibility(View.GONE);
         }
 

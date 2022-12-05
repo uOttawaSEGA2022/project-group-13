@@ -39,7 +39,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         Model model = mList.get(position);
         holder.complaint.setText(model.getComplaint());
         holder.cook.setText(model.getCook());
-        holder.client.setText(model.getClient());
+        holder.client.setText(model.getCook());
     }
 
     @Override

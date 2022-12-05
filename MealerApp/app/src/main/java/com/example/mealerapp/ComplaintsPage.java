@@ -62,8 +62,17 @@ public class ComplaintsPage extends AppCompatActivity implements MyAdapter.Recyc
                 for(DataSnapshot dataSnapshot: snapshot.getChildren()){
                     Boolean isRead = (Boolean) dataSnapshot.child("read").getValue();
 
+                    String[] complaintFields = new String[4];
+                    int counter = 0;
+
                     if(!isRead) {
-                        Model model = dataSnapshot.getValue(Model.class);
+                        for(DataSnapshot fields:dataSnapshot.getChildren()){
+                            if(counter==4){break;}
+                            complaintFields[counter] = fields.getValue().toString();
+                            counter++;
+                        }
+
+                        Model model = new Model(complaintFields[1],complaintFields[2],complaintFields[0]);
                         list.add(model);
                     }
                 }

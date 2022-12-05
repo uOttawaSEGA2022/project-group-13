@@ -139,7 +139,6 @@ public class PurchaseRequestAdapter extends RecyclerView.Adapter<PurchaseRequest
         }
     }
 
-//WHAT SHOULD IT DO WHEN CLICKED?
     public interface RecyclerViewInterface{
         public void onItemClick(int position,String meal, String priceString, String clientString, String dateString);
     }
