@@ -27,5 +27,17 @@ public class RequestDatabase extends Database{
 
     public void deleteRequest(PurchaseRequest request){
 
+
+    }
+
+    public void setAccepted(String clientUID, String cookUID, String meal, Status status){
+        reference.child(request.getCookUID()).child("REQUESTS").child("STATUS").setValue(APPROVED);
+        reference.child(request.getClientUID()).child("REQUESTS").child("STATUS").setValue(APPROVED);
+
+    }
+    public void setRejected(String clientUID, String cookUID, String meal, Status status){
+        reference.child(request.getCookUID()).child("REQUESTS").child("STATUS").setValue(DENIED);
+        reference.child(request.getClientUID()).child("REQUESTS").child("STATUS").setValue(DENIED);
+
     }
 }

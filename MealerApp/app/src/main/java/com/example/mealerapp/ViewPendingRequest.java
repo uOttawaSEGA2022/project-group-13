@@ -63,10 +63,12 @@ public class ViewPendingRequest extends AppCompatActivity {
 
     }
     public void acceptRequest(View v){
+        setAccepted(v);
 
     }
 
     public void declineRequest(View v){
+        setRejected(v);
 
     }
 

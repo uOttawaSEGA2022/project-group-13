@@ -31,6 +31,8 @@ public class ExampleInstrumentedTest {
         assertEquals("com.example.mealerapp", appContext.getPackageName());
     }
 
+
+    /*This test checks if Suspending a cook is working properly*/
     @Test
     public void suspendCook_isCorrect() throws Exception {
         UserDatabase dtb = new UserDatabase();
@@ -114,6 +116,8 @@ public class ExampleInstrumentedTest {
         dtb.deleteComplaint("diWhRfZIqRdWSgqki9aKDpn1vDk2");
     }
 
+
+    /*This test checks if setting and getting information is working properly (in this case the info is the user's address)*/
     @Test
     public void setAndGetInfo_isCorrect(){
         UserDatabase dtb = new UserDatabase();
@@ -159,7 +163,7 @@ public class ExampleInstrumentedTest {
         dtb.setInformation(addressRef,"12345 Main Street");
     }
 
-
+    /*This test checks if a user (either Client or Cook) can succesfuly login and logoff (does so by checking if UID is not null once logged in and null once logged off)*/
     @Test
     public void loginAndLogoff_isCorrect(){
         UserDatabase dtb = new UserDatabase();
@@ -174,7 +178,7 @@ public class ExampleInstrumentedTest {
 
 
 
-     /**
+     /*
      * Test will check if adding and removing a meal from the offered meals list is working correctly
      */
     @Test
@@ -202,6 +206,7 @@ public class ExampleInstrumentedTest {
     }
 
 
+    /*This test checks creating a meal, adding it to the database, and deleting it from the database is working properly */
     @Test
     public void addingAndDeletingMeal_isCorrect(){
 
@@ -243,6 +248,47 @@ public class ExampleInstrumentedTest {
 
     }
 
+
+     /*This test checks if creating and adding a purchase request to the database is working properly*/
+     @Test
+     public void creatingAndAddingRequest_isCorrect(){
+         RequestDatabase rD= new RequestDatabase();
+         PurchaseRequest request= new PurchaseRequest("7Ge4oqXDzBWrvL8CnWqudoR2c7m1", "HmJm4S0TtwZAllFDa4onUMSaCpw2","grilled cheese",PENDING,"December 7 2022");
+         rD.addRequest(request);
+
+         Database.retrieveListener readListener = new Database.retrieveListener() {
+            @Override
+            public void onDataReceived(Object data) {
+
+                assertNotNull(data);
+
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        };
+
+        mD.getInformation(FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("REQUESTS").child(request.getClientUID())., readListener);
+     }
+
+
+    /*This test checks if changing the request status from PEWNDING to APPROVED is working*/
+     @Test
+     public void changingRequestStatus_isCorrect(){
+         RequestDatabase rD= new RequestDatabase();
+         DatabaseReference requestStatus = FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("REQUESTS").child("example").child("status");
+         assertEquals(requestStatus,PENDING);
+         rD.setApproved(APPROVED);
+         assertEquals(requestStatus,APPROVED);
+     }
+
+    // @Test
+    // public void addingAndDeletingMeal_isCorrect(){}
+
+    // @Test
+    // public void addingAndDeletingMeal_isCorrect(){}
 
 /* Deletes the test meal created
     @After
