@@ -150,14 +150,14 @@ public class UserDatabase extends Database{
 
     public void suspendCook(String cookUID, String suspensionDate){
         DatabaseReference cookRef = database.getReference("USERS").child(cookUID);
-        cookRef.child("isSuspended").setValue(true);
+        cookRef.child("suspended").setValue(true);
         cookRef.child("suspensionDate").setValue(suspensionDate);
 
     }
 
     public void liftSuspension(){
         DatabaseReference cookRef = database.getReference("USERS").child(getUID());
-        cookRef.child("isSuspended").setValue(false);
+        cookRef.child("suspended").setValue(false);
         cookRef.child("suspensionDate").setValue("N/A");
     }
 

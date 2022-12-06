@@ -80,7 +80,6 @@ public class ViewMealInfo extends AppCompatActivity implements Serializable {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot: snapshot.getChildren()){
-                    Log.d("datasnap",dataSnapshot.child("email").getValue().toString());
                     if(dataSnapshot.child("email").getValue().toString().equals(meal.getCook())){
                         cookUID = dataSnapshot.getKey();
 
