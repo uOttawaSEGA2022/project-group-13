@@ -9,6 +9,7 @@ public class RequestDatabase extends Database{
 
     private FirebaseDatabase database;
     private DatabaseReference reference;
+    private boolean stop = false;
 
     public RequestDatabase(){
         database = FirebaseDatabase.getInstance();
@@ -16,9 +17,12 @@ public class RequestDatabase extends Database{
     }
 
     public void addRequest(PurchaseRequest request){
-        String requestID = request.getClientUID()+System.currentTimeMillis();
-        reference.child(request.getCookUID()).child("REQUESTS").child(requestID).setValue(request);
-        reference.child(request.getClientUID()).child("REQUESTS").child(requestID).setValue(request);
+        if(!stop){
+            String requestID = request.getClientUID()+System.currentTimeMillis();
+            reference.child(request.getCookUID()).child("REQUESTS").child(requestID).setValue(request);
+            reference.child(request.getClientUID()).child("REQUESTS").child(requestID).setValue(request);
+            stop = true;
+        }
     }
 
     public void deleteRequest(PurchaseRequest request){

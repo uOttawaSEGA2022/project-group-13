@@ -1,10 +1,12 @@
 package com.example.mealerapp;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,10 +20,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class SearchMeals extends AppCompatActivity implements MenuAdapter.RecyclerViewInterface{
+public class SearchMeals extends AppCompatActivity implements SearchMealsAdapter.RecyclerViewInterface{
 
-    private MenuAdapter adapter;
-    private ArrayList<Meal> list, searchResults;
+    private SearchMealsAdapter adapter;
+    private ArrayList<SearchableMeal> list, searchResults;
     private RecyclerView recyclerView;
     private SearchView searchView;
 
@@ -34,7 +36,7 @@ public class SearchMeals extends AppCompatActivity implements MenuAdapter.Recycl
 
         list = new ArrayList<>();
         searchResults = new ArrayList<>();
-        adapter = new MenuAdapter(this, searchResults,this);
+        adapter = new SearchMealsAdapter(this, searchResults,this);
         recyclerView = (RecyclerView) findViewById(R.id.searchMealsRecyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -91,7 +93,7 @@ public class SearchMeals extends AppCompatActivity implements MenuAdapter.Recycl
                                                     rating = Math.round(total/numRatings);
                                                 }
 
-                                                Meal meal = new Meal(name,mealType,cuisine,ingredients,allergens,description,price, currentlyOffered, rating);
+                                                SearchableMeal meal = new SearchableMeal(name,mealType,cuisine,ingredients,allergens,description,price, currentlyOffered, rating, userSnapshot.child("email").getValue().toString());
                                                 list.add(meal);
 
 
@@ -132,11 +134,11 @@ public class SearchMeals extends AppCompatActivity implements MenuAdapter.Recycl
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if(!searchResults.isEmpty()){
-                    for(Meal searchResult: searchResults){
+                    for(SearchableMeal searchResult: searchResults){
                         searchResults.remove(searchResult);
                     }
                 }
-                for(Meal mealItem:list){
+                for(SearchableMeal mealItem:list){
                     if(mealItem.getName().contains(query)){
                         searchResults.add(mealItem);
                         adapter.notifyDataSetChanged();
@@ -154,7 +156,10 @@ public class SearchMeals extends AppCompatActivity implements MenuAdapter.Recycl
     }
 
     @Override
-    public void onItemClick(int position, String meal, String description, String allergens, String ingredients, String cuisine, String mealType, boolean currentlyOffered, Double price, double rating) {
-
+    public void onItemClick(int position, String meal, String description, String allergens, String ingredients, String cuisine, String mealType, boolean currentlyOffered, Double price, double rating, String cook) {
+        Intent purchaseRequest = new Intent(getApplicationContext(),ViewMealInfo.class);
+        Meal purchaseMeal = new SearchableMeal(meal,mealType,cuisine,ingredients,allergens,description,price,true,cook);
+        purchaseRequest.putExtra("meal",purchaseMeal);
+        startActivity(purchaseRequest);
     }
 }
