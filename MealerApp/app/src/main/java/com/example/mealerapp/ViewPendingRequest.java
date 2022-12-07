@@ -7,10 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import com.google.firebase.database.DatabaseReference;
 
 public class ViewPendingRequest extends AppCompatActivity {
 
+    private RequestDatabase database;
+
     private String meal, price, date, client;
+    private PurchaseRequest request;
     private Button accept,decline,requests;
     private TextView mealTextView, priceTextView, clientTextView, dateTextView;
 
@@ -42,7 +46,7 @@ public class ViewPendingRequest extends AppCompatActivity {
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setAccepted(v);
+                acceptRequest(v);
 
 
             }
@@ -51,7 +55,7 @@ public class ViewPendingRequest extends AppCompatActivity {
         decline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setRejected(v);
+                declineRequest(v);
 
             }
         });
@@ -66,11 +70,13 @@ public class ViewPendingRequest extends AppCompatActivity {
 
     }
     public void acceptRequest(View v){
+        database.setAccepted(request);
 
 
     }
 
     public void declineRequest(View v){
+        database.setRejected(request);
 
 
     }

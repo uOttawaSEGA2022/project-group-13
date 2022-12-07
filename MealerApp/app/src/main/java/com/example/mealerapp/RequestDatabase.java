@@ -36,14 +36,15 @@ public class RequestDatabase extends Database{
     }
 
     public void setAccepted(PurchaseRequest request){
-
-        reference.child(request.getCookUID()).child("REQUESTS").child("STATUS").setValue("APPROVED");
-        reference.child(request.getClientUID()).child("REQUESTS").child("STATUS").setValue("APPROVED");
+        String requestID = request.getClientUID() + request.getDate();
+        reference.child(request.getCookUID()).child("REQUESTS").child(requestID).child("STATUS").setValue("APPROVED");
+        reference.child(request.getClientUID()).child("REQUESTS").child(requestID).child("STATUS").setValue("APPROVED");
 
     }
     public void setRejected(PurchaseRequest request){
-        reference.child(request.getCookUID()).child("REQUESTS").child("STATUS").setValue("DENIED");
-        reference.child(request.getClientUID()).child("REQUESTS").child("STATUS").setValue("DENIED");
+        String requestID = request.getClientUID() + request.getDate();
+        reference.child(request.getCookUID()).child("REQUESTS").child(requestID).child("STATUS").setValue("DENIED");
+        reference.child(request.getClientUID()).child("REQUESTS").child(requestID).child("STATUS").setValue("DENIED");
 
     }
 }
