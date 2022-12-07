@@ -274,14 +274,16 @@ public class ExampleInstrumentedTest {
      }
 
 
-    /*This test checks if changing the request status from PENDING to APPROVED is working*/
+    /*This test checks if creating a request and then changing its status from PENDING to APPROVED is working*/
      @Test
-     public void changingRequestStatus_isCorrect(){
-         RequestDatabase rD= new RequestDatabase();
-         DatabaseReference requestStatus = FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("REQUESTS").child("example").child("status");
-         assertEquals(requestStatus,PENDING);
-         rD.setApproved(APPROVED);
-         assertEquals(requestStatus,APPROVED);
+     public void creatingRequestAndChangingStatus_isCorrect(){
+        RequestDatabase rD= new RequestDatabase();
+        PurchaseRequest request= new PurchaseRequest("7Ge4oqXDzBWrvL8CnWqudoR2c7m1", "mdpVvIy1BPhn8QQ4A09FYLtiDzB3","water",PENDING,"December 8 2022");
+        rD.addRequest(request);
+        DatabaseReference requestStatus = FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("REQUESTS").child("mdpVvIy1BPhn8QQ4A09FYLtiDzB3").child("status");
+        assertEquals(requestStatus,PENDING);
+        rD.setApproved(APPROVED);
+        assertEquals(requestStatus,APPROVED);
      }
      
 
