@@ -37,10 +37,9 @@ public class ViewProfile extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_view_profile);
 
 
-
-        /**
         welcomeButton = (Button)findViewById(R.id.welcomePage);
         welcomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,10 +47,7 @@ public class ViewProfile extends AppCompatActivity {
                 welcome(v);
             }
         });
-        */
 
-
-        setContentView(R.layout.activity_view_profile);
         String uid = UserDatabase.getUID();
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -123,13 +119,13 @@ public class ViewProfile extends AppCompatActivity {
 
     }
 
-    /**
+
     public void welcome(View view){
         Intent returnToWelcome = new Intent(getApplicationContext(),WelcomePage.class);
         returnToWelcome.putExtra("role","COOK");
         startActivity(returnToWelcome);
     }
-     */
+
 
 
 }
