@@ -274,7 +274,7 @@ public class ExampleInstrumentedTest {
      }
 
 
-    /*This test checks if changing the request status from PEWNDING to APPROVED is working*/
+    /*This test checks if changing the request status from PENDING to APPROVED is working*/
      @Test
      public void changingRequestStatus_isCorrect(){
          RequestDatabase rD= new RequestDatabase();
@@ -283,12 +283,34 @@ public class ExampleInstrumentedTest {
          rD.setApproved(APPROVED);
          assertEquals(requestStatus,APPROVED);
      }
+     
 
-    // @Test
-    // public void addingAndDeletingMeal_isCorrect(){}
+     /*This class checks if attributes of the Meal are the same as the fields within the database*/
+     @Test
+     public void attributesOfMeal_isCorrect(){
+        MenuDatabase mD= new MenuDatabase();
+        Meal food= new Meal("Sushi", "Sushi", "Japanese", "Rice, fish, SeaWeed", "Fish and SeaFood", "3 sushi rolls", 14.99, true);
+        mD.addMeal("7Ge4oqXDzBWrvL8CnWqudoR2c7m1",food);
+        DatabaseReference foodPrice = FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("MENU").child("price");
+        DatabaseReference foodCuisine = FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("MENU").child("cuisine");
+        DatabaseReference foodAllergens = FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("MENU").child("allergens");
+        DatabaseReference foodIngredients = FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("MENU").child("ingredients");
+        DatabaseReference foodDescription = FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("MENU").child("description");
+        DatabaseReference foodCurrOff = FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("MENU").child("currentlyOffered");
+        DatabaseReference foodName = FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("MENU").child("name");
+        DatabaseReference foodMealType = FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("MENU").child("Sushi");
+        assertEquals(foodPrice,food.getPrice());
+        assertEquals(foodCuisine,food.getCuisine());
+        assertEquals(foodAllergens,food.getAllergens());
+        assertEquals(foodIngredients,food.getIngredients());
+        assertEquals(foodDescription,food.getDescription());
+        assertEquals(foodCurrOff,food.getCurrentlyOffered());
+        assertEquals(foodName,food.getName());
+        assertEquals(foodMealType,food.getMealType());
+    }
 
-    // @Test
-    // public void addingAndDeletingMeal_isCorrect(){}
+     @Test
+     public void addingAndDeletingMeal_isCorrect(){}
 
 /* Deletes the test meal created
     @After
