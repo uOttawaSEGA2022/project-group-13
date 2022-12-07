@@ -24,8 +24,7 @@ public class RequestDatabase extends Database{
 
     public void addRequest(PurchaseRequest request){
         if(!stop) {
-            Date date = new Date();
-            String requestID = request.getClientUID() + date.toString();
+            String requestID = request.getClientUID() + request.getDate();
             reference.child(request.getCookUID()).child("REQUESTS").child(requestID).setValue(request);
             reference.child(request.getClientUID()).child("REQUESTS").child(requestID).setValue(request);
             stop = true;
