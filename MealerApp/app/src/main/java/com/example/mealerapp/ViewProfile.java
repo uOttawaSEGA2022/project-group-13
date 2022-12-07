@@ -28,7 +28,8 @@ public class ViewProfile extends AppCompatActivity {
     String ln = "";
     String ad = "";
     String des = "";
-    DatabaseReference databaseReference;
+    String menu = "";
+    DatabaseReference databaseReference, dtb;
     Button welcomeButton;
 
 
@@ -52,13 +53,7 @@ public class ViewProfile extends AppCompatActivity {
 
         setContentView(R.layout.activity_view_profile);
         String uid = UserDatabase.getUID();
-        /**
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-       email =  databaseReference.child("USERS").child(uid).child("email").toString();
 
-        TextView myTextView = findViewById(R.id.profile);
-        myTextView.setText(email);
-         */
         databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("USERS").child(uid).addValueEventListener((new ValueEventListener() {
             @Override
@@ -86,6 +81,7 @@ public class ViewProfile extends AppCompatActivity {
                 TextView desview = findViewById(R.id.des3);
                 desview.setText(des);
 
+
             }
 
             @Override
@@ -93,6 +89,31 @@ public class ViewProfile extends AppCompatActivity {
 
             }
         }));
+
+
+        // Delete
+        /**
+        dtb = FirebaseDatabase.getInstance().getReference();
+        dtb.child("USERS").child(uid).child("MENU").addValueEventListener((new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                //DataSnapshot childSnapshot = snapshot.getChildren();
+
+                for(DataSnapshot childSnapshot: snapshot.getChildren()){
+                    menu = menu + childSnapshot.getValue(String.class);
+                }
+                TextView menuview = findViewById(R.id.menuitem);
+                menuview.setText(menu);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        }));
+         */
+
 
 
 
@@ -105,7 +126,7 @@ public class ViewProfile extends AppCompatActivity {
     /**
     public void welcome(View view){
         Intent returnToWelcome = new Intent(getApplicationContext(),WelcomePage.class);
-        //returnToWelcome.putExtra("role","COOK");
+        returnToWelcome.putExtra("role","COOK");
         startActivity(returnToWelcome);
     }
      */
