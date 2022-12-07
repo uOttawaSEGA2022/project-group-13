@@ -9,11 +9,15 @@ public class RequestDatabase extends Database{
 
     private FirebaseDatabase database;
     private DatabaseReference reference;
+    private DatabaseReference statusRef;
     private boolean stop = false;
 
     public RequestDatabase(){
         database = FirebaseDatabase.getInstance();
         reference = FirebaseDatabase.getInstance().getReference("USERS");
+        statusRef = FirebaseDatabase.getInstance().getReference("STATUS");
+
+
     }
 
     public void addRequest(PurchaseRequest request){
@@ -25,19 +29,26 @@ public class RequestDatabase extends Database{
         }
     }
 
-    public void deleteRequest(PurchaseRequest request){
+    public void deleteRequest(PurchaseRequest request) {
+        if (!stop) {
+            String requestID = request.getClientUID() + System.currentTimeMillis();
+            reference.child(request.getCookUID()).child("REQUESTS").child(requestID).removeValue();
+            reference.child(request.getClientUID()).child("REQUESTS").child(requestID).removeValue();
+            stop = true;
 
 
+        }
     }
 
-    public void setAccepted(String clientUID, String cookUID, String meal, Status status){
-        reference.child(request.getCookUID()).child("REQUESTS").child("STATUS").setValue(APPROVED);
-        reference.child(request.getClientUID()).child("REQUESTS").child("STATUS").setValue(APPROVED);
+    public void setAccepted(PurchaseRequest request){
+
+        reference.child(request.getCookUID()).child("REQUESTS").child("STATUS").setValue("APPROVED");
+        reference.child(request.getClientUID()).child("REQUESTS").child("STATUS").setValue("APPROVED");
 
     }
-    public void setRejected(String clientUID, String cookUID, String meal, Status status){
-        reference.child(request.getCookUID()).child("REQUESTS").child("STATUS").setValue(DENIED);
-        reference.child(request.getClientUID()).child("REQUESTS").child("STATUS").setValue(DENIED);
+    public void setRejected(PurchaseRequest request){
+        reference.child(request.getCookUID()).child("REQUESTS").child("STATUS").setValue("DENIED");
+        reference.child(request.getClientUID()).child("REQUESTS").child("STATUS").setValue("DENIED");
 
     }
 }

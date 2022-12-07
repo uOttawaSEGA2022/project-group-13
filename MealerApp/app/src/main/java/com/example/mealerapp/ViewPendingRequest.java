@@ -42,6 +42,8 @@ public class ViewPendingRequest extends AppCompatActivity {
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setAccepted(v);
+
 
             }
         });
@@ -49,6 +51,7 @@ public class ViewPendingRequest extends AppCompatActivity {
         decline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setRejected(v);
 
             }
         });
@@ -63,12 +66,12 @@ public class ViewPendingRequest extends AppCompatActivity {
 
     }
     public void acceptRequest(View v){
-        setAccepted(v);
+
 
     }
 
     public void declineRequest(View v){
-        setRejected(v);
+            
 
     }
 
