@@ -1,8 +1,12 @@
 package com.example.mealerapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,57 +23,92 @@ import java.util.List;
 public class ViewProfile extends AppCompatActivity {
 
 
-    String print = "";
-    //String please = "";
-    //List<String> info;
-    //String firstname = "k";
+    String email = "";
+    String fn = "";
+    String ln = "";
+    String ad = "";
+    String des = "";
+    DatabaseReference databaseReference;
+    Button welcomeButton;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
+        /**
+        welcomeButton = (Button)findViewById(R.id.welcomePage);
+        welcomeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                welcome(v);
+            }
+        });
+        */
+
+
         setContentView(R.layout.activity_view_profile);
-
-        //info = new ArrayList<>();
-
-        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-
-        //FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        //String the_uid = user.getUid();
         String uid = UserDatabase.getUID();
-        DatabaseReference additionalUserInfoRef = rootRef.child("USER").child(uid);
+        /**
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+       email =  databaseReference.child("USERS").child(uid).child("email").toString();
 
-        ValueEventListener valueEventListener = new ValueEventListener() {
+        TextView myTextView = findViewById(R.id.profile);
+        myTextView.setText(email);
+         */
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("USERS").child(uid).addValueEventListener((new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String firstName = dataSnapshot.child("firstName").getValue(String.class);
-                String email = dataSnapshot.child("email").getValue(String.class);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                //DataSnapshot childSnapshot = snapshot.getChildren();
 
-                printInfo(firstName);
+                email = snapshot.child("email").getValue(String.class);
+                TextView myTextView = findViewById(R.id.email3);
+                myTextView.setText(email);
 
 
-                //String nameOfUser = dataSnapshot.child("name").getValue(String.class);
+                fn = snapshot.child("firstName").getValue(String.class);
+                TextView fnview = findViewById(R.id.firstname3);
+                fnview.setText(fn);
+
+                ln = snapshot.child("lastName").getValue(String.class);
+                TextView lnview = findViewById(R.id.lastname3);
+                lnview.setText(ln);
+
+                ad = snapshot.child("address").getValue(String.class);
+                TextView adview = findViewById(R.id.address3);
+                adview.setText(ad);
+
+                des = snapshot.child("description").getValue(String.class);
+                TextView desview = findViewById(R.id.des3);
+                desview.setText(des);
+
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
-
-        };
-
-        TextView myTextView = findViewById(R.id.profile);
-        //myTextView.setText(firstName);
+        }));
 
 
 
 
-        //TextView myTextView = findViewById(R.id.profile);
-        //myTextView.setText(address + email + firstName + lastName);
+
+
+
     }
 
-    public void printInfo(String info){
-        TextView myTextView = findViewById(R.id.profile);
-        myTextView.setText("kyle");
+    /**
+    public void welcome(View view){
+        Intent returnToWelcome = new Intent(getApplicationContext(),WelcomePage.class);
+        //returnToWelcome.putExtra("role","COOK");
+        startActivity(returnToWelcome);
     }
+     */
+
 
 }

@@ -83,6 +83,7 @@ public class WelcomePage extends AppCompatActivity{
                 }
             });
             //makeComplaint.setVisibility(View.GONE);
+
         }
         else if(role.equals("COOK")){
             nextActivity.setText("View Menu");
@@ -93,6 +94,7 @@ public class WelcomePage extends AppCompatActivity{
                 }
             });
             //makeComplaint.setVisibility(View.GONE);
+            viewPro.setVisibility(View.VISIBLE);
         }
 
 
