@@ -5,6 +5,8 @@ import android.net.wifi.aware.PublishConfig;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Date;
+
 public class RequestDatabase extends Database{
 
     private FirebaseDatabase database;
@@ -21,8 +23,9 @@ public class RequestDatabase extends Database{
     }
 
     public void addRequest(PurchaseRequest request){
-        if(!stop){
-            String requestID = request.getClientUID()+System.currentTimeMillis();
+        if(!stop) {
+            Date date = new Date();
+            String requestID = request.getClientUID() + date.toString();
             reference.child(request.getCookUID()).child("REQUESTS").child(requestID).setValue(request);
             reference.child(request.getClientUID()).child("REQUESTS").child(requestID).setValue(request);
             stop = true;
@@ -30,14 +33,7 @@ public class RequestDatabase extends Database{
     }
 
     public void deleteRequest(PurchaseRequest request) {
-        if (!stop) {
-            String requestID = request.getClientUID() + System.currentTimeMillis();
-            reference.child(request.getCookUID()).child("REQUESTS").child(requestID).removeValue();
-            reference.child(request.getClientUID()).child("REQUESTS").child(requestID).removeValue();
-            stop = true;
 
-
-        }
     }
 
     public void setAccepted(PurchaseRequest request){
