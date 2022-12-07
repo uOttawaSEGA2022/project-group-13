@@ -71,7 +71,7 @@ public class ViewPendingRequest extends AppCompatActivity {
     }
 
     public void declineRequest(View v){
-            
+
 
     }
 
