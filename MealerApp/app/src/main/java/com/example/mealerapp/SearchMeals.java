@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.SearchView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -26,6 +27,7 @@ public class SearchMeals extends AppCompatActivity implements SearchMealsAdapter
     private ArrayList<SearchableMeal> list, searchResults;
     private RecyclerView recyclerView;
     private SearchView searchView;
+    private Button welcome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,14 @@ public class SearchMeals extends AppCompatActivity implements SearchMealsAdapter
         setContentView(R.layout.activity_search_meals);
 
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("USERS");
+
+        welcome = (Button)findViewById(R.id.welcomeButton);
+        welcome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                returnToWelcome(v);
+            }
+        });
 
         list = new ArrayList<>();
         searchResults = new ArrayList<>();
@@ -161,5 +171,11 @@ public class SearchMeals extends AppCompatActivity implements SearchMealsAdapter
         Meal purchaseMeal = new SearchableMeal(meal,mealType,cuisine,ingredients,allergens,description,price,true,cook);
         purchaseRequest.putExtra("meal",purchaseMeal);
         startActivity(purchaseRequest);
+    }
+
+    private void returnToWelcome(View view){
+        Intent returnToWelcome = new Intent(getApplicationContext(),WelcomePage.class);
+        returnToWelcome.putExtra("role","CLIENT");
+        startActivity(returnToWelcome);
     }
 }

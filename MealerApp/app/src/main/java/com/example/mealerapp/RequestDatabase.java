@@ -1,6 +1,7 @@
 package com.example.mealerapp;
 
 import android.net.wifi.aware.PublishConfig;
+import android.util.Log;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -36,15 +37,17 @@ public class RequestDatabase extends Database{
     }
 
     public void setAccepted(PurchaseRequest request){
+
+        Log.d("setAccepted","called");
         String requestID = request.getClientUID() + request.getDate();
-        reference.child(request.getCookUID()).child("REQUESTS").child(requestID).child("STATUS").setValue("APPROVED");
-        reference.child(request.getClientUID()).child("REQUESTS").child(requestID).child("STATUS").setValue("APPROVED");
+        reference.child(request.getCookUID()).child("REQUESTS").child(requestID).child("status").setValue("APPROVED");
+        reference.child(request.getClientUID()).child("REQUESTS").child(requestID).child("status").setValue("APPROVED");
 
     }
     public void setRejected(PurchaseRequest request){
         String requestID = request.getClientUID() + request.getDate();
-        reference.child(request.getCookUID()).child("REQUESTS").child(requestID).child("STATUS").setValue("DENIED");
-        reference.child(request.getClientUID()).child("REQUESTS").child(requestID).child("STATUS").setValue("DENIED");
+        reference.child(request.getCookUID()).child("REQUESTS").child(requestID).child("status").setValue("DENIED");
+        reference.child(request.getClientUID()).child("REQUESTS").child(requestID).child("status").setValue("DENIED");
 
     }
 }

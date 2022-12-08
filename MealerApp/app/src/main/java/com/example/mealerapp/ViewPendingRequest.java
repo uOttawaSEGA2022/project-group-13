@@ -1,15 +1,25 @@
 package com.example.mealerapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import com.google.firebase.database.DatabaseReference;
 
-public class ViewPendingRequest extends AppCompatActivity {
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.io.Serializable;
+
+public class ViewPendingRequest extends AppCompatActivity{
 
     private RequestDatabase database;
 
@@ -23,11 +33,15 @@ public class ViewPendingRequest extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_pending_request);
 
+
+        database = new RequestDatabase();
+
         Bundle bundle = getIntent().getExtras();
         meal = bundle.getString("meal");
         price = bundle.getString("price");
         date = bundle.getString("date");
         client = bundle.getString("client");
+
 
         mealTextView = (TextView) findViewById(R.id.mealTextView);
         priceTextView = (TextView) findViewById(R.id.priceTextView);
@@ -47,8 +61,6 @@ public class ViewPendingRequest extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 acceptRequest(v);
-
-
             }
         });
 
@@ -70,14 +82,51 @@ public class ViewPendingRequest extends AppCompatActivity {
 
     }
     public void acceptRequest(View v){
-        database.setAccepted(request);
 
+
+        DatabaseReference cookUID = FirebaseDatabase.getInstance().getReference("USERS");
+        cookUID.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    if(dataSnapshot.child("email").getValue().toString().equals(client)){
+                        request = new PurchaseRequest(UserDatabase.getUID(),dataSnapshot.getKey(),meal, PurchaseRequest.STATUS.PENDING,date);
+                        database.setAccepted(request);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+        returnToRequestPage(v);
 
     }
 
     public void declineRequest(View v){
-        database.setRejected(request);
+        DatabaseReference cookUID = FirebaseDatabase.getInstance().getReference("USERS");
+        cookUID.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    if(dataSnapshot.child("email").getValue().toString().equals(client)){
+                        request = new PurchaseRequest(UserDatabase.getUID(),dataSnapshot.getKey(),meal, PurchaseRequest.STATUS.PENDING,date);
+                        database.setRejected(request);
+                    }
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        returnToRequestPage(v);
 
     }
 

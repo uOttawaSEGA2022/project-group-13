@@ -1,6 +1,7 @@
 package com.example.mealerapp;
 
 import java.util.Date;
+import java.util.Locale;
 
 public class PurchaseRequest {
 
@@ -60,7 +61,8 @@ public class PurchaseRequest {
     }
 
     public static STATUS stringToStatus(String statusString){
-        switch (statusString){
+        String status = statusString.toLowerCase();
+        switch (status){
             case "approved": return STATUS.APPROVED;
             case "pending": return STATUS.PENDING;
             case "denied": return STATUS.DENIED;

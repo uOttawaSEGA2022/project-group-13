@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -19,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class ViewPurchaseRequests extends AppCompatActivity implements PurchaseRequestAdapter.RecyclerViewInterface{
@@ -113,11 +115,16 @@ public class ViewPurchaseRequests extends AppCompatActivity implements PurchaseR
 
     @Override
     public void onItemClick(int position, String meal,String price, String clientString, String dateString) {
-       Intent viewPendingRequest = new Intent(getApplicationContext(),ViewPendingRequest.class);
-        viewPendingRequest.putExtra("meal",meal);
-        viewPendingRequest.putExtra("price", price);
-        viewPendingRequest.putExtra("date", dateString);
-        viewPendingRequest.putExtra("client",clientString);
-        startActivity(viewPendingRequest);
+       if(list.get(position).getStatus().equals(PurchaseRequest.STATUS.PENDING)){
+           Intent viewPendingRequest = new Intent(getApplicationContext(),ViewPendingRequest.class);
+           viewPendingRequest.putExtra("client",clientString);
+           viewPendingRequest.putExtra("meal",meal);
+           viewPendingRequest.putExtra("price",price);
+           viewPendingRequest.putExtra("date",dateString);
+           startActivity(viewPendingRequest);
+       }
+       else{
+          Toast.makeText(getApplicationContext(),"Cannot edit a non-pending request",Toast.LENGTH_LONG).show();
+       }
     }
 }
