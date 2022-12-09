@@ -56,8 +56,19 @@ public class AddMealPage extends AppCompatActivity {
                 cuisineString = cuisine.getText().toString();
                 mealTypeString = mealType.getText().toString();
                 priceDouble = Double.parseDouble(price.getText().toString());
-                addNewMeal(v);
-                returnToMenu(v);
+
+                if(checkFields()) {
+                    mealName = name.getText().toString();
+                    descriptionString = description.getText().toString();
+                    allergensString = allergerns.getText().toString();
+                    ingredientsString = ingredients.getText().toString();
+                    cuisineString = cuisine.getText().toString();
+                    mealTypeString = mealType.getText().toString();
+                    priceDouble = Double.parseDouble(price.getText().toString());
+
+                    addNewMeal(v);
+                    returnToMenu(v);
+                }
             }
         });
     }
@@ -72,5 +83,49 @@ public class AddMealPage extends AppCompatActivity {
         Intent returnToMenu = new Intent(getApplicationContext(),MenuPage.class);
         returnToMenu.putExtra("UID",UID);
         startActivity(returnToMenu);
+    }
+
+    private boolean checkFields(){
+        boolean status = true;
+
+        name = (EditText) findViewById(R.id.mealNameEditText);
+        description = (EditText) findViewById(R.id.descriptionEditText);
+        ingredients = (EditText) findViewById(R.id.ingredientsEditText);
+        allergerns = (EditText) findViewById(R.id.allergensEditText);
+        cuisine = (EditText)findViewById(R.id.cuisineEditText);
+        mealType = (EditText)findViewById(R.id.mealNameEditText);
+        price = (EditText)findViewById(R.id.priceNumberEdit);
+
+        if(name.length() == 0){
+            name.setError("This field is required");
+            status = false;
+        }
+        if(description.length() == 0){
+            description.setError("This field is required");
+            status = false;
+        }
+        if(ingredients.length() == 0){
+            ingredients.setError("This field is required");
+            status = false;
+        }
+        if(allergerns.length() == 0){
+            allergerns.setError("This field is required");
+            status = false;
+        }
+        if(cuisine.length() == 0){
+            cuisine.setError("This field is required");
+            status = false;
+        }
+        if(mealType.length() == 0){
+            mealType.setError("This field is required");
+            status = false;
+        }
+        if(price.length() == 0){
+            price.setError("This field is required");
+            status = false;
+        }
+
+
+        return status;
     }
 }

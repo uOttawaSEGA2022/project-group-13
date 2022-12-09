@@ -253,7 +253,7 @@ public class ExampleInstrumentedTest {
      @Test
      public void creatingAndAddingRequest_isCorrect(){
          RequestDatabase rD= new RequestDatabase();
-         PurchaseRequest request= new PurchaseRequest("7Ge4oqXDzBWrvL8CnWqudoR2c7m1", "HmJm4S0TtwZAllFDa4onUMSaCpw2","grilled cheese",PENDING,"December 7 2022");
+         PurchaseRequest request= new PurchaseRequest("7Ge4oqXDzBWrvL8CnWqudoR2c7m1", "HmJm4S0TtwZAllFDa4onUMSaCpw2","grilled cheese",PurchaseRequest.STATUS.PENDING,"December 7 2022");
          rD.addRequest(request);
 
          Database.retrieveListener readListener = new Database.retrieveListener() {
@@ -270,7 +270,7 @@ public class ExampleInstrumentedTest {
             }
         };
 
-        mD.getInformation(FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("REQUESTS").child(request.getClientUID())., readListener);
+        rD.getInformation(FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("REQUESTS").child(request.getClientUID()), readListener);
      }
 
 
@@ -278,12 +278,12 @@ public class ExampleInstrumentedTest {
      @Test
      public void creatingRequestAndChangingStatus_isCorrect(){
         RequestDatabase rD= new RequestDatabase();
-        PurchaseRequest request= new PurchaseRequest("7Ge4oqXDzBWrvL8CnWqudoR2c7m1", "mdpVvIy1BPhn8QQ4A09FYLtiDzB3","water",PENDING,"December 8 2022");
+        PurchaseRequest request= new PurchaseRequest("7Ge4oqXDzBWrvL8CnWqudoR2c7m1", "mdpVvIy1BPhn8QQ4A09FYLtiDzB3","water", PurchaseRequest.STATUS.PENDING,"December 8 2022");
         rD.addRequest(request);
         DatabaseReference requestStatus = FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("REQUESTS").child("mdpVvIy1BPhn8QQ4A09FYLtiDzB3").child("status");
-        assertEquals(requestStatus,PENDING);
-        rD.setApproved(APPROVED);
-        assertEquals(requestStatus,APPROVED);
+        assertEquals(requestStatus,PurchaseRequest.STATUS.PENDING);
+        rD.setAccepted(request);
+        assertEquals(requestStatus,PurchaseRequest.STATUS.APPROVED);
      }
      
 
@@ -311,8 +311,7 @@ public class ExampleInstrumentedTest {
         assertEquals(foodMealType,food.getMealType());
     }
 
-     @Test
-     public void addingAndDeletingMeal_isCorrect(){}
+
 
 /* Deletes the test meal created
     @After
