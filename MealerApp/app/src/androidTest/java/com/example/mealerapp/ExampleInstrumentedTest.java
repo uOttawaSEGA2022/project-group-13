@@ -304,8 +304,24 @@ public class ExampleInstrumentedTest {
         assertEquals(foodAllergens,allergens);
     }
 
-     // @Test
-     // public void _isCorrect(){}
+
+    /*This class checks if attributes of a cook are the same as the fields within the database (the 3 attributes checked are email, address, and password)*/
+    public void attributesOfCook_isCorrect(){
+        UserDatabase uD = new UserDatabase();
+        User cook = new Cook("James", "Bond", "JBond@gmail.com", "jb007", "Cook", "007 Heming way", "I like to cook");
+        uD.registerUser(cook);
+        String userID = FirebaseAuth.getInstance().getID();
+        DatabaseReference cookEmail = FirebaseDatabase.getInstance().getReference("USERS").child(userID).child("email");
+        DatabaseReference cookAddress = FirebaseDatabase.getInstance().getReference("USERS").child(userID).child("address");
+        DatabaseReference cookPassword = FirebaseDatabase.getInstance().getReference("USERS").child(userID).child("password");
+        String email=cook.getEmail();
+        String address=cook.getAddress();
+        String password=cook.getPassword();
+        assertEquals(cookEmail,email);
+        assertEquals(cookAddress,address);
+        assertEquals(cookPassword,password);
+    }
+
 
 /* Deletes the test meal created
     @After
