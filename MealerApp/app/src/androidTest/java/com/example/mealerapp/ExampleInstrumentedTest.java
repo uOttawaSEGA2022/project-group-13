@@ -270,7 +270,11 @@ public class ExampleInstrumentedTest {
             }
         };
 
+<<<<<<< HEAD
         rD.getInformation(FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("REQUESTS").child(request.getClientUID()), readListener);
+=======
+        rD.getInformation(FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("REQUESTS").child(request.getClientUID())., readListener);
+>>>>>>> 55dd9982ed498e549a77cd127762d3c19ffac574
      }
 
 
@@ -281,37 +285,57 @@ public class ExampleInstrumentedTest {
         PurchaseRequest request= new PurchaseRequest("7Ge4oqXDzBWrvL8CnWqudoR2c7m1", "mdpVvIy1BPhn8QQ4A09FYLtiDzB3","water", PurchaseRequest.STATUS.PENDING,"December 8 2022");
         rD.addRequest(request);
         DatabaseReference requestStatus = FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("REQUESTS").child("mdpVvIy1BPhn8QQ4A09FYLtiDzB3").child("status");
+<<<<<<< HEAD
         assertEquals(requestStatus,PurchaseRequest.STATUS.PENDING);
         rD.setAccepted(request);
         assertEquals(requestStatus,PurchaseRequest.STATUS.APPROVED);
+=======
+        assertEquals(requestStatus,PENDING);
+        rD.setAccepted(request);
+        assertEquals(requestStatus,APPROVED);
+>>>>>>> 55dd9982ed498e549a77cd127762d3c19ffac574
      }
      
 
-     /*This class checks if attributes of the Meal are the same as the fields within the database*/
+     /*This class checks if attributes of the Meal are the same as the fields within the database (the 3 attributes checked are description, cuisine, and allergens)*/
      @Test
      public void attributesOfMeal_isCorrect(){
         MenuDatabase mD= new MenuDatabase();
         Meal food= new Meal("Sushi", "Sushi", "Japanese", "Rice, fish, SeaWeed", "Fish and SeaFood", "3 sushi rolls", 14.99, true);
         mD.addMeal("7Ge4oqXDzBWrvL8CnWqudoR2c7m1",food);
-        DatabaseReference foodPrice = FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("MENU").child("price");
-        DatabaseReference foodCuisine = FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("MENU").child("cuisine");
-        DatabaseReference foodAllergens = FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("MENU").child("allergens");
-        DatabaseReference foodIngredients = FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("MENU").child("ingredients");
-        DatabaseReference foodDescription = FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("MENU").child("description");
-        DatabaseReference foodCurrOff = FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("MENU").child("currentlyOffered");
-        DatabaseReference foodName = FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("MENU").child("name");
-        DatabaseReference foodMealType = FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("MENU").child("Sushi");
-        assertEquals(foodPrice,food.getPrice());
-        assertEquals(foodCuisine,food.getCuisine());
-        assertEquals(foodAllergens,food.getAllergens());
-        assertEquals(foodIngredients,food.getIngredients());
-        assertEquals(foodDescription,food.getDescription());
-        assertEquals(foodCurrOff,food.getCurrentlyOffered());
-        assertEquals(foodName,food.getName());
-        assertEquals(foodMealType,food.getMealType());
+        DatabaseReference foodDescription = FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("MENU").child("Suchi").child("description");
+        DatabaseReference foodCuisine = FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("MENU").child("Suchi").child("cuisine");
+        DatabaseReference foodAllergens = FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("MENU").child("Suchi").child("allergens");
+        String description=food.getDescription();
+        String cuisine=food.getCuisine();
+        String allergens=food.getAllergens();
+        assertEquals(foodDescription,description);
+        assertEquals(foodCuisine,cuisine);
+        assertEquals(foodAllergens,allergens);
     }
 
 
+    /*This class checks if attributes of a cook are the same as the fields within the database (the 3 attributes checked are email, address, and password)*/
+    public void attributesOfCook_isCorrect(){
+        UserDatabase uD = new UserDatabase();
+        User cook = new Cook("James", "Bond", "JBond@gmail.com", "jb007", "Cook", "007 Heming way", "I like to cook");
+        uD.registerUser(cook);
+        String userID = FirebaseAuth.getInstance().getID();
+        DatabaseReference cookEmail = FirebaseDatabase.getInstance().getReference("USERS").child(userID).child("email");
+        DatabaseReference cookAddress = FirebaseDatabase.getInstance().getReference("USERS").child(userID).child("address");
+        DatabaseReference cookPassword = FirebaseDatabase.getInstance().getReference("USERS").child(userID).child("password");
+        String email=cook.getEmail();
+        String address=cook.getAddress();
+        String password=cook.getPassword();
+        assertEquals(cookEmail,email);
+        assertEquals(cookAddress,address);
+        assertEquals(cookPassword,password);
+    }
+
+<<<<<<< HEAD
+
+=======
+>>>>>>> 55dd9982ed498e549a77cd127762d3c19ffac574
 
 /* Deletes the test meal created
     @After
