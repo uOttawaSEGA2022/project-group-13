@@ -270,11 +270,11 @@ public class ExampleInstrumentedTest {
             }
         };
 
-<<<<<<< HEAD
+
         rD.getInformation(FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("REQUESTS").child(request.getClientUID()), readListener);
-=======
+
         rD.getInformation(FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("REQUESTS").child(request.getClientUID())., readListener);
->>>>>>> 55dd9982ed498e549a77cd127762d3c19ffac574
+
      }
 
 
@@ -285,15 +285,15 @@ public class ExampleInstrumentedTest {
         PurchaseRequest request= new PurchaseRequest("7Ge4oqXDzBWrvL8CnWqudoR2c7m1", "mdpVvIy1BPhn8QQ4A09FYLtiDzB3","water", PurchaseRequest.STATUS.PENDING,"December 8 2022");
         rD.addRequest(request);
         DatabaseReference requestStatus = FirebaseDatabase.getInstance().getReference("USERS").child("7Ge4oqXDzBWrvL8CnWqudoR2c7m1").child("REQUESTS").child("mdpVvIy1BPhn8QQ4A09FYLtiDzB3").child("status");
-<<<<<<< HEAD
+
         assertEquals(requestStatus,PurchaseRequest.STATUS.PENDING);
         rD.setAccepted(request);
         assertEquals(requestStatus,PurchaseRequest.STATUS.APPROVED);
-=======
+
         assertEquals(requestStatus,PENDING);
         rD.setAccepted(request);
         assertEquals(requestStatus,APPROVED);
->>>>>>> 55dd9982ed498e549a77cd127762d3c19ffac574
+
      }
      
 
@@ -320,7 +320,7 @@ public class ExampleInstrumentedTest {
         UserDatabase uD = new UserDatabase();
         User cook = new Cook("James", "Bond", "JBond@gmail.com", "jb007", "Cook", "007 Heming way", "I like to cook");
         uD.registerUser(cook);
-        String userID = FirebaseAuth.getInstance().getID();
+        String userID = FirebaseAuth.getInstance().getUID();
         DatabaseReference cookEmail = FirebaseDatabase.getInstance().getReference("USERS").child(userID).child("email");
         DatabaseReference cookAddress = FirebaseDatabase.getInstance().getReference("USERS").child(userID).child("address");
         DatabaseReference cookPassword = FirebaseDatabase.getInstance().getReference("USERS").child(userID).child("password");
@@ -332,10 +332,6 @@ public class ExampleInstrumentedTest {
         assertEquals(cookPassword,password);
     }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 55dd9982ed498e549a77cd127762d3c19ffac574
 
 /* Deletes the test meal created
     @After
