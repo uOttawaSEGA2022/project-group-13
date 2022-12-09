@@ -49,13 +49,6 @@ public class AddMealPage extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mealName = name.getText().toString();
-                descriptionString = description.getText().toString();
-                allergensString = allergerns.getText().toString();
-                ingredientsString = ingredients.getText().toString();
-                cuisineString = cuisine.getText().toString();
-                mealTypeString = mealType.getText().toString();
-                priceDouble = Double.parseDouble(price.getText().toString());
 
                 if(checkFields()) {
                     mealName = name.getText().toString();
